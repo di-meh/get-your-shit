@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml -f docker-compose.override.yml -o infra/k8s
+    kompose.version: 1.28.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: shipping-db
+  name: shipping-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: shipping-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -f docker-compose.override.yml -o infra/k8s
+        kompose.version: 1.28.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/get-your-shit-default: "true"
+        io.kompose.service: shipping-db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: shipping-db
+            - name: POSTGRES_PASSWORD
+              value: ${POSTGRES_PASSWORD}
+            - name: POSTGRES_USER
+              value: ${POSTGRES_USER}
+          image: postgres:15-alpine
+          name: shipping-db
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: shipping-db
+      restartPolicy: Always
+      volumes:
+        - name: shipping-db
+          persistentVolumeClaim:
+            claimName: shipping-db
+status: {}

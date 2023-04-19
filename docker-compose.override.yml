@@ -1,0 +1,163 @@
+version: '3.8'
+# Development environment
+services:
+# DATABASES
+  auth-user-db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: auth-user-db
+    ports:
+      - ${AUTH_USER_DB_PORT-5432}:5432
+    volumes:
+      - auth-user-db:/var/lib/postgresql/data
+  demand-db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: demand-db
+    ports:
+      - ${DEMAND_DB_PORT-5433}:5432
+    volumes:
+      - demand-db:/var/lib/postgresql/data
+  order-db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: order-db
+    ports:
+      - ${ORDER_DB_PORT-5434}:5432
+    volumes:
+      - order-db:/var/lib/postgresql/data
+  restaurant-db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: restaurant-db
+    ports:
+      - ${RESTAURANT_DB_PORT-5435}:5432
+    volumes:
+      - restaurant-db:/var/lib/postgresql/data
+  shipping-db:
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: shipping-db
+    ports:
+      - ${SHIPPING_DB_PORT-5436}:5432
+    volumes:
+      - shipping-db:/var/lib/postgresql/data
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    depends_on:
+        - auth-user-db
+        - demand-db
+        - order-db
+        - restaurant-db
+        - shipping-db
+    ports:
+      - "8080:8080"
+
+# Services
+  admin-website:
+    build:
+      target: development
+    ports:
+      - ${ADMIN_WEBSITE_PORT-3000}:3000
+    volumes:
+      - ./admin-website:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.nuxt
+    depends_on:
+      - auth-user-db
+      - demand-db
+      - order-db
+      - restaurant-db
+      - shipping-db
+  pwa:
+    build:
+      target: development
+    ports:
+      - ${PWA_PORT-3001}:3000
+    volumes:
+      - ./pwa:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.nuxt
+    depends_on:
+      - auth-user-db
+      - demand-db
+      - order-db
+      - restaurant-db
+      - shipping-db
+
+  auth-user-service:
+    build:
+      target: development
+    ports:
+      - ${AUTH_USER_SERVICE_PORT-3002}:3000
+    volumes:
+      - ./auth-user-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - auth-user-db
+
+  demand-service:
+    build:
+      target: development
+    ports:
+      - ${DEMAND_SERVICE_PORT-3003}:3000
+    volumes:
+      - ./demand-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - demand-db
+
+  order-service:
+    build:
+      target: development
+    ports:
+      - ${ORDER_SERVICE_PORT-3004}:3000
+    volumes:
+      - ./order-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - order-db
+
+  payment-service:
+    build:
+      target: development
+    ports:
+      - ${PAYMENT_SERVICE_PORT-3005}:3000
+    volumes:
+      - ./payment-service:/usr/src/app
+      - /usr/src/app/node_modules
+
+  restaurant-service:
+    build:
+      target: development
+    ports:
+      - ${RESTAURANT_SERVICE_PORT-3006}:3000
+    volumes:
+      - ./restaurant-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - restaurant-db
+
+  shipping-service:
+    build:
+      target: development
+    ports:
+      - ${SHIPPING_SERVICE_PORT-3007}:3000
+    volumes:
+      - ./shipping-service:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - shipping-db
+
+volumes:
+  auth-user-db:
+  demand-db:
+  order-db:
+  restaurant-db:
+  shipping-db:
