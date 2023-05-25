@@ -20,9 +20,3 @@ docker compose build --pull --no-cache
 ```bash
 docker compose up -d
 ```
-
-### Prod environment
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-```
