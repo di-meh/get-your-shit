@@ -18,6 +18,9 @@ services:
       - payment
       - restaurant
       - shipping
+    environment:
+      AUTH_USER_SERVICE_HOST: auth-user
+      AUTH_USER_SERVICE_PORT: ${AUTH_PORT-4000}
 
   pwa:
     build:
@@ -45,74 +48,98 @@ services:
 
   # SERVICES
   auth-user:
+    container_name: auth-user
     build:
       context: ./services/auth-user-service
       target: development
     ports:
-      - ${AUTH_PORT-4000}:3000
+      - ${AUTH_PORT-4000}:${AUTH_PORT-4000}
     volumes:
       - ./services/auth-user-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - auth-user-db
+    environment:
+      APP_PORT: ${AUTH_PORT-4000}
+      APP_HOST: auth-user
 
   demand:
+    container_name: demand
     build:
       context: ./services/demand-service
       target: development
     ports:
-      - ${DEMAND_PORT-4001}:3000
+      - ${DEMAND_PORT-4001}:${DEMAND_PORT-4001}
     volumes:
       - ./services/demand-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - demand-db
+    environment:
+      APP_PORT: ${DEMAND_PORT-4001}
+      APP_HOST: demand
 
   order:
+    container_name: order
     build:
       context: ./services/order-service
       target: development
     ports:
-      - ${ORDER_PORT-4002}:3000
+      - ${ORDER_PORT-4002}:${ORDER_PORT-4002}
     volumes:
       - ./services/order-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - order-db
+    environment:
+      APP_PORT: ${ORDER_PORT-4002}
+      APP_HOST: order
 
   payment:
+    container_name: payment
     build:
       context: ./services/payment-service
       target: development
     ports:
-      - ${PAYMENT_PORT-4003}:3000
+      - ${PAYMENT_PORT-4003}:${PAYMENT_PORT-4003}
     volumes:
       - ./services/payment-service:/home/node/app
       - /home/node/app/node_modules
+    environment:
+      APP_PORT: ${PAYMENT_PORT-4003}
+      APP_HOST: payment
 
   restaurant:
+    container_name: restaurant
     build:
       context: ./services/restaurant-service
       target: development
     ports:
-      - ${RESTAURANT_PORT-4004}:3000
+      - ${RESTAURANT_PORT-4004}:${RESTAURANT_PORT-4004}
     volumes:
       - ./services/restaurant-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - restaurant-db
+    environment:
+      APP_PORT: ${RESTAURANT_PORT-4004}
+      APP_HOST: restaurant
 
   shipping:
+    container_name: shipping
     build:
       context: ./services/shipping-service
       target: development
     ports:
-      - ${SHIPPING_PORT-4005}:3000
+      - ${SHIPPING_PORT-4005}:${SHIPPING_PORT-4005}
     volumes:
       - ./services/shipping-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - shipping-db
+    environment:
+      APP_PORT: ${SHIPPING_PORT-4005}
+      APP_HOST: shipping
 
   # DATABASES
   auth-user-db:
