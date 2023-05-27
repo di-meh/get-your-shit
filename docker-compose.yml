@@ -7,7 +7,7 @@ services:
       context: ./apps/gateway
       target: development
     ports:
-      - ${GATEWAY_PORT-3000}:3000
+      - ${GATEWAY_PORT-3000}:${GATEWAY_PORT-3000}
     volumes:
       - ./apps/gateway:/home/node/app
       - /home/node/app/node_modules
@@ -19,8 +19,19 @@ services:
       - restaurant
       - shipping
     environment:
+      APP_PORT: ${GATEWAY_PORT-3000}
       AUTH_USER_SERVICE_HOST: auth-user
       AUTH_USER_SERVICE_PORT: ${AUTH_PORT-4000}
+      DEMAND_SERVICE_HOST: demand
+      DEMAND_SERVICE_PORT: ${DEMAND_PORT-4001}
+      ORDER_SERVICE_HOST: order
+      ORDER_SERVICE_PORT: ${ORDER_PORT-4002}
+      PAYMENT_SERVICE_HOST: payment
+      PAYMENT_SERVICE_PORT: ${PAYMENT_PORT-4003}
+      RESTAURANT_SERVICE_HOST: restaurant
+      RESTAURANT_SERVICE_PORT: ${RESTAURANT_PORT-4004}
+      SHIPPING_SERVICE_HOST: shipping
+      SHIPPING_SERVICE_PORT: ${SHIPPING_PORT-4005}
 
   pwa:
     build:
