@@ -69,7 +69,7 @@ services:
       - ./services/auth-user-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - auth-user-db
+      - postgres
     environment:
       APP_PORT: ${AUTH_PORT-4000}
       APP_HOST: auth-user
@@ -85,7 +85,7 @@ services:
       - ./services/demand-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - demand-db
+      - postgres
     environment:
       APP_PORT: ${DEMAND_PORT-4001}
       APP_HOST: demand
@@ -101,7 +101,7 @@ services:
       - ./services/order-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - order-db
+      - postgres
     environment:
       APP_PORT: ${ORDER_PORT-4002}
       APP_HOST: order
@@ -131,7 +131,7 @@ services:
       - ./services/restaurant-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - restaurant-db
+      - postgres
     environment:
       APP_PORT: ${RESTAURANT_PORT-4004}
       APP_HOST: restaurant
@@ -147,87 +147,32 @@ services:
       - ./services/shipping-service:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - shipping-db
+      - postgres
     environment:
       APP_PORT: ${SHIPPING_PORT-4005}
       APP_HOST: shipping
 
   # DATABASES
-  auth-user-db:
+  postgres:
     image: postgres:15-alpine
-    container_name: auth-user-db
     restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: auth-user-db
-    ports:
-      - ${AUTH_USER_DB_PORT-5432}:5432
     volumes:
-      - auth-user-db:/var/lib/postgresql/data
-  demand-db:
-    image: postgres:15-alpine
-    container_name: demand-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: demand-db
+      - postgres-db:/var/lib/postgresql/data
+      - ./infra/docker/:/docker-entrypoint-initdb.d/
     ports:
-      - ${DEMAND_DB_PORT-5433}:5432
-    volumes:
-      - demand-db:/var/lib/postgresql/data
-  order-db:
-    image: postgres:15-alpine
-    container_name: order-db
-    restart: always
+      - "5432:5432"
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: order-db
-    ports:
-      - ${ORDER_DB_PORT-5434}:5432
-    volumes:
-      - order-db:/var/lib/postgresql/data
-  restaurant-db:
-    image: postgres:15-alpine
-    container_name: restaurant-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: restaurant-db
-    ports:
-      - ${RESTAURANT_DB_PORT-5435}:5432
-    volumes:
-      - restaurant-db:/var/lib/postgresql/data
-  shipping-db:
-    image: postgres:15-alpine
-    container_name: shipping-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: shipping-db
-    ports:
-      - ${SHIPPING_DB_PORT-5436}:5432
-    volumes:
-      - shipping-db:/var/lib/postgresql/data
+      - POSTGRES_USER=${POSTGRES_USER-username}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD-password}
+      - POSTGRES_MULTIPLE_DATABASES="auth-user","demand","order","restaurant","shipping"
+
   adminer:
     image: adminer:4.8.1
     restart: always
     depends_on:
-      - auth-user-db
-      - demand-db
-      - order-db
-      - restaurant-db
-      - shipping-db
+      - postgres
     ports:
       - "8080:8080"
 
 volumes:
-  auth-user-db:
-  demand-db:
-  order-db:
-  restaurant-db:
-  shipping-db:
+  postgres-db:
