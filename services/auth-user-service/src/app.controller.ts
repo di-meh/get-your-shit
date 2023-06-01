@@ -10,4 +10,16 @@ export class AppController {
   ping(from: string): string {
     return this.appService.ping(from);
   }
+
+  @MessagePattern('auth-user-service:register')
+  async register(data: any) {
+    const result = this.appService.register(data.username, data.password, data.email);
+    return this.appService.register(data.username, data.password, data.email);
+  }
+
+  @MessagePattern('auth-user-service:login')
+  async login(data: any) {
+    const result = this.appService.login(data.username, data.password);
+    return this.appService.login(data.username, data.password);
+  }
 }

@@ -12,4 +12,21 @@ export class AuthController {
   ping(): Observable<string> {
     return this.client.send('auth-user-service:ping', 'auth');
   }
+
+  @Get('register')
+  register(): Observable<string> {
+    return this.client.send('auth-user-service:register', {
+      username: 'test',
+      password: 'admin',
+      email: 'test@hehe.fr',
+    });
+  }
+
+  @Get('login')
+  login(): Observable<string> {
+    return this.client.send('auth-user-service:login', {
+      username: 'test',
+      password: 'admin',
+    });
+  }
 }
