@@ -11,17 +11,16 @@ services:
     volumes:
       - ./apps/gateway:/home/node/app
       - /home/node/app/node_modules
-    depends_on:
-      - auth-user
-      - demand
-      - order
-      - payment
-      - restaurant
-      - shipping
+#    depends_on:
+#      - demand
+#      - order
+#      - payment
+#      - restaurant
+#      - shipping
     environment:
+      JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: ${AUTH_USER_DATABASE_URL}
       APP_PORT: ${GATEWAY_PORT-3000}
-      AUTH_USER_SERVICE_HOST: auth-user
-      AUTH_USER_SERVICE_PORT: ${AUTH_PORT-4000}
       DEMAND_SERVICE_HOST: demand
       DEMAND_SERVICE_PORT: ${DEMAND_PORT-4001}
       ORDER_SERVICE_HOST: order
@@ -58,22 +57,6 @@ services:
       - gateway
 
   # SERVICES
-  auth-user:
-    container_name: auth-user
-    build:
-      context: ./services/auth-user-service
-      target: development
-    ports:
-      - ${AUTH_PORT-4000}:${AUTH_PORT-4000}
-    volumes:
-      - ./services/auth-user-service:/home/node/app
-      - /home/node/app/node_modules
-    depends_on:
-      - postgres
-    environment:
-      APP_PORT: ${AUTH_PORT-4000}
-      APP_HOST: auth-user
-
   demand:
     container_name: demand
     build:

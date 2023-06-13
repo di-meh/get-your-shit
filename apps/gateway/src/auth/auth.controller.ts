@@ -1,15 +1,31 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import {Body, Controller, Get, Inject, Request, Post} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import {AuthService} from "./auth.service";
+import {LoginUserDto} from "./dto/loginUser.dto";
+import {RegisterUserDto} from "./dto/registerUser.dto";
+import {Public} from "./auth.decorator";
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    @Inject('AUTH_USER_SERVICE') private readonly client: ClientProxy,
+    private readonly authService: AuthService,
   ) {}
 
-  @Get('ping')
-  ping(): Observable<string> {
-    return this.client.send('auth-user-service:ping', 'auth');
+  @Public()
+  @Post('register')
+  register(@Body() registerDto: RegisterUserDto){
+    return this.authService.register(registerDto);
+  }
+
+  @Public()
+  @Post('login')
+  login(@Body() loginDto: LoginUserDto) {
+    return this.authService.login(loginDto);
+  }
+
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
