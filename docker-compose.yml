@@ -11,12 +11,12 @@ services:
     volumes:
       - ./apps/gateway:/home/node/app
       - /home/node/app/node_modules
-#    depends_on:
-#      - demand
-#      - order
-#      - payment
-#      - restaurant
-#      - shipping
+    depends_on:
+      - demand
+      - order
+      - payment
+      - restaurant
+      - shipping
     environment:
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: ${AUTH_USER_DATABASE_URL}
