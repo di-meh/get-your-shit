@@ -1,7 +1,7 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <PublicHero />
+  </div>
 </template>
 <script setup lang="ts">
 </script>

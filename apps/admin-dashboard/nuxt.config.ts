@@ -11,5 +11,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
 
+  },
+  colorMode: {
+    dataValue: 'theme'
   }
 })
