@@ -21,11 +21,11 @@
     <body class="h-full">
     ```
   -->
-  <div class="flex min-h-full flex-1">
+  <div class="flex min-h-full flex-1 h-[calc(100vh-4rem)]">
     <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
-          <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight">
+          <h2 class="text-2xl font-bold leading-9 tracking-tight">
             Connectez-vous
           </h2>
         </div>
@@ -34,7 +34,7 @@
           <div>
             <form action="#" method="POST" class="space-y-6">
               <div>
-                <label for="email" class="block text-sm font-medium leading-6">Email address</label>
+                <label for="email" class="label label-text">Email address</label>
                 <div class="mt-2">
                   <input
                     id="email"
@@ -48,7 +48,7 @@
               </div>
 
               <div>
-                <label for="password" class="block text-sm font-medium leading-6">Password</label>
+                <label for="password" class="label label-text">Password</label>
                 <div class="mt-2">
                   <input
                     id="password"
