@@ -1,6 +1,11 @@
 <template>
   <div>
     <VitePwaManifest />
-    <NuxtWelcome />
+    <NuxtPage />
   </div>
 </template>
+
+<script>
+import 'boxicons/css/boxicons.min.css'
+
+</script>
