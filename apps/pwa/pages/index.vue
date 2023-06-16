@@ -1,3 +1,82 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+let restaurants = [
+    {
+        name: "Pizza Hut - Sceaux",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - paris",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Boulogne",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    {
+        name: "Pizza Hut - Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+
+]
+
+
+onMounted(() => {
+    window.onscroll = function () { makeNavSticky() };
+    let searchbar = document.querySelector(".searchbar");
+    let sticky = searchbar.offsetTop;
+    let restaurant = document.querySelector(".restaurant");
+    function makeNavSticky() {
+        if (window.pageYOffset >= sticky) {
+            searchbar.classList.add("sticky")
+            restaurant.style.marginTop = "5.2em";
+            restaurant.style.marginBottom = "5.2em";
+        } else {
+            searchbar.classList.remove("sticky");
+            restaurant.style.marginTop = "0";
+            restaurant.style.marginBottom = "0";
+        }
+    }
+})
+
+</script>
+
 <template>
     <div class="container">
         <div class="first">
@@ -15,65 +94,21 @@
             </div>
         </div>
 
+        <div class="restaurant">
+            <div class="card" v-for="restaurant in restaurants">
+                <img :src="restaurant.image" alt="">
 
+                <p>{{ restaurant.name }}</p>
+                <p>{{ restaurant.deliveryPrice }}€ - {{ restaurant.deliveryTime }}</p>
 
-
-
-
-
-
-
-        <div class="menu">
-            <ul>
-                <a>
-                    <li><i class='bx bxs-home'></i><span>Acceuil</span></li>
-                </a>
-                <a>
-                    <li><i class='bx bx-search'></i><span>Parcourir</span></li>
-                </a>
-                <a>
-                    <li><i class='bx bxs-cart'></i><span>Paniers</span></li>
-                </a>
-                <a>
-                    <li><i class='bx bxs-user'></i><span>Compte</span></li>
-                </a>
-            </ul>
+            </div>
         </div>
+
     </div>
 </template>
 
 <style>
-/* temporaire */
-
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-
-.menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-}
-
-.menu>ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-}
-
-.menu>ul>a>li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.menu>ul>a>li>i {
-    font-size: 2rem;
-}
-
+/* Search bar */
 
 .searchbar {
     margin-top: 1rem;
@@ -86,7 +121,7 @@
     align-items: center;
     width: 90%;
     border-radius: 2222222px;
-    padding: 1rem;
+    padding-left: 1rem;
     background-color: rgb(231, 231, 231);
 }
 
@@ -101,15 +136,38 @@
     width: 100%;
     background: none;
     font-size: 1rem;
+    line-height: 3em;
 }
 
+/* Restaurants cards */
 
-/* change placeholder color 
-::placeholder {
-    color: #000;
-    opacity: 1;
+.restaurant {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
-*/
+.restaurant>.card {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
 
+    width: 90%;
+    border-radius: 1rem;
+}
+
+.restaurant>.card>img {
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    margin: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
 </style>
