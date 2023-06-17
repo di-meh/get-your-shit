@@ -5,6 +5,7 @@ import {AuthService} from "./auth.service";
 import {LoginUserDto} from "./dto/loginUser.dto";
 import {RegisterUserDto} from "./dto/registerUser.dto";
 import {Public} from "./auth.decorator";
+import {ROLE} from "@prisma/client";
 
 @Controller('auth')
 export class AuthController {

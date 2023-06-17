@@ -9,3 +9,17 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Demand {
+  id          String   @id @default(uuid())
+  name        String
+  address     String
+  phone       String
+  postal_code String
+  city        String
+  userId      String
+  reviewedBy  String?
+  approved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

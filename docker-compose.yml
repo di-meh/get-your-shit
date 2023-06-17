@@ -73,6 +73,7 @@ services:
     environment:
       APP_PORT: ${DEMAND_PORT-4001}
       APP_HOST: demand
+      DATABASE_URL: ${DEMAND_DATABASE_URL}
 
   order:
     container_name: order

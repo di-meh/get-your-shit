@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DemandController } from './demand.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import {AuthModule} from "../auth/auth.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
+    AuthModule,
   ],
   controllers: [DemandController],
 })
