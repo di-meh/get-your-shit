@@ -9,6 +9,6 @@ export default <Partial<Config>>{
     // './node_modules/@formkit/themes/dist/tailwindcss/genesis/index.cjs'
   ],
   daisyui: {
-    themes: ['forest']
+    themes: ['forest', 'lemonade']
   }
 }

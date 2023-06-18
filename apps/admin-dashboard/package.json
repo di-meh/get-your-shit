@@ -16,6 +16,8 @@
     "@nuxtjs/eslint-module": "^4.1.0",
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "^18",
+    "@vueuse/core": "^10.2.0",
+    "@vueuse/nuxt": "^10.2.0",
     "daisyui": "^3.1.0",
     "eslint": "^8.42.0",
     "nuxt": "^3.5.1"
@@ -27,7 +29,10 @@
     "@formkit/icons": "^0.17.2",
     "@formkit/nuxt": "^0.17.2",
     "@formkit/themes": "^0.17.2",
+    "@heroicons/vue": "^2.0.18",
     "@pinia/nuxt": "^0.4.11",
+    "@vueuse/integrations": "^10.2.0",
+    "jwt-decode": "^3.1.2",
     "pinia": "^2.1.4"
   }
 }

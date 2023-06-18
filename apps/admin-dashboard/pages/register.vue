@@ -102,7 +102,7 @@
                 type="password"
                 name="password_confirm"
                 label="Confirmation du mot de passe"
-                validation="required|confirmed:password"
+                validation="required|confirm"
                 input-class="input input-bordered input-primary w-full mt-2 w-full"
                 outer-class="w-full"
                 label-class="label label-text"
@@ -122,13 +122,29 @@
 <script setup>
 
 const isLoading = ref(false)
+const toast = useToast()
 async function register (credentials) {
   isLoading.value = true
-  return new Promise(resolve =>
-    setTimeout(() => {
-      resolve(console.log(credentials))
-      isLoading.value = false
-    }, 2000)
-  )
+  await useGatewayFetch('/demand/create', {
+    method: 'POST',
+    body: credentials,
+    onResponse (context) {
+      if (context.response.ok) {
+        toast.add({
+          title: 'Demande envoyée',
+          description: 'Votre demande a bien été envoyée, vous recevrez un mail de confirmation dans les prochaines heures.',
+          duration: 5000
+        })
+      }
+    },
+    onResponseError (context) {
+      toast.add({
+        title: 'Erreur',
+        description: context.error?.message ?? 'Une erreur est survenue lors de l\'envoi de votre demande, veuillez réessayer plus tard.',
+        duration: 5000
+      })
+    }
+  })
+  isLoading.value = false
 }
 </script>

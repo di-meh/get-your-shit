@@ -49,6 +49,7 @@
 </template>
 
 <script setup>
+import { login as loginUtil } from '~/utils/auth'
 
 const isLoading = ref(false)
 definePageMeta({
@@ -57,11 +58,7 @@ definePageMeta({
 
 async function login (credentials) {
   isLoading.value = true
-  return new Promise(resolve =>
-    setTimeout(() => {
-      resolve(console.log(credentials))
-      isLoading.value = false
-    }, 2000)
-  )
+  await loginUtil(credentials.email, credentials.password)
+  isLoading.value = false
 }
 </script>

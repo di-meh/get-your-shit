@@ -1,31 +1,36 @@
-import {IsNotEmpty, IsPhoneNumber, IsPostalCode, IsString, IsUUID} from "class-validator";
+import {
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsPostalCode,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateDemandDto {
+  @IsString()
+  @IsNotEmpty()
+  address: string;
 
-    @IsString()
-    @IsNotEmpty()
-    address: string;
+  @IsString()
+  @IsNotEmpty()
+  @IsPostalCode('FR')
+  postal_code: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @IsPostalCode("FR")
-    postal_code: string;
+  @IsString()
+  @IsNotEmpty()
+  city: string;
 
-    @IsString()
-    @IsNotEmpty()
-    city: string;
+  @IsString()
+  @IsPhoneNumber('FR')
+  @IsNotEmpty()
+  phone: string;
 
-    @IsString()
-    @IsPhoneNumber("FR")
-    @IsNotEmpty()
-    phone: string;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @IsString()
-    @IsNotEmpty()
-    name: string;
-
-    @IsString()
-    @IsNotEmpty()
-    @IsUUID()
-    userId: string;
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  userId: string;
 }

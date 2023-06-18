@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import {PrismaService} from "./prisma.service";
-import {CreateDemandDto} from "./dto/createDemand.dto";
+import { PrismaService } from './prisma.service';
+import { CreateDemandDto } from './dto/createDemand.dto';
 
 @Injectable()
 export class AppService {
@@ -10,6 +10,10 @@ export class AppService {
   }
 
   async create(data: CreateDemandDto) {
-    return await this.prismaService.demand.create({data});
+    return await this.prismaService.demand.create({ data });
+  }
+
+  async getAll() {
+    return await this.prismaService.demand.findMany();
   }
 }

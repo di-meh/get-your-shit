@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern } from '@nestjs/microservices';
-import {CreateDemandDto} from "./dto/createDemand.dto";
+import { CreateDemandDto } from './dto/createDemand.dto';
 
 @Controller()
 export class AppController {
@@ -14,6 +14,11 @@ export class AppController {
 
   @MessagePattern('demand-service:create')
   create(data: CreateDemandDto) {
-      return this.appService.create(data);
+    return this.appService.create(data);
+  }
+
+  @MessagePattern('demand-service:getAll')
+  getAll() {
+    return this.appService.getAll();
   }
 }
