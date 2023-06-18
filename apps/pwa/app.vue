@@ -6,8 +6,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import 'boxicons/css/boxicons.min.css'
+
 </script>
 
 

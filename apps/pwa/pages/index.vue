@@ -6,53 +6,69 @@ const router = useRouter()
 
 let restaurants = [
     {
-        name: "Pizza Hut - Sceaux",
+        name: "Pizza Hut",
+        location: "Sceaux",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - paris",
+        name: "Pizza Hut",
+        location: "Paris",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Boulogne",
+        name: "Pizza Hut",
+        location: "Boulogne",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Clamart",
+        name: "Pizza Hut",
+        location: "Clamart",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Clamart",
+        name: "Pizza Hut",
+        location: "Clamart",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Clamart",
+        name: "Pizza Hut",
+        location: "Clamart",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Clamart",
+        name: "Pizza Hut",
+        location: "Clamart",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
     {
-        name: "Pizza Hut - Clamart",
+        name: "Pizza Hut",
+        location: "Clamart",
         deliveryPrice: 4.99,
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
+    {
+        name: "Pizza Hut",
+        location: "Clamart",
+        deliveryPrice: 4.99,
+        deliveryTime: "35-50min",
+        image: "../images/PizzaHut-header-2280x900px.jpg"
+    },
+    
 
 ]
 
@@ -74,6 +90,21 @@ onMounted(() => {
         }
     }
 })
+
+// function findRestaurant() {
+//     let input = document.querySelector(".searchbar>div>input");
+//     let filter = input.value.toUpperCase();
+//     let restaurant = document.querySelectorAll(".restaurant>.card");
+//     for (let i = 0; i < restaurant.length; i++) {
+//         let name = restaurant[i].querySelector("p").id;
+//         let location = restaurant[i].querySelector("p").getAttribute("data");
+//         if (name.toUpperCase().indexOf(filter) > -1 || location.toUpperCase().indexOf(filter) > -1) {
+//             restaurant[i].style.display = "";
+//         } else {
+//             restaurant[i].style.display = "none";
+//         }
+//     }
+// }
 
 </script>
 
@@ -98,7 +129,7 @@ onMounted(() => {
             <div class="card" v-for="restaurant in restaurants">
                 <img :src="restaurant.image" alt="">
 
-                <p>{{ restaurant.name }}</p>
+                <p :id=restaurant.name :data=restaurant.location>{{ restaurant.name }} - {{ restaurant.location }}</p>
                 <p>{{ restaurant.deliveryPrice }}€ - {{ restaurant.deliveryTime }}</p>
 
             </div>

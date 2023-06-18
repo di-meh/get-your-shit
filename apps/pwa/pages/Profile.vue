@@ -69,8 +69,6 @@
 
 
 
-
-
 .first > .second {
     display: flex;
     justify-content: space-around;

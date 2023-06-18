@@ -1,5 +1,5 @@
 <template>
-    <h1>Paniers</h1>
+    <h1 id="title">Paniers</h1>
     <div class="content">
         <i class='bx bx-cart-alt'></i>
         <p>Ajoutez des articles pour commencer un panier</p>
@@ -16,6 +16,11 @@
 
 <style>
 
+h1#title {
+    padding-left: 1rem;
+    margin-top: 2rem;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -30,7 +35,7 @@
 }
 
 .content > p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -42,7 +47,7 @@
     padding: 1rem 2rem;
     background-color: black;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
 }
