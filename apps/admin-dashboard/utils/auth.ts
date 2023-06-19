@@ -2,7 +2,7 @@ import { useJwt } from '@vueuse/integrations/useJwt'
 
 export const authLogin = async (email: string, password: string) => {
   const toast = useToast()
-  await useGatewayFetch('/auth/login', {
+  return await useGatewayFetch('/auth/login', {
     method: 'POST',
     body: { email, password },
     onResponse (context) {
@@ -47,7 +47,7 @@ export const authLogin = async (email: string, password: string) => {
 
 export const authRegister = async (data: any) => {
   const toast = useToast()
-  await useGatewayFetch('/demand/create', {
+  return await useGatewayFetch('/demand/create', {
     method: 'POST',
     body: data,
     onResponse (context) {
@@ -77,5 +77,5 @@ export const authLogout = () => {
     title: 'Déconnexion réussie',
     description: 'Vous allez être redirigé vers la page de connexion'
   })
-  navigateTo('/login')
+  return navigateTo('/login')
 }

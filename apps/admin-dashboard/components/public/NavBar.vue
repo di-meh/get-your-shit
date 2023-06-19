@@ -23,4 +23,15 @@
   </nav>
 </template>
 <script setup lang="ts">
+import {useJwt} from "@vueuse/integrations/useJwt";
+
+const userRole = ref(null)
+
+const cookie = useCookie('token')
+if (cookie.value) {
+  const {payload} = useJwt(cookie.value)
+
+} else {
+  userRole.value = null
+}
 </script>

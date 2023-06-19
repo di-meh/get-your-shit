@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     '@nuxtjs/eslint-module',
     '@vueuse/nuxt'
   ],
+  pinia: {
+    autoImports: ['defineStore']
+  },
   devtools: {
     enabled: true
   },
