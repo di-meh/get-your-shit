@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { login as loginUtil } from '~/utils/auth'
+import { authLogin as loginUtil } from '~/utils/auth'
 
 const isLoading = ref(false)
 definePageMeta({

@@ -1,6 +1,6 @@
 import { useJwt } from '@vueuse/integrations/useJwt'
 
-export const login = async (email: string, password: string) => {
+export const authLogin = async (email: string, password: string) => {
   const toast = useToast()
   await useGatewayFetch('/auth/login', {
     method: 'POST',
@@ -45,7 +45,31 @@ export const login = async (email: string, password: string) => {
   })
 }
 
-export const logout = () => {
+export const authRegister = async (data: any) => {
+  const toast = useToast()
+  await useGatewayFetch('/demand/create', {
+    method: 'POST',
+    body: data,
+    onResponse (context) {
+      if (context.response.ok) {
+        toast.add({
+          title: 'Demande envoyée',
+          description: 'Votre demande a bien été envoyée, vous recevrez un mail de confirmation dans les prochaines heures.',
+          timeout: 5000
+        })
+      }
+    },
+    onResponseError (context) {
+      toast.add({
+        title: 'Erreur',
+        description: context.error?.message ?? 'Une erreur est survenue lors de l\'envoi de votre demande, veuillez réessayer plus tard.',
+        timeout: 5000
+      })
+    }
+  })
+}
+
+export const authLogout = () => {
   const toast = useToast()
   const cookie = useCookie('token')
   cookie.value = ''

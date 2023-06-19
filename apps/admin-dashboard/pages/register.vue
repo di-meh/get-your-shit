@@ -120,31 +120,12 @@
 </template>
 
 <script setup>
+import { authRegister } from '~/utils/auth'
 
 const isLoading = ref(false)
-const toast = useToast()
 async function register (credentials) {
   isLoading.value = true
-  await useGatewayFetch('/demand/create', {
-    method: 'POST',
-    body: credentials,
-    onResponse (context) {
-      if (context.response.ok) {
-        toast.add({
-          title: 'Demande envoyée',
-          description: 'Votre demande a bien été envoyée, vous recevrez un mail de confirmation dans les prochaines heures.',
-          duration: 5000
-        })
-      }
-    },
-    onResponseError (context) {
-      toast.add({
-        title: 'Erreur',
-        description: context.error?.message ?? 'Une erreur est survenue lors de l\'envoi de votre demande, veuillez réessayer plus tard.',
-        duration: 5000
-      })
-    }
-  })
+  await authRegister(credentials)
   isLoading.value = false
 }
 </script>

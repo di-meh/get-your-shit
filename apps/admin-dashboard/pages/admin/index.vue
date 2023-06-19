@@ -6,7 +6,8 @@
 
 <script setup>
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'admin'
 })
 onBeforeMount(() => {
   useHead({
