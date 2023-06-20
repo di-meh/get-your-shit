@@ -1,39 +1,40 @@
 import { useJwt } from '@vueuse/integrations/useJwt'
 
-export const authLogin = async (email: string, password: string) => {
+export const authLogin = (email: string, password: string) => {
   const toast = useToast()
-  return await useGatewayFetch('/auth/login', {
+  return useGatewayFetch('/auth/login', {
     method: 'POST',
     body: { email, password },
     onResponse (context) {
-      const token = context.response._data.access_token
-      const { payload } = useJwt(token)
-      const cookie = useCookie('token')
-      switch (payload.value.role) {
-        case 'ADMIN':
-          toast.add({
-            title: 'Connexion réussie',
-            description: 'Vous allez être redirigé vers votre espace admin'
-          })
-          cookie.value = token
-          navigateTo('/admin')
-          break
-        case 'CHIEF':
-          toast.add({
-            title: 'Connexion réussie',
-            description: 'Vous allez être redirigé vers votre espace chef'
-          })
-          cookie.value = token
-          navigateTo('/chief')
-          break
-        default:
-          toast.add({
-            title: 'Erreur',
-            description: "Vous n'avez pas les droits pour vous connecter"
-          })
-          break
+      if (context.response.ok) {
+        const token = context.response._data.access_token
+        const { payload } = useJwt(token)
+        const cookie = useCookie('token')
+        switch (payload.value.role) {
+          case 'ADMIN':
+            toast.add({
+              title: 'Connexion réussie',
+              description: 'Vous allez être redirigé vers votre espace admin'
+            })
+            cookie.value = token
+            navigateTo('/admin')
+            break
+          case 'CHIEF':
+            toast.add({
+              title: 'Connexion réussie',
+              description: 'Vous allez être redirigé vers votre espace chef'
+            })
+            cookie.value = token
+            navigateTo('/chief')
+            break
+          default:
+            toast.add({
+              title: 'Erreur',
+              description: "Vous n'avez pas les droits pour vous connecter"
+            })
+            break
+        }
       }
-
       // TODO: Faire du code plus propre
     },
     onResponseError (context) {
@@ -45,9 +46,9 @@ export const authLogin = async (email: string, password: string) => {
   })
 }
 
-export const authRegister = async (data: any) => {
+export const authRegister = (data: any) => {
   const toast = useToast()
-  return await useGatewayFetch('/demand/create', {
+  return useGatewayFetch('/demand/create', {
     method: 'POST',
     body: data,
     onResponse (context) {

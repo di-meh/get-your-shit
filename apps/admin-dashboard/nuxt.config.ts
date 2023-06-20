@@ -18,6 +18,9 @@ export default defineNuxtConfig({
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
     }
   },
+  eslint: {
+    lintOnStart: false
+  },
   colorMode: {
     dataValue: 'theme'
   }

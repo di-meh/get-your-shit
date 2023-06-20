@@ -1,7 +1,7 @@
 import { useJwt } from '@vueuse/integrations/useJwt'
 
 export default defineNuxtRouteMiddleware(() => {
-  if (process.server) return
+  if (process.server) { return }
   const cookie = useCookie('token')
   const toast = useToast()
   if (cookie.value) {
