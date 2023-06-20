@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
     modules: ['@vite-pwa/nuxt'],
+    css: ["bootstrap/dist/css/bootstrap.min.css"], // add bootstrap css
     pwa: {
         manifest: {
             name: 'Get Your Shit',
