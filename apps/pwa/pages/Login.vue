@@ -12,17 +12,30 @@
                 <input type="password" class="form-control" id="password" name="password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <p>Vous n'avez pas de compte ? <NuxtLink to="/register">Inscrivez-vous</NuxtLink></p>
+            <p>Vous n'avez pas de compte ? <NuxtLink to="/register">Inscrivez-vous</NuxtLink>
+            </p>
         </form>
     </div>
 </template>
 
 <script setup>
 
-function login(e) {
+async function login(e) {
     e.preventDefault();
+    const config = useRuntimeConfig()
+    const url = config.public.gatewayUrl // http://localhost:3000
     let form = new FormData(e.target);
-    console.log(form.get("email"), form.get("password"));
+    let email = form.get("email");
+    let password = form.get("password");
+
+    const data = await useFetch(url + '/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    })
+
 }
 
 </script>

@@ -21,5 +21,10 @@ export default defineNuxtConfig({
         devOptions: {
             enabled: true,
         },
-    }
+    },
+    runtimeConfig: {
+        public: {
+          gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
+        }
+      },
   })

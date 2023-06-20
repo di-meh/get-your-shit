@@ -1,8 +1,8 @@
 <template>
     <div class="login">
         <img src="../images/ubereats.png" />
-        <h1>Connexion</h1>
-        <form class="form" @submit="login($event)">
+        <h1>Inscription</h1>
+        <form class="form" @submit="register($event)">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" id="email" class="form-control" name="email" required>
@@ -40,7 +40,7 @@
 
 <script setup>
 
-async function login(e) {
+async function register(e) {
     e.preventDefault();
     let form = new FormData(e.target);
     let email = form.get("email");
@@ -60,7 +60,7 @@ async function login(e) {
             body: JSON.stringify({ email, username, password })
         });
 
-        
+
     }
 }
 
