@@ -68,8 +68,6 @@ let restaurants = [
         deliveryTime: "35-50min",
         image: "../images/PizzaHut-header-2280x900px.jpg"
     },
-    
-
 ]
 
 
@@ -90,21 +88,6 @@ onMounted(() => {
         }
     }
 })
-
-// function findRestaurant() {
-//     let input = document.querySelector(".searchbar>div>input");
-//     let filter = input.value.toUpperCase();
-//     let restaurant = document.querySelectorAll(".restaurant>.card");
-//     for (let i = 0; i < restaurant.length; i++) {
-//         let name = restaurant[i].querySelector("p").id;
-//         let location = restaurant[i].querySelector("p").getAttribute("data");
-//         if (name.toUpperCase().indexOf(filter) > -1 || location.toUpperCase().indexOf(filter) > -1) {
-//             restaurant[i].style.display = "";
-//         } else {
-//             restaurant[i].style.display = "none";
-//         }
-//     }
-// }
 
 </script>
 
