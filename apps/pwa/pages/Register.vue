@@ -1,44 +1,7 @@
-<template>
-    <div class="login">
-        <img src="../images/ubereats.png" />
-        <h1>Inscription</h1>
-        <form class="form" @submit="register($event)">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" name="email" required>
-                <div class="invalid-feedback">
-                    Veuillez saisir une adresse email valide.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="username" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-                <div class="invalid-feedback">
-                    Veuillez saisir un nom valide.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <div class="invalid-feedback">
-                    Veuillez saisir un mot de passe valide.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                <div class="invalid-feedback">
-                    Veuillez confirmer votre mot de passe.
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <p>Vous avez déjà un compte ? <NuxtLink to="/login">Connexion</NuxtLink>
-            </p>
-        </form>
-    </div>
-</template>
-
 <script setup>
+definePageMeta({
+    layout: false,
+});
 
 async function register(e) {
     e.preventDefault();
@@ -65,6 +28,50 @@ async function register(e) {
 }
 
 </script>
+
+<template>
+    <NuxtLayout name="empty">
+        <div class="login">
+            <img src="../images/ubereats.png" />
+            <h1>Inscription</h1>
+            <form class="form" @submit="register($event)">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" name="email" required>
+                    <div class="invalid-feedback">
+                        Veuillez saisir une adresse email valide.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                    <div class="invalid-feedback">
+                        Veuillez saisir un nom valide.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="invalid-feedback">
+                        Veuillez saisir un mot de passe valide.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    <div class="invalid-feedback">
+                        Veuillez confirmer votre mot de passe.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <p>Vous avez déjà un compte ? <NuxtLink to="/login">Connexion</NuxtLink>
+                </p>
+            </form>
+        </div>
+    </NuxtLayout>
+</template>
+
+
 
 <style>
 .login {

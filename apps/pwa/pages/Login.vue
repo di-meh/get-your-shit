@@ -1,44 +1,66 @@
-<template>
-    <div class="login">
-        <img src="../images/ubereats.png" />
-        <h1>Connexion</h1>
-        <form class="form" @submit="login($event)">
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" name="email">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <p>Vous n'avez pas de compte ? <NuxtLink to="/register">Inscrivez-vous</NuxtLink>
-            </p>
-        </form>
-    </div>
-</template>
-
 <script setup>
+import { useToast } from "vue-toastification";
+import { useAuthStore } from '~/stores/auth';
+
+definePageMeta({
+  layout: false,
+});
 
 async function login(e) {
     e.preventDefault();
+    const toast = useToast();
     const config = useRuntimeConfig()
+
     const url = config.public.gatewayUrl // http://localhost:3000
     let form = new FormData(e.target);
     let email = form.get("email");
     let password = form.get("password");
-
-    const data = await useFetch(url + '/auth/login', {
-        method: 'POST',
+    const data = await fetch(`${url}/auth/login`, {
+        method: "POST",
+        body: JSON.stringify({
+            email,
+            password,
+        }),
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
-    })
-
+    });
+    if (data.ok) {
+        const token = await data.json();
+        const authStore = useAuthStore();
+        authStore.setToken(token.access_token);
+        toast.success("Vous êtes connecté");
+        navigateTo('/')
+    } else {
+        toast.error("Une erreur est survenue");
+    }
 }
 
+
+
 </script>
+
+<template>
+    <NuxtLayout name="empty">
+        <div class="login">
+            <img src="../images/ubereats.png" />
+            <h1>Connexion</h1>
+            <form class="form" @submit="login($event)">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" name="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <p>Vous n'avez pas de compte ? <NuxtLink to="/register">Inscrivez-vous</NuxtLink>
+                </p>
+            </form>
+        </div>
+    </NuxtLayout>
+</template>
 
 <style>
 .login {
