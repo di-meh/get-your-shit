@@ -49,16 +49,17 @@
 </template>
 
 <script setup>
-import { authLogin as loginUtil } from '~/utils/auth'
+import { useUserStore } from '~/stores/user'
 
 const isLoading = ref(false)
+const userStore = useUserStore()
 definePageMeta({
   layout: false
 })
 
 async function login (credentials) {
   isLoading.value = true
-  await loginUtil(credentials.email, credentials.password)
+  await userStore.login(credentials.email, credentials.password)
   isLoading.value = false
 }
 </script>

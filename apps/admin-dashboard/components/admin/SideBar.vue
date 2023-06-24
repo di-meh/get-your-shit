@@ -103,7 +103,9 @@ import {
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
+import {useUserStore} from "~/stores/user";
 
+const userStore = useUserStore()
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
   { name: 'Utilisateurs', href: '/admin/users', icon: UsersIcon, current: false },
@@ -112,6 +114,6 @@ const navigation = [
 const sidebarOpen = ref(false)
 
 const logout = () => {
-  authLogout()
+  userStore.logout()
 }
 </script>
