@@ -123,6 +123,15 @@
 import { authRegister } from '~/utils/auth'
 
 const isLoading = ref(false)
+useHeadSafe({
+  title: 'Inscription',
+  meta: [
+    {
+      name: 'description',
+      content: 'Inscription'
+    }
+  ]
+})
 async function register (credentials) {
   isLoading.value = true
   await authRegister(credentials)

@@ -56,6 +56,15 @@ const userStore = useUserStore()
 definePageMeta({
   layout: false
 })
+useHeadSafe({
+  title: 'Connexion',
+  meta: [
+    {
+      name: 'description',
+      content: 'Connexion à votre compte restaurateur ou admin'
+    }
+  ]
+})
 
 async function login (credentials) {
   isLoading.value = true
