@@ -1,23 +1,25 @@
 import {
   Body,
-  Controller,
+  Controller, ForbiddenException,
   Get,
   Inject,
-  InternalServerErrorException,
-  Post,
+  InternalServerErrorException, Param, ParseUUIDPipe,
+  Post, Put, Request
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import {catchError, lastValueFrom, Observable} from 'rxjs';
 import { Public, Roles } from '../auth/auth.decorator';
 import { CreateDemandDto } from './dto/createDemand.dto';
 import { AuthService } from '../auth/auth.service';
 import { ROLE } from '@prisma/client';
+import {UserService} from "../user/user.service";
 
 @Controller('demand')
 export class DemandController {
   constructor(
     @Inject('DEMAND_SERVICE') private readonly client: ClientProxy,
     private readonly authService: AuthService,
+    private readonly userService: UserService
   ) {}
 
   @Public()
@@ -38,14 +40,12 @@ export class DemandController {
     if (!user) {
       throw new InternalServerErrorException('User could not be created');
     }
-    // Remove username, password and email from the DTO and add the user id
     const demandData = {
       userId: user.id,
       ...createDemandDto,
     };
     delete demandData.username;
     delete demandData.password;
-    delete demandData.email;
 
     return this.client.send('demand-service:create', demandData);
   }
@@ -54,5 +54,26 @@ export class DemandController {
   @Get()
   async getAll() {
     return this.client.send('demand-service:getAll', {});
+  }
+
+  @Roles('ADMIN')
+  @Put('accept/:id')
+  async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req)
+  {
+    const response = await lastValueFrom(
+        this.client.send('demand-service:accept',
+            { id, reviewerId: req.user.sub })
+            .pipe(catchError((error) => {
+                throw new ForbiddenException(error.message);
+            }))
+    );
+
+    // // @ts-ignore TODO: Chercher comment faire pour que le type soit bon
+    const user = await this.userService.verifyUser(response.userId);
+    if (!user) {
+      throw new InternalServerErrorException('User could not be verified');
+    }
+
+    return {response};
   }
 }

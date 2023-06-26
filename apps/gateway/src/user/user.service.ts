@@ -12,4 +12,27 @@ export class UserService {
       },
     });
   }
+
+  async findOneById(id: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findAll() {
+    return this.prisma.user.findMany();
+  }
+
+  async verifyUser(id: string) {
+    return this.prisma.user.update({
+        where: {
+            id,
+        },
+        data: {
+          verified: true,
+        }
+    });
+  }
 }

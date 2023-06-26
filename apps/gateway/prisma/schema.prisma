@@ -19,6 +19,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   role      ROLE     @default(USER)
+  verified  Boolean  @default(false)
 }
 
 enum ROLE {

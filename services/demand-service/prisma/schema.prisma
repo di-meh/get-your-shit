@@ -17,6 +17,7 @@ model Demand {
   phone       String
   postal_code String
   city        String
+  email       String
   userId      String
   reviewedBy  String?
   approved    Boolean  @default(false)

@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsNotEmpty,
   IsPhoneNumber,
   IsPostalCode,
@@ -28,6 +29,10 @@ export class CreateDemandDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
   @IsString()
   @IsNotEmpty()

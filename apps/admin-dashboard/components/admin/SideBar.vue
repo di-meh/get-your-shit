@@ -109,6 +109,7 @@ const userStore = useUserStore()
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
   { name: 'Utilisateurs', href: '/admin/users', icon: UsersIcon, current: false },
+  {name: 'Demandes', href: '/admin/demands', icon: FolderIcon, current: false},
 ]
 
 const sidebarOpen = ref(false)

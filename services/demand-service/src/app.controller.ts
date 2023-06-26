@@ -2,6 +2,8 @@ import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateDemandDto } from './dto/createDemand.dto';
+import {AcceptDemandDto} from "./dto/acceptDemand.dto";
+import {RejectDemandDto} from "./dto/rejectDemand.dto";
 
 @Controller()
 export class AppController {
@@ -21,4 +23,20 @@ export class AppController {
   getAll() {
     return this.appService.getAll();
   }
+
+  @MessagePattern('demand-service:getOne')
+  getOne(id: string) {
+    return this.appService.getOne(id);
+  }
+
+  @MessagePattern('demand-service:accept')
+  accept(data: AcceptDemandDto) {
+    return this.appService.accept(data);
+  }
+
+  @MessagePattern('demand-service:reject')
+  reject(data: RejectDemandDto) {
+    return this.appService.reject(data);
+  }
+
 }
