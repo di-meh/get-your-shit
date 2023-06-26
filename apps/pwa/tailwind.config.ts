@@ -1,0 +1,11 @@
+import type { Config } from 'tailwindcss'
+
+export default <Partial<Config>>{
+  plugins: [
+    require('daisyui')
+    // require('@formkit/themes/tailwindcss')
+  ],
+//   daisyui: {
+//     themes: ['forest', 'lemonade']
+//   }
+}

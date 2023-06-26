@@ -5,3 +5,4 @@ node_modules
 .nuxt
 .nitro
 .cache
+.pnpm-store
