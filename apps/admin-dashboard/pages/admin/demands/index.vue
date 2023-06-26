@@ -1,7 +1,7 @@
 <template>
     <h1 class="font-bold text-4xl mb-6">Demandes</h1>
     <span v-if="pending" class="loading loading-spinner loading-lg"></span>
-    <p v-else-if="!demands.length">Pas de demandes actuellement.</p>
+    <p v-else-if="!demands?.length">Pas de demandes actuellement.</p>
     <ul v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <li v-for="demand in demands" class="card bg-bases-100 shadow-xl">
         <div class="card-body">
@@ -27,15 +27,16 @@ definePageMeta(
     }
 )
 const {data: demands, pending, refresh} = useGatewayFetch('/demand')
+console.log('lol', demands)
 
 const acceptDemand = async (id) => {
   await useGatewayFetch(`/demand/${id}/accept`, {method: 'PUT'})
-  await refresh
+  refresh()
 }
 
 const refuseDemand = async (id) => {
   await useGatewayFetch(`/demand/${id}/reject`, {method: 'PUT'})
-  await refresh
+  refresh()
 }
 
 onBeforeMount(() => {

@@ -23,12 +23,6 @@ export class DemandController {
   ) {}
 
   @Public()
-  @Get('ping')
-  ping(): Observable<string> {
-    return this.client.send('demand-service:ping', 'demand');
-  }
-
-  @Public()
   @Post('create')
   async create(@Body() createDemandDto: CreateDemandDto) {
     const userData = {
@@ -47,13 +41,13 @@ export class DemandController {
     delete demandData.username;
     delete demandData.password;
 
-    return this.client.send('demand-service:create', demandData);
+    return this.client.send('demand-service:restaurant:create', demandData);
   }
 
   @Roles('ADMIN')
   @Get()
   async getAll() {
-    return this.client.send('demand-service:getAll', {});
+    return this.client.send('demand-service:restaurant:getAll', {});
   }
 
   @Roles('ADMIN')
@@ -61,7 +55,7 @@ export class DemandController {
   async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req)
   {
     const response = await lastValueFrom(
-        this.client.send('demand-service:accept',
+        this.client.send('demand-service:restaurant:accept',
             { id, reviewerId: req.user.sub })
             .pipe(catchError((error) => {
                 throw new InternalServerErrorException(error.message);
@@ -81,7 +75,7 @@ export class DemandController {
   @Put(':id/reject')
   async reject(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     const response = await lastValueFrom(
-        this.client.send('demand-service:reject',
+        this.client.send('demand-service:restaurant:reject',
             { id, reviewerId: req.user.sub })
             .pipe(catchError((error) => {
               throw new InternalServerErrorException(error.message);

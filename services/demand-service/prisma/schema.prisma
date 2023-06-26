@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Demand {
+model RestaurantDemand {
   id          String   @id @default(uuid())
   name        String
   address     String
