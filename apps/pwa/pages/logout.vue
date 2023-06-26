@@ -14,8 +14,8 @@ setTimeout(() => {
 
 <template>
     <div class="loading-logout">
-        <span class="loading loading-spinner loading-lg"></span>
-    <h1>Déconnexion</h1>
+        <span class="loading loading-spinner loading-lg  bg-neutral"></span>
+    <h1 >Déconnexion</h1>
     </div>
 </template>
 

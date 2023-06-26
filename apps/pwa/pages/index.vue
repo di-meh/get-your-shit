@@ -96,7 +96,7 @@ const search = () => {
       </div>
     </div>
     <div class="searchbar">
-      <div>
+      <div class="bg-neutral">
         <i class='bx bx-search'></i>
         <input type="text" @input="search()" placeholder="Rechercher un restaurant...">
       </div>
@@ -131,7 +131,6 @@ const search = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #18342B;
   border-radius: 1rem;
   padding-left: 1rem;
   width: 90%;

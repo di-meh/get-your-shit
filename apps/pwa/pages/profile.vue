@@ -13,8 +13,10 @@
             <p>Favoris</p>
         </div>
         <div class="bg-neutral">
-            <i class='bx bx-credit-card'></i>
-            <p>Cartes</p>
+            <NuxtLink to="/paymentmethods">
+                <i class='bx bx-credit-card'></i>
+                <p>Cartes</p>
+            </NuxtLink>
         </div>
         <div class="bg-neutral">
             <i class='bx bx-cart'></i>
@@ -237,6 +239,4 @@
         font-size: 1.5rem;
     }
 }
-
-
 </style>

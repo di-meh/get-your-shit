@@ -7,97 +7,97 @@
     <div class="container">
         <h3>Meilleures catégories</h3>
         <div class="cats">
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-pizza'></i>
                 </div>
                 <p>Pizza</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-coffee'></i>
                 </div>
                 <p>Café</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-cookie'></i>
                 </div>
                 <p>Desserts</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-baguette'></i>
                 </div>
                 <p>Burgers</p>
             </div>
-            <div>
+            <div class="bg-neutral"> 
                 <div>
                     <i class='bx bxs-pizza'></i>
                 </div>
                 <p>Pizza</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-coffee'></i>
                 </div>
                 <p>Café</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-cookie'></i>
                 </div>
                 <p>Desserts</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-baguette'></i>
                 </div>
                 <p>Burgers</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-pizza'></i>
                 </div>
                 <p>Pizza</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-coffee'></i>
                 </div>
                 <p>Café</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-cookie'></i>
                 </div>
                 <p>Desserts</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-baguette'></i>
                 </div>
                 <p>Burgers</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-pizza'></i>
                 </div>
                 <p>Pizza</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-coffee'></i>
                 </div>
                 <p>Café</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bx-cookie'></i>
                 </div>
                 <p>Desserts</p>
             </div>
-            <div>
+            <div class="bg-neutral">
                 <div>
                     <i class='bx bxs-baguette'></i>
                 </div>
@@ -127,7 +127,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #18342B;
     border-radius: 1rem;
     padding: 1em;
     width: -webkit-fill-available;
