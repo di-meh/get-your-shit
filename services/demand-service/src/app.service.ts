@@ -44,10 +44,10 @@ export class AppService {
   async reject(data: RejectDemandDto) {
     const demand = await this.getOne(data.id);
     if (!demand) {
-      throw new RpcException( new NotFoundException('Demand not found'));
+      throw new RpcException('Demand not found');
     }
     if (demand.approved || demand.reviewedBy !== null) {
-      throw new RpcException(new ForbiddenException('Demand already reviewed'));
+      throw new RpcException('Demand already reviewed');
     }
     return await this.prismaService.demand.update({
         where: { id: data.id },

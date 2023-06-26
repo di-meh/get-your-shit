@@ -57,14 +57,34 @@ export class DemandController {
   }
 
   @Roles('ADMIN')
-  @Put('accept/:id')
+  @Put(':id/accept')
   async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req)
   {
     const response = await lastValueFrom(
         this.client.send('demand-service:accept',
             { id, reviewerId: req.user.sub })
             .pipe(catchError((error) => {
-                throw new ForbiddenException(error.message);
+                throw new InternalServerErrorException(error.message);
+            }))
+    );
+
+    // // @ts-ignore TODO: Chercher comment faire pour que le type soit bon
+    const user = await this.userService.verifyUser(response.userId);
+    if (!user) {
+      throw new InternalServerErrorException('User could not be verified');
+    }
+
+    return {response};
+  }
+
+  @Roles('ADMIN')
+  @Put(':id/reject')
+  async reject(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+    const response = await lastValueFrom(
+        this.client.send('demand-service:reject',
+            { id, reviewerId: req.user.sub })
+            .pipe(catchError((error) => {
+              throw new InternalServerErrorException(error.message);
             }))
     );
 

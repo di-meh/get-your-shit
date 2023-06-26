@@ -11,8 +11,8 @@
           <p>{{ demand.postal_code }}</p>
           <p>{{ demand.city }}</p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary">Accepter</button>
-            <button class="btn btn-secondary">Refuser</button>
+            <button @click="acceptDemand(demand.id)" class="btn btn-primary">Accepter</button>
+            <button @click="refuseDemand(demand.id)" class="btn btn-secondary">Refuser</button>
           </div>
         </div>
       </li>
@@ -26,7 +26,18 @@ definePageMeta(
       middleware: 'admin'
     }
 )
-const {data: demands, pending} = useGatewayFetch('/demand')
+const {data: demands, pending, refresh} = useGatewayFetch('/demand')
+
+const acceptDemand = async (id) => {
+  await useGatewayFetch(`/demand/${id}/accept`, {method: 'PUT'})
+  await refresh
+}
+
+const refuseDemand = async (id) => {
+  await useGatewayFetch(`/demand/${id}/reject`, {method: 'PUT'})
+  await refresh
+}
+
 onBeforeMount(() => {
   useHead({
     htmlAttrs: {
