@@ -5,7 +5,7 @@ export default <Partial<Config>>{
     require('daisyui')
     // require('@formkit/themes/tailwindcss')
   ],
-//   daisyui: {
-//     themes: ['forest', 'lemonade']
-//   }
+  daisyui: {
+    themes: ['forest', 'lemonade']
+  }
 }
