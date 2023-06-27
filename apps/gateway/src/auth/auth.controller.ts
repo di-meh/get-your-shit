@@ -1,12 +1,8 @@
-import { Body, Controller, Get, Inject, Request, Post } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { Body, Controller, Get, Request, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { Public } from './auth.decorator';
-import { ROLE } from '@prisma/client';
-import {UserService} from "../user/user.service";
 
 @Controller('auth')
 export class AuthController {

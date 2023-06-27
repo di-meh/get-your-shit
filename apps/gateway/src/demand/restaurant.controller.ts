@@ -1,25 +1,29 @@
 import {
   Body,
-  Controller, ForbiddenException,
+  Controller,
   Get,
   Inject,
-  InternalServerErrorException, Param, ParseUUIDPipe,
-  Post, Put, Request
+  InternalServerErrorException,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+  Request,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import {catchError, lastValueFrom, Observable} from 'rxjs';
+import { catchError, lastValueFrom } from 'rxjs';
 import { Public, Roles } from '../auth/auth.decorator';
 import { CreateDemandDto } from './dto/createDemand.dto';
 import { AuthService } from '../auth/auth.service';
 import { ROLE } from '@prisma/client';
-import {UserService} from "../user/user.service";
+import { UserService } from '../user/user.service';
 
 @Controller('demand/restaurant')
 export class RestaurantDemandController {
   constructor(
     @Inject('DEMAND_SERVICE') private readonly client: ClientProxy,
     private readonly authService: AuthService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
 
   @Public()
@@ -52,14 +56,18 @@ export class RestaurantDemandController {
 
   @Roles('ADMIN')
   @Put(':id/accept')
-  async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req)
-  {
+  async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     const response = await lastValueFrom(
-        this.client.send('demand-service:restaurant:accept',
-            { id, reviewerId: req.user.sub })
-            .pipe(catchError((error) => {
-                throw new InternalServerErrorException(error.message);
-            }))
+      this.client
+        .send('demand-service:restaurant:accept', {
+          id,
+          reviewerId: req.user.sub,
+        })
+        .pipe(
+          catchError((error) => {
+            throw new InternalServerErrorException(error.message);
+          }),
+        ),
     );
 
     // // @ts-ignore TODO: Chercher comment faire pour que le type soit bon
@@ -68,18 +76,23 @@ export class RestaurantDemandController {
       throw new InternalServerErrorException('User could not be verified');
     }
 
-    return {response};
+    return { response };
   }
 
   @Roles('ADMIN')
   @Put(':id/reject')
   async reject(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     const response = await lastValueFrom(
-        this.client.send('demand-service:restaurant:reject',
-            { id, reviewerId: req.user.sub })
-            .pipe(catchError((error) => {
-              throw new InternalServerErrorException(error.message);
-            }))
+      this.client
+        .send('demand-service:restaurant:reject', {
+          id,
+          reviewerId: req.user.sub,
+        })
+        .pipe(
+          catchError((error) => {
+            throw new InternalServerErrorException(error.message);
+          }),
+        ),
     );
 
     // // @ts-ignore TODO: Chercher comment faire pour que le type soit bon
@@ -88,6 +101,6 @@ export class RestaurantDemandController {
       throw new InternalServerErrorException('User could not be verified');
     }
 
-    return {response};
+    return { response };
   }
 }

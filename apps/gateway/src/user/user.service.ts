@@ -27,12 +27,12 @@ export class UserService {
 
   async verifyUser(id: string) {
     return this.prisma.user.update({
-        where: {
-            id,
-        },
-        data: {
-          verified: true,
-        }
+      where: {
+        id,
+      },
+      data: {
+        verified: true,
+      },
     });
   }
 }

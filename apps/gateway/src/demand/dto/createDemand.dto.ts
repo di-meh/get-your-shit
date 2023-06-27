@@ -1,10 +1,8 @@
 import {
-  IsEmail,
   IsNotEmpty,
   IsPhoneNumber,
   IsPostalCode,
   IsString,
-  IsStrongPassword,
 } from 'class-validator';
 import { RegisterUserDto } from '../../auth/dto/registerUser.dto';
 
