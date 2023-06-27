@@ -41,11 +41,14 @@ services:
       target: development
     ports:
       - ${PWA_PORT-3001}:3000
+      - 24678:24678
     volumes:
       - ./apps/pwa:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - gateway
+    environment:
+      NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
 
   admin-dashboard:
     container_name: admin-dashboard
