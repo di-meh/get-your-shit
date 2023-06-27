@@ -1,42 +1,50 @@
 <template>
-    <form>
-        <div class="cardNum">
-            <label for="cardNumber">Numéro de carte</label>
-            <div class="bg-neutral">
-                <i class='bx bxs-credit-card'></i>
-                <input type="text" id="cardNumber">
-            </div>
-        </div>
-
-        <div class="second">
-            <div class="cardExp">
-                <label for="cardExpiry">Date d'exp.</label>
-                <div class="bg-neutral mr-2">
-                    <input  type="text" id="cardExpiry" placeholder="MM/AA">
-                    <i class='bx bxs-help-circle'></i>
-                </div>
-            </div>
-            <div class="cardCvc">
-                <label for="cardCVC">Code de sécurité</label>
+    <div class="cardMethod">
+        <form>
+            <div class="cardNum">
+                <label for="cardNumber">Numéro de carte</label>
                 <div class="bg-neutral">
-                    <input type="text" id="cardCVC" placeholder="123">
-                    <i class='bx bxs-help-circle'></i>
+                    <i class='bx bxs-credit-card'></i>
+                    <input type="text" id="cardNumber">
                 </div>
             </div>
-        </div>
-        <div class="CarNa">
-            <label for="cardName">Nom de la carte</label>
-            <input type="text" class="bg-neutral" id="cardName" placeholder="P.ex.: John Doe">
 
-        </div>
-        <button type="submit" class="btn btn-neutral">Ajouter</button>
-    </form>
+            <div class="second">
+                <div class="cardExp">
+                    <label for="cardExpiry">Date d'exp.</label>
+                    <div class="bg-neutral mr-2">
+                        <input type="text" id="cardExpiry" placeholder="MM/AA">
+                        <i class='bx bxs-help-circle'></i>
+                    </div>
+                </div>
+                <div class="cardCvc">
+                    <label for="cardCVC">Code de sécurité</label>
+                    <div class="bg-neutral">
+                        <input type="text" id="cardCVC" placeholder="123">
+                        <i class='bx bxs-help-circle'></i>
+                    </div>
+                </div>
+            </div>
+            <div class="CarNa">
+                <label for="cardName">Nom de la carte</label>
+                <input type="text" class="bg-neutral" id="cardName" placeholder="P.ex.: John Doe">
+
+            </div>
+            <button type="submit" class="btn btn-neutral">Ajouter</button>
+        </form>
+    </div>
 </template>
 
 <style scoped>
+.cardMethod {
+    display: flex;
+    justify-content: center;
+}
+
 form {
     padding: 2em;
 }
+
 .cardNum {
     display: flex;
     flex-direction: column;
@@ -75,7 +83,7 @@ form {
     justify-content: space-between;
 }
 
-.second > div {
+.second>div {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;

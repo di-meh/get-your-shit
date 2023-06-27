@@ -37,3 +37,9 @@ export default {
 };
 </script>
 
+<style scoped>
+.btm-nav > *:where(.active) {
+  background-color: #222;
+}
+</style>
+
