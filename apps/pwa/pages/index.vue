@@ -1,87 +1,24 @@
 <script setup>
+await nextTick();
 
-let restaurants = [
-  {
-    name: "Pizza Hut",
-    location: "Sceaux",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Paris",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Boulogne",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-]
+const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
 
 // search bar function
 const search = () => {
-  let input = document.querySelector('input')
-  let filter = input.value.toUpperCase()
-  let cards = document.querySelectorAll('.card')
+  // let input = document.querySelector('input')
+  // let filter = input.value.toUpperCase()
+  // let cards = document.querySelectorAll('.card')
 
-  for (let i = 0; i < cards.length; i++) {
-    let p = cards[i].getElementsByTagName('p')[0]
-    let txtValue = p.textContent || p.innerText
+  // for (let i = 0; i < cards.length; i++) {
+  //   let p = cards[i].getElementsByTagName('p')[0]
+  //   let txtValue = p.textContent || p.innerText
 
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      cards[i].style.display = ""
-    } else {
-      cards[i].style.display = "none"
-    }
-  }
+  //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
+  //     cards[i].style.display = ""
+  //   } else {
+  //     cards[i].style.display = "none"
+  //   }
+  // }
 }
 
 </script>
@@ -103,18 +40,19 @@ const search = () => {
     </div>
     <div class="restaurant">
       <div class="card" v-for="restaurant in restaurants">
-        <img :src="restaurant.image" alt="">
-        <span>
-          <p :id=restaurant.name :data=restaurant.location>{{ restaurant.name }} - {{ restaurant.location }}</p>
-          <p>{{ restaurant.deliveryPrice }}€ - {{ restaurant.deliveryTime }}</p>
-        </span>
+        <NuxtLink :to="`/restaurant/${restaurant.id}`" class="links">
+          <span>
+            <p :id=restaurant.name>{{ restaurant.name }}</p>
+            <p>{{ restaurant.address }}, {{ restaurant.city }}</p>
+          </span>
+        </NuxtLink>
+
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-
 .container {
   max-width: 100%;
 }
@@ -166,22 +104,22 @@ const search = () => {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-
   width: 90%;
   border-radius: 1rem;
 }
 
-.restaurant>.card>img {
-  width: 100%;
-  border-radius: 1rem;
-}
-
-.restaurant>.card>span {
+.restaurant>.card > .links >span {
   display: flex;
+  
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 0.5rem 1rem;
 }
+
+
+
+
+
 
 
 /* tablet */
@@ -221,10 +159,6 @@ const search = () => {
     width: 50%;
   }
 
-  .restaurant>.card>img {
-    width: 30%;
-    border-radius: 1rem;
-  }
 
   .restaurant>.card>span {
     display: flex;
@@ -234,23 +168,6 @@ const search = () => {
     padding: 0.5rem 1rem;
   }
 
-  .restaurant>.card>span>p:first-child {
-    font-size: 1.2rem;
-  }
-
-  .restaurant>.card>span>p:last-child {
-    font-size: 1rem;
-  }
-
-  .restaurant>.card>span>p:last-child:before {
-    content: "•";
-    margin-right: 0.5rem;
-  }
-
-  .restaurant>.card>span>p:last-child:after {
-    content: "•";
-    margin-left: 0.5rem;
-  }
 
 
 }

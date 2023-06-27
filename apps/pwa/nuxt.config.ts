@@ -62,8 +62,13 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  build:{
+  build: {
     // vue-toastification - old commonjs module 
     transpile: ['vue-toastification'],
+  },
+  runtimeConfig: {
+    public: {
+      gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
+    }
   },
 })

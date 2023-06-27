@@ -8,4 +8,12 @@ export class AppService {
   create(data: CreateRestaurantDto) {
     return this.prismaService.restaurant.create({ data });
   }
+
+  getAll() {
+    return this.prismaService.restaurant.findMany();
+  }
+
+  getById(id: string) {
+    return this.prismaService.restaurant.findUnique({ where: { id }});
+  }
 }
