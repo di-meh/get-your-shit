@@ -48,7 +48,7 @@ export const authLogin = (email: string, password: string) => {
 
 export const authRegister = (data: any) => {
   const toast = useToast()
-  return useGatewayFetch('/demand/create', {
+  return useGatewayFetch('/demand/restaurant', {
     method: 'POST',
     body: data,
     onResponse (context) {

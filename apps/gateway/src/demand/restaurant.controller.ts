@@ -14,8 +14,8 @@ import { AuthService } from '../auth/auth.service';
 import { ROLE } from '@prisma/client';
 import {UserService} from "../user/user.service";
 
-@Controller('demand')
-export class DemandController {
+@Controller('demand/restaurant')
+export class RestaurantDemandController {
   constructor(
     @Inject('DEMAND_SERVICE') private readonly client: ClientProxy,
     private readonly authService: AuthService,
@@ -23,7 +23,7 @@ export class DemandController {
   ) {}
 
   @Public()
-  @Post('create')
+  @Post()
   async create(@Body() createDemandDto: CreateDemandDto) {
     const userData = {
       email: createDemandDto.email,

@@ -26,16 +26,16 @@ definePageMeta(
       middleware: 'admin'
     }
 )
-const {data: demands, pending, refresh} = useGatewayFetch('/demand')
+const {data: demands, pending, refresh} = useGatewayFetch('/demand/restaurant')
 console.log('lol', demands)
 
 const acceptDemand = async (id) => {
-  await useGatewayFetch(`/demand/${id}/accept`, {method: 'PUT'})
+  await useGatewayFetch(`/demand/restaurant/${id}/accept`, {method: 'PUT'})
   refresh()
 }
 
 const refuseDemand = async (id) => {
-  await useGatewayFetch(`/demand/${id}/reject`, {method: 'PUT'})
+  await useGatewayFetch(`/demand/restaurant/${id}/reject`, {method: 'PUT'})
   refresh()
 }
 

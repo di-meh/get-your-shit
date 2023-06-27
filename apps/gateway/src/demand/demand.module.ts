@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DemandController } from './demand.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthModule } from '../auth/auth.module';
 import {UserModule} from "../user/user.module";
+import {DriverDemandController} from "./driver.controller";
+import {RestaurantDemandController} from "./restaurant.controller";
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import {UserModule} from "../user/user.module";
     AuthModule,
     UserModule
   ],
-  controllers: [DemandController],
+  controllers: [RestaurantDemandController, DriverDemandController],
 })
 export class DemandModule {}
