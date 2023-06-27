@@ -20,5 +20,12 @@ export default defineNuxtConfig({
   },
   colorMode: {
     dataValue: 'theme'
+  },
+  vite: {
+    server: {
+      hmr: {
+        port: 24679
+      }
+    }
   }
 })

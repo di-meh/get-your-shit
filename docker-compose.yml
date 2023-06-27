@@ -57,7 +57,7 @@ services:
       target: development
     ports:
       - ${ADMIN_DASHBOARD_PORT-3002}:3000
-      - "24678:24678"
+      - "24679:24679"
     volumes:
       - ./apps/admin-dashboard:/home/node/app
       - /home/node/app/node_modules
