@@ -20,7 +20,7 @@ export default function useGatewayFetch<T> (url: string, options: UseFetchOption
             description: 'Veuillez vous reconnecter'
           })
           navigateTo('/login')
-        } else {
+        } else if (response.status === 304) {
           toast.add({
             title: 'Une erreur s\'est produite',
             description: error?.message ?? 'Veuillez réessayer'

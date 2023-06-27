@@ -21,7 +21,9 @@ import { UserService } from '../user/user.service';
 @Controller('demand/restaurant')
 export class RestaurantDemandController {
   constructor(
-    @Inject('DEMAND_SERVICE') private readonly client: ClientProxy,
+    @Inject('DEMAND_SERVICE') private readonly demandClient: ClientProxy,
+    @Inject('RESTAURANT_SERVICE')
+    private readonly restaurantClient: ClientProxy,
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {}
@@ -45,20 +47,23 @@ export class RestaurantDemandController {
     delete demandData.username;
     delete demandData.password;
 
-    return this.client.send('demand-service:restaurant:create', demandData);
+    return this.demandClient.send(
+      'demand-service:restaurant:create',
+      demandData,
+    );
   }
 
   @Roles('ADMIN')
   @Get()
   async getAll() {
-    return this.client.send('demand-service:restaurant:getAll', {});
+    return this.demandClient.send('demand-service:restaurant:getAll', {});
   }
 
   @Roles('ADMIN')
   @Put(':id/accept')
   async accept(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     const response = await lastValueFrom(
-      this.client
+      this.demandClient
         .send('demand-service:restaurant:accept', {
           id,
           reviewerId: req.user.sub,
@@ -76,14 +81,35 @@ export class RestaurantDemandController {
       throw new InternalServerErrorException('User could not be verified');
     }
 
-    return { response };
+    const restaurantData = {
+      name: response.name,
+      address: response.address,
+      phone: response.phone,
+      postal_code: response.postal_code,
+      city: response.city,
+      ownerId: response.userId,
+    };
+    const restaurantResponse = await lastValueFrom(
+      this.restaurantClient
+        .send('restaurant-service:create', restaurantData)
+        .pipe(
+          catchError((error) => {
+            throw new InternalServerErrorException(error.message);
+          }),
+        ),
+    );
+    if (!restaurantResponse) {
+      throw new InternalServerErrorException('Restaurant could not be created');
+    }
+
+    return { response, restaurantResponse };
   }
 
   @Roles('ADMIN')
   @Put(':id/reject')
   async reject(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     const response = await lastValueFrom(
-      this.client
+      this.demandClient
         .send('demand-service:restaurant:reject', {
           id,
           reviewerId: req.user.sub,

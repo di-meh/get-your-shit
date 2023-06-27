@@ -126,6 +126,7 @@ services:
     environment:
       APP_PORT: ${RESTAURANT_PORT-4004}
       APP_HOST: restaurant
+      DATABASE_URL: ${RESTAURANT_DATABASE_URL}
 
   shipping:
     container_name: shipping

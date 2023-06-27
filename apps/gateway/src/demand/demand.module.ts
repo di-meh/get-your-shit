@@ -16,6 +16,14 @@ import { RestaurantDemandController } from './restaurant.controller';
           port: parseInt(process.env.DEMAND_SERVICE_PORT || '3000'),
         },
       },
+      {
+        name: 'RESTAURANT_SERVICE',
+        transport: Transport.TCP,
+        options: {
+          host: process.env.RESTAURANT_SERVICE_HOST || '',
+          port: parseInt(process.env.RESTAURANT_SERVICE_PORT || '3000'),
+        },
+      },
     ]),
     AuthModule,
     UserModule,
