@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "boxicons": "^2.1.4",
+    "defu": "^6.1.2",
     "vue-toastification": "2.0.0-rc.5"
   }
 }
