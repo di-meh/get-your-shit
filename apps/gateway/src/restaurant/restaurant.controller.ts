@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put } from '@nestjs/common';
-=======
-import { Controller, Get, Inject, Post, Body, Put, Param } from '@nestjs/common';
->>>>>>> feature/app/paymentMethods
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
@@ -10,8 +6,6 @@ import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { Observable } from 'rxjs';
-import { ParseUUIDPipe } from '@nestjs/common';
-
 @Controller('restaurant')
 export class RestaurantController {
   constructor(
@@ -23,10 +17,6 @@ export class RestaurantController {
     return this.client.send('restaurant-service:create', data);
   }
 
-  @Get(':id')
-  getById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.client.send('restaurant-service:getById', id);
-  }
 
   @Get()
   getRestaurant() {
@@ -37,9 +27,10 @@ export class RestaurantController {
   createProduct(@Body() data: CreateProductDto) {
     return this.client.send('restaurant-service:createProduct', data);
   }
-
+  
   @Get('products')
   getProducts() {
+    console.log('test');
     return this.client.send('restaurant-service:getProducts', {});
   }
 
@@ -61,6 +52,11 @@ export class RestaurantController {
   @Put('categories/:id')
   updateCategoryProduct(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateCategoryProductDto) {
     return this.client.send('restaurant-service:updateCategoryProduct', { id, ...data });
+  }
+
+  @Get(':id')
+  getById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:getById', id);
   }
 
 

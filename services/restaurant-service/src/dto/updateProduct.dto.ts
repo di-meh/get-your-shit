@@ -10,14 +10,14 @@ import {
 } from 'class-validator';
 
 export class UpdateProductDto {
-    @IsUUID()
+    @IsString()
     @IsDefined()
     @IsNotEmpty()
     id: string;
 
+
     @IsString()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     name: string;
 
     @IsString()
@@ -25,13 +25,11 @@ export class UpdateProductDto {
     description?: string;
 
     @IsNumber()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     price: number;
 
     @IsString()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID()
     categoryId: string;
 

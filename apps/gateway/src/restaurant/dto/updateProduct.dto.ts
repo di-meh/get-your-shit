@@ -11,8 +11,7 @@ import {
 
 export class UpdateProductDto {
     @IsString()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     name: string;
 
     @IsString()
@@ -20,13 +19,11 @@ export class UpdateProductDto {
     description?: string;
 
     @IsNumber()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     price: number;
 
     @IsString()
-    @IsDefined()
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID()
     categoryId: string;
 
