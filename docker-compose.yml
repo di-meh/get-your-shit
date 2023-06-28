@@ -33,6 +33,7 @@ services:
       RESTAURANT_SERVICE_PORT: ${RESTAURANT_PORT-4004}
       SHIPPING_SERVICE_HOST: shipping
       SHIPPING_SERVICE_PORT: ${SHIPPING_PORT-4005}
+      SMTP_URL: ${SMTP_URL}
 
   pwa:
     container_name: pwa

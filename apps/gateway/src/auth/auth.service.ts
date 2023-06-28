@@ -9,12 +9,14 @@ import { RegisterUserDto } from './dto/registerUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ROLE } from '@prisma/client';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     private jwtService: JwtService,
+    private readonly mailerService: MailerService
   ) {}
 
   async register(registerDto: RegisterUserDto, role: ROLE = ROLE.USER) {
@@ -64,4 +66,16 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
+  async verify() {
+    return this.mailerService
+        .sendMail({
+          to: 'mahewit638@fitwl.com', // list of receivers
+          subject: 'Testing Nest MailerModule ✔', // Subject line
+          text: 'welcome', // plaintext body
+          html: '<b>welcome</b>', // HTML body content
+        })
+        .then(() => 'ok')
+        .catch((error) => error);
+  }
+
 }

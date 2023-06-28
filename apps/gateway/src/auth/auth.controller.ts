@@ -24,4 +24,11 @@ export class AuthController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @Public()
+  @Get('verify')
+  verify(@Request() req) {
+    return this.authService.verify();
+
+  }
 }
