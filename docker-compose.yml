@@ -64,7 +64,7 @@ services:
     depends_on:
       - gateway
     environment:
-      NUXT_PUBLIC_GATEWAY_URL: http://localhost:${GATEWAY_PORT-3000}
+      NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
 
   # SERVICES
   demand:
