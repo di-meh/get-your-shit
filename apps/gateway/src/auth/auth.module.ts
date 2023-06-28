@@ -7,6 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { AuthService } from './auth.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
+import {MailService} from "../mail/mail.service";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthGuard } from './auth.guard';
   providers: [
     AuthService,
     PrismaService,
+    MailService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Request, Post } from '@nestjs/common';
+import {Body, Controller, Get, Request, Post, Param} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { Public } from './auth.decorator';
+import {VerifyEmailDto} from "./dto/verifyEmail.dto";
 
 @Controller('auth')
 export class AuthController {
@@ -20,15 +21,14 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @Public()
+  @Post('verify')
+  verify(@Body() data: VerifyEmailDto) {
+    return this.authService.verify(data.hash);
+  }
+
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
-  }
-
-  @Public()
-  @Get('verify')
-  verify(@Request() req) {
-    return this.authService.verify();
-
   }
 }

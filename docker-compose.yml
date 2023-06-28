@@ -15,10 +15,10 @@ services:
     depends_on:
       - postgres
       - demand
-      - order
-      - payment
-      - restaurant
-      - shipping
+#      - order
+#      - payment
+#      - restaurant
+#      - shipping
     environment:
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: ${AUTH_USER_DATABASE_URL}
@@ -34,6 +34,7 @@ services:
       SHIPPING_SERVICE_HOST: shipping
       SHIPPING_SERVICE_PORT: ${SHIPPING_PORT-4005}
       SMTP_URL: ${SMTP_URL}
+      GATEWAY_PWA_URL: ${GATEWAY_PWA_URL}
 
   pwa:
     container_name: pwa
@@ -46,10 +47,12 @@ services:
     volumes:
       - ./apps/pwa:/home/node/app
       - /home/node/app/node_modules
+      - /home/node/app/.pnpm-store
     depends_on:
       - gateway
     environment:
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
+      NUXT_PUBLIC_SERVER_GATEWAY_URL: ${NUXT_PUBLIC_SERVER_GATEWAY_URL}
 
   admin-dashboard:
     container_name: admin-dashboard
