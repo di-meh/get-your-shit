@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put } from '@nestjs/common';
+=======
+import { Controller, Get, Inject, Post, Body, Put, Param } from '@nestjs/common';
+>>>>>>> feature/app/paymentMethods
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
@@ -6,6 +10,7 @@ import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { Observable } from 'rxjs';
+import { ParseUUIDPipe } from '@nestjs/common';
 
 @Controller('restaurant')
 export class RestaurantController {
