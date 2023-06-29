@@ -13,4 +13,12 @@ export class MailService {
             text: `Veuillez cliquer sur le lien ci-après pour vérifier votre compte: ${process.env.GATEWAY_PWA_URL}/api/verify-email/${mailData.data.hash}` ,
         })
     }
+
+    async sendForgotPasswordMail(mailData: MailData<{hash: string}>) {
+        await this.mailerService.sendMail({
+            to: mailData.to,
+            subject: 'Réinitialisation de votre mot de passe',
+            text: `Veuillez cliquer sur le lien ci-après pour réinitialiser votre mot de passe: ${process.env.GATEWAY_PWA_URL}/api/reset-password/${mailData.data.hash}` ,
+        });
+    }
 }

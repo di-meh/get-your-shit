@@ -1,7 +1,8 @@
 import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+    UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -12,6 +13,7 @@ import { ROLE } from '@prisma/client';
 import { randomStringGenerator } from "@nestjs/common/utils/random-string-generator.util";
 import * as crypto from 'crypto';
 import {MailService} from "../mail/mail.service";
+import {ResetPasswordDto} from "./dto/resetPassword.dto";
 
 @Injectable()
 export class AuthService {
@@ -98,16 +100,74 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
-  // async verify() {
-  //   return this.mailerService
-  //       .sendMail({
-  //         to: 'mahewit638@fitwl.com', // list of receivers
-  //         subject: 'Testing Nest MailerModule ✔', // Subject line
-  //         text: 'welcome', // plaintext body
-  //         html: '<b>welcome</b>', // HTML body content
-  //       })
-  //       .then(() => 'ok')
-  //       .catch((error) => error);
-  // }
+
+  async forgotPassword(email: string) {
+      // TODO: Lint + générer un lien en fonction du rôle
+    const user = await this.prismaService.user.findUnique({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    const resetPasswordHash = crypto.createHash('sha256').update(randomStringGenerator()).digest('hex');
+    const forgotPasswordToken = await this.prismaService.forgotPasswordToken.create({
+      data: {
+        token: resetPasswordHash,
+        user: {
+            connect: {
+                id: user.id
+            }
+        }
+      }
+    })
+    await this.mailService.sendForgotPasswordMail({
+        to: email,
+        data: {
+            hash: resetPasswordHash
+        }
+    });
+
+    return {
+        message: 'Password reset email sent'
+    }
+
+  }
+
+  async resetPassword(data: ResetPasswordDto) {
+    const forgotPasswordToken = await this.prismaService.forgotPasswordToken.findUnique({
+        where: {
+            token: data.hash
+        },
+        include: {
+          user: true
+        }
+    });
+    if (!forgotPasswordToken) {
+      throw new NotFoundException('Token not found');
+    }
+    const user = forgotPasswordToken.user;
+    // Check that new password is different from old password
+    const passwordMatch = await bcrypt.compare(data.password, user.password);
+    if (passwordMatch) {
+        throw new BadRequestException('New password must be different from old password');
+    }
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    await this.prismaService.user.update({
+        where: {
+            id: user.id
+        },
+        data: {
+            password: hashedPassword
+        }
+    });
+    await this.prismaService.forgotPasswordToken.delete({
+        where: {
+            id: forgotPasswordToken.id
+        }
+    });
+
+    return {
+        message: 'Password updated'
+    }
+  }
+
 
 }

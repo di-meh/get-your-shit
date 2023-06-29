@@ -15,10 +15,10 @@ services:
     depends_on:
       - postgres
       - demand
-#      - order
-#      - payment
-#      - restaurant
-#      - shipping
+      - order
+      - payment
+      - restaurant
+      - shipping
     environment:
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: ${AUTH_USER_DATABASE_URL}
@@ -45,9 +45,9 @@ services:
       - ${PWA_PORT-3001}:3000
       - 24678:24678
     volumes:
-      - ./apps/pwa:/home/node/app
-      - /home/node/app/node_modules
-      - /home/node/app/.pnpm-store
+      - ./apps/pwa:/root/app
+      - /root/app/node_modules
+      - /root/app/.pnpm-store
     depends_on:
       - gateway
     environment:
