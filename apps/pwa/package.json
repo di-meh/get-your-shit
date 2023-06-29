@@ -29,8 +29,11 @@
     "vue-tsc": "^1.8.1"
   },
   "dependencies": {
+    "@vueuse/integrations": "^10.2.1",
     "boxicons": "^2.1.4",
     "defu": "^6.1.2",
+    "idb-keyval": "^6.2.1",
+    "jwt-decode": "^3.1.2",
     "vue-toastification": "2.0.0-rc.5"
   }
 }

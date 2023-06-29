@@ -3,24 +3,6 @@ await nextTick();
 
 const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
 
-// search bar function
-const search = () => {
-  // let input = document.querySelector('input')
-  // let filter = input.value.toUpperCase()
-  // let cards = document.querySelectorAll('.card')
-
-  // for (let i = 0; i < cards.length; i++) {
-  //   let p = cards[i].getElementsByTagName('p')[0]
-  //   let txtValue = p.textContent || p.innerText
-
-  //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
-  //     cards[i].style.display = ""
-  //   } else {
-  //     cards[i].style.display = "none"
-  //   }
-  // }
-}
-
 </script>
 <template>
   <div class="container">

@@ -1,24 +1,20 @@
 FROM node:lts-alpine as development
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
+COPY .npmrc package.json pnpm-lock.yaml ./
 
-RUN pnpm i
+RUN pnpm config set store-dir /root/app/.pnpm-store/v3 --global && pnpm i
 
-COPY --chown=node:node . .
-
-RUN chown -R node:node /home/node
-
-USER node
+COPY . .
 
 CMD ["pnpm", "run", "dev:pwa"]
 
 FROM development as build
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
 ENV NODE_ENV production
 
@@ -28,6 +24,6 @@ RUN pnpm run build
 
 FROM build as production
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
 CMD ["node", ".output/server/index.mjs"]

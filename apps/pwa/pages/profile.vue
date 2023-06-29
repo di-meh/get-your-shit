@@ -1,10 +1,14 @@
 <script setup>
+import { useJwt } from '@vueuse/integrations/useJwt'
+const cookie = useCookie('token')
+const { header, payload } = useJwt(cookie.value)
+const userName = payload.value.username
 
 </script>
 
 <template>
     <div class="first">
-        <p>Nikola PANIC</p>
+        <p>{{ userName }}</p>
         <i class="bx bx-user"></i>
     </div>
     <div class="second">
