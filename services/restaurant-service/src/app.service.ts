@@ -14,7 +14,16 @@ export class AppService {
   }
 
   getById(id: string) {
-    return this.prismaService.restaurant.findUnique({ where: { id } });
+    return this.prismaService.restaurant.findUnique({
+      where: { id },
+      include: {
+        products: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
   }
 
   getRestaurant() {
@@ -26,7 +35,11 @@ export class AppService {
   }
 
   getProducts() {
-    return this.prismaService.product.findMany();
+    return this.prismaService.product.findMany({
+      include: {
+        category: true,
+      },
+    });
   }
 
   createCategoryProduct(data: CreateCategoryProductDto) {
@@ -34,7 +47,20 @@ export class AppService {
   }
 
   getCategoryProduct() {
-    return this.prismaService.category.findMany();
+    return this.prismaService.category.findMany({
+      include: {
+        products: true,
+      },
+    });
+  }
+
+  getCategoryProductById(id: string) {
+    return this.prismaService.category.findUnique({
+      where: { id },
+      include: {
+        products: true,
+      },
+    });
   }
 
   updateProduct(data: UpdateProductDto) {

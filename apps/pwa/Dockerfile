@@ -4,7 +4,7 @@ WORKDIR /home/node/app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY --chown=node:node package.json pnpm-lock.yaml ./
+COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
 
 RUN pnpm i
 
@@ -14,7 +14,7 @@ RUN chown -R node:node /home/node
 
 USER node
 
-CMD ["npm", "run", "dev:pwa"]
+CMD ["pnpm", "run", "dev:pwa"]
 
 FROM development as build
 

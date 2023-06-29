@@ -1,4 +1,7 @@
 <script setup>
+await nextTick();
+
+const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/categories')
 
 </script>
 
@@ -7,102 +10,17 @@
     <div class="container">
         <h3>Meilleures catégories</h3>
         <div class="cats">
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-pizza'></i>
+            <NuxtLink :to="`/restaurant/categories/${cat.id}`" v-for="cat in categories" class="links">
+                <div class="bg-neutral" >
+
+                    <div>
+                        <i v-if="cat.name == 'beuh'" class='bx bx-leaf'></i>
+                        <i v-if="cat.name == 'shit'" class='bx bx-wink-tongue'></i>
+                    </div>
+                    <p>{{ cat.name }}</p>
                 </div>
-                <p>Pizza</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-coffee'></i>
-                </div>
-                <p>Café</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-cookie'></i>
-                </div>
-                <p>Desserts</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-baguette'></i>
-                </div>
-                <p>Burgers</p>
-            </div>
-            <div class="bg-neutral"> 
-                <div>
-                    <i class='bx bxs-pizza'></i>
-                </div>
-                <p>Pizza</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-coffee'></i>
-                </div>
-                <p>Café</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-cookie'></i>
-                </div>
-                <p>Desserts</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-baguette'></i>
-                </div>
-                <p>Burgers</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-pizza'></i>
-                </div>
-                <p>Pizza</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-coffee'></i>
-                </div>
-                <p>Café</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-cookie'></i>
-                </div>
-                <p>Desserts</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-baguette'></i>
-                </div>
-                <p>Burgers</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-pizza'></i>
-                </div>
-                <p>Pizza</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-coffee'></i>
-                </div>
-                <p>Café</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bx-cookie'></i>
-                </div>
-                <p>Desserts</p>
-            </div>
-            <div class="bg-neutral">
-                <div>
-                    <i class='bx bxs-baguette'></i>
-                </div>
-                <p>Burgers</p>
-            </div>
+            </NuxtLink>
+
         </div>
 
     </div>
@@ -120,6 +38,10 @@
     justify-items: center;
     grid-gap: 1em;
     margin-top: 1em;
+}
+
+.cats > .links {
+    width: 100%;
 }
 
 .cats div {

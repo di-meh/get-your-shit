@@ -30,7 +30,6 @@ export class RestaurantController {
   
   @Get('products')
   getProducts() {
-    console.log('test');
     return this.client.send('restaurant-service:getProducts', {});
   }
 
@@ -47,6 +46,11 @@ export class RestaurantController {
   @Get('categories')
   getCategoriesProduct() {
     return this.client.send('restaurant-service:getCategoriesProduct', {});
+  }
+
+  @Get('categories/:id')
+  getCategoryProductById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:getCategoryProductById', id);
   }
 
   @Put('categories/:id')

@@ -43,7 +43,7 @@ const search = () => {
         <NuxtLink :to="`/restaurant/${restaurant.id}`" class="links">
           <span>
             <p :id=restaurant.name>{{ restaurant.name }}</p>
-            <p>{{ restaurant.address }}, {{ restaurant.city }}</p>
+            <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
           </span>
         </NuxtLink>
 

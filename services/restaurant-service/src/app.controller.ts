@@ -52,6 +52,11 @@ export class AppController {
     return this.appService.getCategoryProduct();
   }
 
+  @MessagePattern('restaurant-service:getCategoryProductById')
+  getCategoryProductById(id: string) {
+    return this.appService.getCategoryProductById(id);
+  }
+
   @MessagePattern('restaurant-service:updateCategoryProduct')
   updateCategoryProduct(data: UpdateCategoryProductDto) {
     return this.appService.updateCategoryProduct(data);

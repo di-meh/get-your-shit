@@ -45,6 +45,7 @@ services:
     volumes:
       - ./apps/pwa:/home/node/app
       - /home/node/app/node_modules
+      - /home/node/app/.pnpm-store
     depends_on:
       - gateway
     environment:

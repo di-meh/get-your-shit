@@ -2,19 +2,20 @@
 import { ref, onBeforeMount } from 'vue';
 
 const { id } = useRoute().params;
-const restaurant = ref(null);
+const categories = ref(null);
 
 onBeforeMount(async () => {
-    const url = '/restaurant/' + id;
+    const url = '/restaurant/categories/' + id;
     const { data } = await useGatewayFetch(url);
-    restaurant.value = data;
+    categories.value = data;
 });
 </script>
 
 <template>
-    <div v-if="restaurant">
-        {{ restaurant.value.name }}
-        <div v-for="cat in restaurant.value.products">
+    <div v-if="categories">
+        {{ categories.value.name }}
+        <h2>Produits :</h2>
+        <div v-for="cat in categories.value.products">
             {{ cat.name }}
             {{ cat.price }}
             {{ cat.description }}

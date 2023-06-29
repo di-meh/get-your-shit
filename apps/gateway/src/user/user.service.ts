@@ -37,7 +37,6 @@ export class UserService {
   }
 
   async addPayment(userId: string, customerId: string) {
-    console.log(userId, customerId);
     return await this.prisma.user.update({
       where: { id: userId },
       data: { customerId },
