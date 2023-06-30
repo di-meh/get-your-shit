@@ -37,6 +37,7 @@
               </UButton>
             </FormKit>
           </div>
+          <NuxtLink to="/forgot-password" class="block mt-5 link link-hover link-primary">Mot de passe oublié ?</NuxtLink>
         </div>
       </div>
     </div>
