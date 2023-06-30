@@ -7,16 +7,16 @@ import { ShippingModule } from './shipping/shipping.module';
 import { DemandModule } from './demand/demand.module';
 import { PaymentModule } from './payment/payment.module';
 import { MailModule } from './mail/mail.module';
-import {MailerModule} from "@nestjs-modules/mailer";
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
-      MailerModule.forRoot({
-        transport: process.env.SMTP_URL,
-        defaults: {
-          from: '"Get Your Shit" <hello@gys.com>'
-        }
-      }),
+    MailerModule.forRoot({
+      transport: process.env.SMTP_URL,
+      defaults: {
+        from: '"Get Your Shit" <hello@gys.com>',
+      },
+    }),
     AuthModule,
     UserModule,
     RestaurantModule,

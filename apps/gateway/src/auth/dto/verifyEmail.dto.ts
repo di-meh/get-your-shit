@@ -1,8 +1,8 @@
-import {IsDefined, IsNotEmpty, IsString} from "class-validator";
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
 
 export class VerifyEmailDto {
-    @IsString()
-    @IsDefined()
-    @IsNotEmpty()
-    hash: string;
+  @IsString()
+  @IsDefined()
+  @IsNotEmpty()
+  hash: string;
 }
