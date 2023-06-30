@@ -4,7 +4,6 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     '@pinia/nuxt',
     '@nuxthq/ui',
-    '@nuxtjs/eslint-module',
     '@vueuse/nuxt'
   ],
   devtools: {
@@ -15,9 +14,6 @@ export default defineNuxtConfig({
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
     }
   },
-  eslint: {
-    lintOnStart: false
-  },
   colorMode: {
     dataValue: 'theme'
   },
@@ -27,5 +23,6 @@ export default defineNuxtConfig({
         port: 24679
       }
     }
-  }
+  },
+  ssr: false
 })

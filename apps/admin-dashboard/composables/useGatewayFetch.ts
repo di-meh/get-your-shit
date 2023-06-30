@@ -1,5 +1,5 @@
-import type { UseFetchOptions } from '#app'
 import { defu } from 'defu'
+import type { UseFetchOptions } from '#app'
 
 export default function useGatewayFetch<T> (url: string, options: UseFetchOptions<T> = {}) {
   const config = useRuntimeConfig()
@@ -30,5 +30,5 @@ export default function useGatewayFetch<T> (url: string, options: UseFetchOption
     }
   }
   const params = defu(options, defaults)
-  return useFetch(url, params)
+  return useFetch(() => url, params)
 }
