@@ -1,41 +1,23 @@
 <script setup>
+import { storeToRefs } from 'pinia'
+const cartStore = useCartStore()
+const { cart } = storeToRefs(cartStore)
 
-const cart = useCartStore();
-// const cartItems = ref(null);
-
-const caca = async (e) => {
-    const cartItems = await cart.getCart();
-    console.log(cartItems);
-
-}
-
-
-
-
-
-
-
-// setTimeout(async () => {
-//     const e = await cart.getCart();
-//     cartItems.value = e;
-//     console.log(cartItems.value);
-// }, 1000);
-
-
-function removeItemFromCart(id) {
-    cart.removeFromCart(id);
-    cartItems.value = cartItems.value.filter(item => item.id !== id); // remove item from cartItems
+function removeItemFromCart(product) {
+    cartStore.removeFromCart(product);
+    cart.value = cart.value.filter((item) => item.id !== product.id);
 }
 
 function emptyCart() {
-    cart.clearCart();
+    cartStore.clearCart();
+    cart.value = []; // empty cartItems
 }
 
 </script>
 
 <template>
     <h1>Panier</h1>
-    <div v-if="!cartItems">
+    <div v-if="!cart || cart.length === 0">
         <i class='bx bx-cart'></i>
         <h2>Ajouter des articles pour commencer un panier</h2>
         <p>
@@ -46,12 +28,15 @@ function emptyCart() {
             <button class="btn btn-neutral">Commander</button>
         </NuxtLink>
     </div>
-    <!-- <div v-if="cartItems">
-        <div v-for="item in cartItems">
-            <span>{{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }} <button @click="removeItemFromCart(item.id)">Remove</button></span>
+    <div v-else>
+        <div v-for="item in cart">
+            <span>
+                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}
+                <button @click="removeItemFromCart(item)">Remove</button>
+            </span>
         </div>
-    </div> -->
-    <button @click="emptyCart()">Vider le panier</button>
+        <button @click="emptyCart()">Vider le panier</button>
+    </div>
 </template>
 
 <style scoped>
