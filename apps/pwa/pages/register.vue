@@ -1,59 +1,63 @@
 <script setup>
 import { useToast } from "vue-toastification";
+
+
 definePageMeta({
-    layout: 'empty'
+  layout: 'empty'
 })
 const register = async (e) => {
-    e.preventDefault()
-    const toast = useToast();
-    const form = new FormData(e.target)
-    const username = form.get('username')
-    const email = form.get('email')
-    const password = form.get('password')
-    const password_confirmation = form.get('password_confirmation')
+  e.preventDefault()
+  const toast = useToast();
+  const form = new FormData(e.target)
+  const username = form.get('username')
+  const email = form.get('email')
+  const password = form.get('password')
+  const password_confirmation = form.get('password_confirmation')
 
-    if (password !== password_confirmation) {
-        alert('Les mots de passe ne correspondent pas')
-        return
-    }
+  if (password !== password_confirmation) {
+    alert('Les mots de passe ne correspondent pas')
+    return
+  }
 
-    const data = await fetch('http://localhost:3000/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username,
-            email,
-            password
-        })
-    });
+  const data = await fetch('http://localhost:3000/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username,
+      email,
+      password
+    })
+  });
 
-    if (data.ok) {
-        toast.success("Vous êtes inscrit");
-        navigateTo('/login')
-    }
+  if (data.ok) {
+    toast.success("Vous êtes inscrit");
+    navigateTo('/login')
+  }
 }
+
 
 </script>
 
 <template>
-    <div class="register-container">
-      <div class="register-header">
-        <h1 class="register-title">Register</h1>
-      </div>
-      <div class="register-content">
-        <form @submit="register($event)" class="register-form">
-          <input type="text" name="username" placeholder="Username" class="input" />
-          <input type="email" name="email" placeholder="Email" class="input" />
-          <input type="password" name="password" placeholder="Password" class="input" />
-          <input type="password" name="password_confirmation" placeholder="Password confirmation" class="input" />
-          <button class="btn" type="submit">Register</button>
-        </form>
-        <p class="register-text">Vous avez déjà un compte ? <NuxtLink to="/login" class="register-link">Connexion</NuxtLink></p>
-      </div>
+  <div class="register-container">
+    <div class="register-header">
+      <h1 class="register-title">Register</h1>
     </div>
-  </template>
+    <div class="register-content">
+      <form @submit="register($event)" class="register-form">
+        <input type="text" name="username" placeholder="Username" class="input" />
+        <input type="email" name="email" placeholder="Email" class="input" />
+        <input type="password" name="password" placeholder="Password" class="input" />
+        <input type="password" name="password_confirmation" placeholder="Password confirmation" class="input" />
+        <button class="btn" type="submit">Register</button>
+      </form>
+      <p class="register-text">Vous avez déjà un compte ? <NuxtLink to="/login" class="register-link">Connexion</NuxtLink>
+      </p>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .register-container {
@@ -65,7 +69,7 @@ const register = async (e) => {
 }
 
 .register-content {
-    width: 100%;
+  width: 100%;
 }
 
 .register-header {
@@ -122,27 +126,26 @@ const register = async (e) => {
 /* tablet */
 
 @media (min-width: 738px) {
-    .input {
-        width: 40%;
-    }
+  .input {
+    width: 40%;
+  }
 
-    .btn {
-        width: 20%;
-    }
+  .btn {
+    width: 20%;
+  }
 }
 
 
 /* desktop */
 
 @media (min-width: 1280px) {
-    .input {
-        width: 20%;
-    }
+  .input {
+    width: 20%;
+  }
 
-    .btn {
-        width: 10%;
-    }
+  .btn {
+    width: 10%;
+  }
 }
-
 </style>
 
