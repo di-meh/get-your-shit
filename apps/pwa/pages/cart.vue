@@ -2,6 +2,10 @@
 import { storeToRefs } from 'pinia'
 const cartStore = useCartStore()
 const { cart } = storeToRefs(cartStore)
+const modal = ref(null);
+const selectedProduct = ref(null);
+const selectedProductQuantity = ref(1);
+
 
 function removeItemFromCart(product) {
     cartStore.removeFromCart(product);
@@ -11,6 +15,33 @@ function removeItemFromCart(product) {
 function emptyCart() {
     cartStore.clearCart();
     cart.value = []; // empty cartItems
+}
+
+function openModal(product) {
+    selectedProduct.value = product;
+    selectedProductQuantity.value = product.quantity;
+    modal.value.showModal()
+}
+
+function resetProductQuantity() {
+    selectedProductQuantity.value = 1;
+}
+
+function updateCart(product) {
+    cartStore.updateCart({
+        ...product,
+        quantity: selectedProductQuantity.value
+    });
+    cart.value = cart.value.map((item) => {
+        if (item.id === product.id) {
+            return {
+                ...item,
+                quantity: selectedProductQuantity.value
+            };
+        }
+        return item;
+    });
+    modal.value.close();
 }
 
 </script>
@@ -30,12 +61,34 @@ function emptyCart() {
     </div>
     <div v-else>
         <div v-for="item in cart">
-            <span>
+            <span @click="openModal(item)">
                 {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}
+                |
                 <button @click="removeItemFromCart(item)">Remove</button>
             </span>
         </div>
         <button @click="emptyCart()">Vider le panier</button>
+
+        <dialog class="modal" ref="modal">
+            <form method="dialog" class="modal-box" v-if="selectedProduct">
+                <div class="modal-header">
+                    <h3>Vous avez séléctioné : {{ selectedProduct.name }}</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Quel quantité souhaitez-vous acheter ?</p>
+                    <select class="select w-full max-w-xs" v-model="selectedProductQuantity">
+                        <option v-for="n in 30" :key="n" :value="n" :selected="n === selectedProductQuantity">{{ n }}
+                        </option>
+                    </select>
+                </div>
+                <div class="modal-action">
+                    <button class="btn bg-neutral border-0" @click="updateCart(selectedProduct)">Modifier le
+                        produit</button>
+                    <button class="btn" @click="resetProductQuantity">Close</button>
+                </div>
+            </form>
+        </dialog>
+
     </div>
 </template>
 

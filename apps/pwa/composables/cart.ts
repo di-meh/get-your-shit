@@ -13,6 +13,16 @@ export const useCartStore = defineStore('cart', () => {
         toast.success('Product : ' + product.name + ' added to cart')
     }
 
+    function updateCart(product: any) {
+        cart.value = cart.value.map((item: any) => {
+            if (item.id === product.id) {
+                return product
+            }
+            return item
+        })
+        toast.success('Product : ' + product.name + ' updated in cart' + ' to ' + product.quantity + ' quantity')
+    }
+
     function removeFromCart(product: any) {
         cart.value = cart.value.filter((item: any) => item.id !== product.id)
         toast.success('Product : ' + product.name + ' removed from cart')
@@ -34,7 +44,8 @@ export const useCartStore = defineStore('cart', () => {
         removeFromCart,
         clearCart,
         getCart,
-        isFinished
+        isFinished,
+        updateCart
     }
 
 
