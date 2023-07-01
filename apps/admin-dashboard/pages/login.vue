@@ -1,3 +1,28 @@
+<script setup>
+import { useUserStore } from '~/stores/user'
+
+const isLoading = ref(false)
+const userStore = useUserStore()
+definePageMeta({
+  layout: 'empty',
+})
+useHeadSafe({
+  title: 'Connexion',
+  meta: [
+    {
+      name: 'description',
+      content: 'Connexion à votre compte restaurateur ou admin',
+    },
+  ],
+})
+
+async function login(credentials) {
+  isLoading.value = true
+  await userStore.login(credentials.email, credentials.password)
+  isLoading.value = false
+}
+</script>
+
 <template>
   <div class="flex min-h-full flex-1 h-screen">
     <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -37,7 +62,9 @@
               </UButton>
             </FormKit>
           </div>
-          <NuxtLink to="/forgot-password" class="block mt-5 link link-hover link-primary">Mot de passe oublié ?</NuxtLink>
+          <NuxtLink to="/forgot-password" class="block mt-5 link link-hover link-primary">
+            Mot de passe oublié ?
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -46,28 +73,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { useUserStore } from '~/stores/user'
-
-const isLoading = ref(false)
-const userStore = useUserStore()
-definePageMeta({
-  layout: 'empty'
-})
-useHeadSafe({
-  title: 'Connexion',
-  meta: [
-    {
-      name: 'description',
-      content: 'Connexion à votre compte restaurateur ou admin'
-    }
-  ]
-})
-
-async function login (credentials) {
-  isLoading.value = true
-  await userStore.login(credentials.email, credentials.password)
-  isLoading.value = false
-}
-</script>

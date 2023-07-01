@@ -5,42 +5,42 @@ const isLoading = ref(false)
 const toast = useToast()
 await useGatewayFetch(url, {
   key: hash,
-  async onResponse ({ response }) {
+  async onResponse({ response }) {
     if (response.ok) {
       const validRoles = ['ADMIN', 'CHIEF']
       if (!validRoles.includes(response._data.user.role)) {
         toast.add({
           title: 'Erreur',
-          description: 'Votre rôle est invalide. Veuillez réessayer.'
+          description: 'Votre rôle est invalide. Veuillez réessayer.',
         })
         await navigateTo('/login')
       }
     }
   },
-  async onResponseError () {
+  async onResponseError() {
     toast.add({
       title: 'Erreur',
-      description: 'Une erreur est survenue. Veuillez réessayer.'
+      description: 'Une erreur est survenue. Veuillez réessayer.',
     })
     await navigateTo('/login')
-  }
+  },
 })
 
 async function resetPassword(credentials) {
   const body = {
     password: credentials.password,
-    hash
+    hash,
   }
   isLoading.value = true
   const resetUrl = '/auth/reset-password'
   await useGatewayFetch(resetUrl, {
     method: 'POST',
     body,
-    async onResponse({response}) {
+    async onResponse({ response }) {
       if (response.ok) {
         toast.add({
           title: 'Mot de passe réinitialisé',
-          description: 'Vous pouvez maintenant vous connecter'
+          description: 'Vous pouvez maintenant vous connecter',
         })
         await navigateTo('/login')
       }
@@ -48,9 +48,9 @@ async function resetPassword(credentials) {
     onResponseError() {
       toast.add({
         title: 'Erreur',
-        description: 'Une erreur est survenue. Veuillez réessayer.'
+        description: 'Une erreur est survenue. Veuillez réessayer.',
       })
-    }
+    },
   })
   isLoading.value = false
 }

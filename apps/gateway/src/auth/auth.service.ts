@@ -105,7 +105,6 @@ export class AuthService {
   }
 
   async forgotPassword(email: string) {
-    // TODO: Lint + générer un lien en fonction du rôle
     const user = await this.prismaService.user.findUnique({ where: { email } });
     if (!user) {
       throw new NotFoundException('User not found');

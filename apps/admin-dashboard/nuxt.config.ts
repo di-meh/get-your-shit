@@ -4,25 +4,25 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     '@pinia/nuxt',
     '@nuxthq/ui',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
   ],
   devtools: {
-    enabled: true
+    enabled: true,
   },
   runtimeConfig: {
     public: {
-      gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
-    }
+      gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
+    },
   },
   colorMode: {
-    dataValue: 'theme'
+    dataValue: 'theme',
   },
   vite: {
     server: {
       hmr: {
-        port: 24679
-      }
-    }
+        port: 24679,
+      },
+    },
   },
-  ssr: false
+  ssr: false,
 })

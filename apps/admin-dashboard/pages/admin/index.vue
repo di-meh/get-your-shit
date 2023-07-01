@@ -1,3 +1,17 @@
+<script setup>
+definePageMeta({
+  layout: 'admin',
+  middleware: 'admin',
+})
+onBeforeMount(() => {
+  useHead({
+    htmlAttrs: {
+      'data-theme': 'lemonade',
+    },
+  })
+})
+</script>
+
 <template>
   <div class="card w-full bg-base-100 shadow-xl border-2 border-secondary">
     <div class="card-body">
@@ -8,17 +22,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-definePageMeta({
-  layout: 'admin',
-  middleware: 'admin'
-})
-onBeforeMount(() => {
-  useHead({
-    htmlAttrs: {
-      'data-theme': 'lemonade'
-    }
-  })
-})
-</script>

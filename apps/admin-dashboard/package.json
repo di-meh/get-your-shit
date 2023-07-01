@@ -9,7 +9,18 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint . --fix"
   },
+  "dependencies": {
+    "@formkit/icons": "^0.17.2",
+    "@formkit/nuxt": "^0.17.2",
+    "@formkit/themes": "^0.17.2",
+    "@heroicons/vue": "^2.0.18",
+    "@pinia/nuxt": "^0.4.11",
+    "@vueuse/integrations": "^10.2.0",
+    "jwt-decode": "^3.1.2",
+    "pinia": "^2.1.4"
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.39.6",
     "@nuxt/devtools": "^0.6.0",
     "@nuxthq/ui": "^2.4.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
@@ -24,15 +35,5 @@
   },
   "overrides": {
     "vue": "latest"
-  },
-  "dependencies": {
-    "@formkit/icons": "^0.17.2",
-    "@formkit/nuxt": "^0.17.2",
-    "@formkit/themes": "^0.17.2",
-    "@heroicons/vue": "^2.0.18",
-    "@pinia/nuxt": "^0.4.11",
-    "@vueuse/integrations": "^10.2.0",
-    "jwt-decode": "^3.1.2",
-    "pinia": "^2.1.4"
   }
 }
