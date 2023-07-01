@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Request, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Request, Post, Put, Param, ParseUUIDPipe } from '@nestjs/common';
 import { addPaymentDto } from './dto/addPayment.dto';
 import { UserService } from './user.service';
-
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 
 @Controller('user')
@@ -13,5 +13,11 @@ export class UserController {
     addPayment(@Request() req, @Body() paymentInfo: addPaymentDto) {
         return this.userService.addPayment(req.user.sub, paymentInfo.customerId);
     }
+
+    @Put('/me')
+    update(@Request() req, @Body() userInfo: UpdateUserDto) {
+        return this.userService.updateMe(req.user.sub, userInfo);
+    }
+
 
 }

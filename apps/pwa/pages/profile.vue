@@ -29,7 +29,7 @@ const userName = payload.value.username
     </div>
     <div class="divider"></div>
     <div class="third">
-        <NuxtLink class="links hover:bg-neutral rounded-full">
+        <NuxtLink to="/editProfile" class="links hover:bg-neutral rounded-full">
             <div>
                 <i class='bx bx-cog'></i>
                 <p>Paramètres</p>

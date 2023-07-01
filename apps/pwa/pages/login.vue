@@ -1,55 +1,52 @@
 <script setup>
 import { useToast } from "vue-toastification";
 definePageMeta({
-    layout: 'empty'
+  layout: 'empty'
 })
 
 const login = async (e) => {
-    e.preventDefault()
-    const form = new FormData(e.target)
-    const email = form.get('email')
-    const password = form.get('password')
-    const toast = useToast();
-    const userStore = useUserStore()
+  e.preventDefault()
+  const form = new FormData(e.target)
+  const email = form.get('email')
+  const password = form.get('password')
+  const toast = useToast();
+  const userStore = useUserStore()
 
-    const data = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
-    });
 
-    if (data.ok) {
-        const token = await data.json()
-        userStore.setCookie(token.access_token)
+  const { data, pending, refresh } = useGatewayFetch('/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: { email, password },
+    onResponse({ response }) {
+      if (response.ok) {
+        userStore.setCookie(response._data.access_token)
         toast.success("Vous êtes connecté");
         navigateTo('/')
+      }
     }
-
-
+  });
 }
 
 </script>
 
 <template>
-    <div class="login-container">
-      <div class="login-header">
-        <h1 class="login-title">Login</h1>
-      </div>
-      <div class="login-content">
-        <form @submit="login($event)" class="login-form">
-          <input type="email" name="email" placeholder="Email" class="input" />
-          <input type="password" name="password" placeholder="Password" class="input" />
-          <button class="btn" type="submit">Login</button>
-        </form>
-        <p class="login-text">Vous n'avez pas de compte ? <NuxtLink to="/register" class="login-link">Inscription</NuxtLink></p>
-      </div>
+  <div class="login-container">
+    <div class="login-header">
+      <h1 class="login-title">Login</h1>
     </div>
-  </template>
+    <div class="login-content">
+      <form @submit="login($event)" class="login-form">
+        <input type="email" name="email" placeholder="Email" class="input" />
+        <input type="password" name="password" placeholder="Password" class="input" />
+        <button class="btn" type="submit">Login</button>
+      </form>
+      <p class="login-text">Vous n'avez pas de compte ? <NuxtLink to="/register" class="login-link">Inscription</NuxtLink>
+      </p>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .login-container {
@@ -61,7 +58,7 @@ const login = async (e) => {
 }
 
 .login-content {
-    width: 100%;
+  width: 100%;
 }
 
 .login-header {
@@ -118,30 +115,26 @@ const login = async (e) => {
 /* tablet */
 
 @media (min-width: 738px) {
-    .input {
-        width: 40%;
-    }
+  .input {
+    width: 40%;
+  }
 
-    .btn {
-        width: 20%;
-    }
+  .btn {
+    width: 20%;
+  }
 }
 
 
 /* desktop */
 
 @media (min-width: 1280px) {
-    .input {
-        width: 20%;
-    }
+  .input {
+    width: 20%;
+  }
 
-    .btn {
-        width: 10%;
-    }
+  .btn {
+    width: 10%;
+  }
 }
-
-
-
-
 </style>
 
