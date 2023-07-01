@@ -60,14 +60,13 @@ function updateCart(product) {
         </NuxtLink>
     </div>
     <div v-else>
-        <div v-for="item in cart">
+        <div v-for="item in cart" class="flex flex-raw">
             <span @click="openModal(item)">
-                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}
-                |
-                <button @click="removeItemFromCart(item)">Remove</button>
+                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}    
             </span>
+            <button @click="removeItemFromCart(item)">Remove</button>
         </div>
-        <button @click="emptyCart()">Vider le panier</button>
+        <button class="mt-8" @click="emptyCart()">Vider le panier</button>
 
         <dialog class="modal" ref="modal">
             <form method="dialog" class="modal-box" v-if="selectedProduct">

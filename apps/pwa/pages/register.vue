@@ -52,6 +52,7 @@ const register = async (e) => {
   }
 }
 
+
 </script>
 
 <template>
