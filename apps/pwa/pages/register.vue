@@ -41,7 +41,8 @@ const register = async (e) => {
         password_confirmation: form.get('password_confirmation'),
         address: form.get('address address-search'),
         city: form.get('city'),
-        postal_code: form.get('postcode')
+        postal_code: form.get('postcode'),
+        phone: form.get('phone')
       }
     )
   });
@@ -64,6 +65,7 @@ const register = async (e) => {
       <form @submit="register($event)" class="register-form">
         <input type="text" name="username" placeholder="Username" class="input" />
         <input type="email" name="email" placeholder="Email" class="input" />
+        <input type="number" name="phone" placeholder="Phone" class="input" />
         <input type="password" name="password" placeholder="Password" class="input" />
         <input type="password" name="password_confirmation" placeholder="Password confirmation" class="input" />
         <input name="address" type="text" autocomplete="address-line1" placeholder="Address" class="input" />

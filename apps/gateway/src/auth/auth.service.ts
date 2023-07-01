@@ -18,7 +18,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterUserDto, role: ROLE = ROLE.USER) {
-    const { username, password, email, address, postal_code, city } = registerDto;
+    const { username, password, email, address, postal_code, city, phone } = registerDto;
     const existingUser = await this.prismaService.user.findUnique({
       where: { username },
     });
@@ -38,6 +38,7 @@ export class AuthService {
         address,
         postal_code,
         city,
+        phone,
       },
     });
   }
