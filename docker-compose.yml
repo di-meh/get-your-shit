@@ -14,11 +14,11 @@ services:
       - /home/node/app/node_modules
     depends_on:
       - postgres
-#      - demand
-#      - order
-#      - payment
-#      - restaurant
-#      - shipping
+      - demand
+      - order
+      - payment
+      - restaurant
+      - shipping
     environment:
       JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: ${AUTH_USER_DATABASE_URL}
