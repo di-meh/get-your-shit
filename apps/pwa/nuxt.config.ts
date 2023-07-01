@@ -72,4 +72,5 @@ export default defineNuxtConfig({
       serverGatewayUrl: process.env.NUXT_PUBLIC_SERVER_GATEWAY_URL,
     }
   },
+  ssr: false
 })
