@@ -31,12 +31,7 @@ export class RestaurantDemandController {
   @Public()
   @Post()
   async create(@Body() createDemandDto: CreateDemandDto) {
-    const userData = {
-      email: createDemandDto.email,
-      password: createDemandDto.password,
-      username: createDemandDto.username,
-    };
-    const user = await this.authService.register(userData, ROLE.CHIEF);
+    const user = await this.authService.register(createDemandDto, ROLE.CHIEF);
     if (!user) {
       throw new InternalServerErrorException('User could not be created');
     }

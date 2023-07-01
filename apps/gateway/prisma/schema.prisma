@@ -11,15 +11,18 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  username   String   @unique
-  password   String
-  email      String   @unique
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  role       ROLE     @default(USER)
-  verified   Boolean  @default(false)
-  customerId String?
+  id          String   @id @default(uuid())
+  username    String   @unique
+  password    String
+  email       String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  role        ROLE     @default(USER)
+  verified    Boolean  @default(false)
+  customerId  String?
+  address     String?
+  city        String?
+  postal_code String?
 }
 
 enum ROLE {
@@ -28,4 +31,3 @@ enum ROLE {
   DELIVERY
   USER
 }
- 
