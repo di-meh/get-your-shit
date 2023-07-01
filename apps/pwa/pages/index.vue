@@ -5,7 +5,7 @@ const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
 
 </script>
 <template>
-  <div class="container">
+  <div class="container relative">
     <div class="first">
       <div>
         <p>Livrer maintenant</p>
@@ -32,6 +32,9 @@ const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
       </div>
     </div>
   </div>
+  <NuxtLink to="/restaurant/aroundMe">
+      <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
+    </NuxtLink>
 </template>
 
 <style scoped>
@@ -90,15 +93,20 @@ const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
   border-radius: 1rem;
 }
 
-.restaurant>.card > .links >span {
+.restaurant>.card>.links>span {
   display: flex;
-  
+
   justify-content: space-between;
   align-items: flex-start;
   padding: 0.5rem 1rem;
 }
 
-
+.seeRestaus {
+  position: absolute;
+  bottom: 6em;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 
 

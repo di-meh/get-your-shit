@@ -19,5 +19,10 @@ export class UserController {
         return this.userService.updateMe(req.user.sub, userInfo);
     }
 
+    @Get('/me')
+    getMe(@Request() req) {
+        return this.userService.getMe(req.user.sub);
+    }
+
 
 }
