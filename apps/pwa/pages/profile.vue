@@ -35,7 +35,7 @@ const userName = payload.value.username
                 <p>Paramètres</p>
             </div>
         </NuxtLink>
-        <NuxtLink class="links hover:bg-neutral rounded-full">
+        <NuxtLink to="/becomeDriver" class="links hover:bg-neutral rounded-full">
             <div>
                 <i class='bx bx-user-check'></i>
                 <p>Devenir un livreur</p>

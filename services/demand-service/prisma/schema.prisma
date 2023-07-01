@@ -24,3 +24,15 @@ model RestaurantDemand {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model DriverDemand {
+  id            String   @id @default(uuid())
+  departement   String
+  vehicule_type String
+  date_birth    DateTime @db.Date
+  userId        String
+  reviewedBy    String?
+  approved      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

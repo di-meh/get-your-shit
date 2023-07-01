@@ -23,6 +23,10 @@ model User {
   address     String?
   city        String?
   postal_code String?
+  phone         String?
+  departement   String?
+  vehicule_type String?
+  date_birth    DateTime?
 }
 
 enum ROLE {
