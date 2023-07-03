@@ -2,6 +2,7 @@
 await nextTick();
 
 const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
+const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFetch('/user/me')
 
 </script>
 <template>
@@ -9,7 +10,7 @@ const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
     <div class="first">
       <div>
         <p>Livrer maintenant</p>
-        <p>1 rue du test <i class='bx bx-chevron-down'></i></p>
+        <p v-if="user">{{ user.address }}<i class='bx bx-chevron-down'></i></p>
       </div>
       <div>
       </div>
