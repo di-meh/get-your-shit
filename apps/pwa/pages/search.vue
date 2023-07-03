@@ -12,11 +12,6 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
         <div class="cats">
             <NuxtLink :to="`/restaurant/categories/${cat.id}`" v-for="cat in categories" class="links">
                 <div class="bg-neutral" >
-
-                    <div>
-                        <i v-if="cat.name == 'beuh'" class='bx bx-leaf'></i>
-                        <i v-if="cat.name == 'shit'" class='bx bx-wink-tongue'></i>
-                    </div>
                     <p>{{ cat.name }}</p>
                 </div>
             </NuxtLink>

@@ -13,10 +13,6 @@ const userName = payload.value.username
     </div>
     <div class="second">
         <div class="bg-neutral">
-            <i class='bx bx-heart'></i>
-            <p>Favoris</p>
-        </div>
-        <div class="bg-neutral">
             <NuxtLink to="/paymentmethods">
                 <i class='bx bx-credit-card'></i>
                 <p>Cartes</p>

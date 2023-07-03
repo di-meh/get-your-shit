@@ -1,11 +1,10 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 const cartStore = useCartStore()
-const { cart } = storeToRefs(cartStore)
+const { cart, total } = storeToRefs(cartStore)
 const modal = ref(null);
 const selectedProduct = ref(null);
 const selectedProductQuantity = ref(1);
-
 
 function removeItemFromCart(product) {
     cartStore.removeFromCart(product);
@@ -66,8 +65,8 @@ function updateCart(product) {
             </span>
             <button @click="removeItemFromCart(item)">Remove</button>
         </div>
-        <button class="mt-8" @click="emptyCart()">Vider le panier</button>
 
+        <button class="mt-8" @click="emptyCart()">Vider le panier</button>
         <dialog class="modal" ref="modal">
             <form method="dialog" class="modal-box" v-if="selectedProduct">
                 <div class="modal-header">
@@ -87,6 +86,7 @@ function updateCart(product) {
                 </div>
             </form>
         </dialog>
+        <h3>Total : {{total}}€</h3>
 
     </div>
 </template>

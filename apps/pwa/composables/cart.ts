@@ -8,9 +8,12 @@ export const useCartStore = defineStore('cart', () => {
     const { data: cart, isFinished } = useIDBKeyval('cart', [])
 
     function addToCart(product: any) {
+        if (cart.value.find((item: any) => item.id === product.id)) {
+            toast.error('Product : ' + product.name + ' already exists in cart')
+            return
+        }
         cart.value.push(product)
-        console.log()
-        toast.success('Product : ' + product.name + ' added to cart')
+        toast.success('Product : ' + product.name + ' added to cart' + ' with ' + product.quantity + ' quantity')
     }
 
     function updateCart(product: any) {
@@ -34,9 +37,12 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     function getCart() {
-        console.log('Getting cart:', cart.value)
         return cart.value
     }
+
+    const total = computed(() => {
+        return cart.value.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0)
+    })
 
     return {
         cart,
@@ -45,7 +51,8 @@ export const useCartStore = defineStore('cart', () => {
         clearCart,
         getCart,
         isFinished,
-        updateCart
+        updateCart,
+        total
     }
 
 
