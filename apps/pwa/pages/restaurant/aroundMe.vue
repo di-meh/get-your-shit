@@ -17,6 +17,7 @@ onMounted(async () => {
         maxZoom: 17,
         minZoom: 10
     })
+    map.addControl(new mapboxgl.NavigationControl());
     useGatewayFetch('/user/me')
         .then((data) => {
             useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(data.data.value.address)}.json?access_token=${accessToken}`)
