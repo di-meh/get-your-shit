@@ -1,3 +1,15 @@
+<script setup lang="ts">
+useHeadSafe({
+  title: 'Devenez partenaire commercial de Get Your Shit',
+  meta: [
+    {
+      name: 'description',
+      content: 'Laissez Get Your Shit vous aider à toucher plus de clients.',
+    },
+  ],
+})
+</script>
+
 <template>
   <div>
     <PublicHero />
@@ -42,14 +54,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-useHeadSafe({
-  title: 'Devenez partenaire commercial de Get Your Shit',
-  meta: [
-    {
-      name: 'description',
-      content: 'Laissez Get Your Shit vous aider à toucher plus de clients.'
-    }
-  ]
-})
-</script>

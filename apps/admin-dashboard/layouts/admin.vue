@@ -1,3 +1,6 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div>
     <AdminSideBar>
@@ -7,5 +10,3 @@
     </AdminSideBar>
   </div>
 </template>
-<script setup lang="ts">
-</script>

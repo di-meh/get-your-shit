@@ -33,6 +33,9 @@ services:
       RESTAURANT_SERVICE_PORT: ${RESTAURANT_PORT-4004}
       SHIPPING_SERVICE_HOST: shipping
       SHIPPING_SERVICE_PORT: ${SHIPPING_PORT-4005}
+      SMTP_URL: ${SMTP_URL}
+      GATEWAY_PWA_URL: ${GATEWAY_PWA_URL}
+      GATEWAY_ADMIN_DASHBOARD_URL: ${GATEWAY_ADMIN_DASHBOARD_URL}
 
   pwa:
     container_name: pwa
@@ -43,12 +46,14 @@ services:
       - ${PWA_PORT-3001}:3000
       - 24678:24678
     volumes:
-      - ./apps/pwa:/home/node/app
-      - /home/node/app/node_modules
+      - ./apps/pwa:/root/app
+      - /root/app/node_modules
+      - /root/app/.pnpm-store
     depends_on:
       - gateway
     environment:
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
+      NUXT_PUBLIC_SERVER_GATEWAY_URL: ${NUXT_PUBLIC_SERVER_GATEWAY_URL}
 
   admin-dashboard:
     container_name: admin-dashboard
@@ -64,7 +69,7 @@ services:
     depends_on:
       - gateway
     environment:
-      NUXT_PUBLIC_GATEWAY_URL: http://localhost:${GATEWAY_PORT-3000}
+      NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
 
   # SERVICES
   demand:

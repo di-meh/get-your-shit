@@ -1,3 +1,30 @@
+<script setup>
+import { ref } from 'vue'
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import {
+  ArrowLeftOnRectangleIcon,
+  Bars3Icon,
+  FolderIcon,
+  HomeIcon,
+  UsersIcon,
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
+const navigation = [
+  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
+  { name: 'Utilisateurs', href: '/admin/users', icon: UsersIcon, current: false },
+  { name: 'Demandes', href: '/admin/demands', icon: FolderIcon, current: false },
+]
+
+const sidebarOpen = ref(false)
+
+function logout() {
+  userStore.logout()
+}
+</script>
+
 <template>
   <!--
     This example requires updating your template:
@@ -32,8 +59,8 @@
                     <li class="mt-8">
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <NuxtLink :to="item.href" :class="[item.current ? 'bg-secondary-focus' : 'hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                            <component :is="item.icon" :class="[item.current ? 'text-secondary-content' : '', 'h-6 w-6 shrink-0']" aria-hidden="true" />
+                          <NuxtLink :to="item.href" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold" :class="[item.current ? 'bg-secondary-focus' : 'hover:bg-secondary-focus']">
+                            <component :is="item.icon" class="h-6 w-6 shrink-0" :class="[item.current ? 'text-secondary-content' : '']" aria-hidden="true" />
                             {{ item.name }}
                           </NuxtLink>
                         </li>
@@ -57,15 +84,17 @@
             <li class="mt-8">
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <NuxtLink :to="item.href" :class="[item.current ? 'bg-secondary-focus' : 'hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                    <component :is="item.icon" :class="[item.current ? 'text-secondary-content' : '', 'h-6 w-6 shrink-0']" aria-hidden="true" />
+                  <NuxtLink :to="item.href" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold" :class="[item.current ? 'bg-secondary-focus' : 'hover:bg-secondary-focus']">
+                    <component :is="item.icon" class="h-6 w-6 shrink-0" :class="[item.current ? 'text-secondary-content' : '']" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
                 </li>
               </ul>
             </li>
             <li class="-mx-6 mt-auto">
-              <button @click="logout" class="btn btn-ghost m-2"><ArrowLeftOnRectangleIcon  class="h-6 w-6"/>Se déconnecter</button>
+              <button class="btn btn-ghost m-2" @click="logout">
+                <ArrowLeftOnRectangleIcon class="h-6 w-6" />Se déconnecter
+              </button>
             </li>
           </ul>
         </nav>
@@ -77,8 +106,12 @@
         <span class="sr-only">Open sidebar</span>
         <Bars3Icon class="h-6 w-6" aria-hidden="true" />
       </button>
-      <div class="flex-1 text-sm font-semibold leading-6">Dashboard</div>
-      <button @click="logout" class="btn btn-ghost"><ArrowLeftOnRectangleIcon  class="h-6 w-6"/></button>
+      <div class="flex-1 text-sm font-semibold leading-6">
+        Dashboard
+      </div>
+      <button class="btn btn-ghost" @click="logout">
+        <ArrowLeftOnRectangleIcon class="h-6 w-6" />
+      </button>
     </div>
 
     <main class="py-10 lg:pl-72">
@@ -88,33 +121,3 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import {
-  Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  ArrowLeftOnRectangleIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
-import {useUserStore} from "~/stores/user";
-
-const userStore = useUserStore()
-const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: HomeIcon, current: true },
-  { name: 'Utilisateurs', href: '/admin/users', icon: UsersIcon, current: false },
-  {name: 'Demandes', href: '/admin/demands', icon: FolderIcon, current: false},
-]
-
-const sidebarOpen = ref(false)
-
-const logout = () => {
-  userStore.logout()
-}
-</script>
