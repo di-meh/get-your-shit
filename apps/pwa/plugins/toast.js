@@ -4,6 +4,6 @@ import "vue-toastification/dist/index.css";
 
 export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.vueApp.use(Toast, {
-        hideProgressBar : false
+        hideProgressBar: false
     });
-  })
+})

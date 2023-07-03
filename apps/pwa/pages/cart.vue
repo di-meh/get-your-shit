@@ -61,7 +61,7 @@ function updateCart(product) {
     <div v-else>
         <div v-for="item in cart" class="flex flex-raw">
             <span @click="openModal(item)">
-                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}    
+                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}
             </span>
             <button @click="removeItemFromCart(item)">Remove</button>
         </div>
@@ -86,8 +86,18 @@ function updateCart(product) {
                 </div>
             </form>
         </dialog>
-        <h3>Total : {{total}}€</h3>
+        <h3>Total : {{ total }}€</h3>
 
+        <button class="btn" onclick="my_modal_3.showModal()">open modal</button>
+        <dialog id="my_modal_3" class="modal">
+            <form method="dialog" class="modal-box">
+                
+                <div class="modal-action">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </div>
+            </form>
+        </dialog>
     </div>
 </template>
 
