@@ -53,7 +53,7 @@ const becomeDriver = async (e) => {
                 <h1>Devenir livreur</h1>
                 <p>Dans quelle departement souhaitez-vous rouler ?</p>
                 <select class="select w-full mt-4" v-model="selectedCity">
-                    <option value="" disabled selected>Choisissez une ville</option>
+                    <option value="" disabled selected>Choisissez un département</option>
                     <option v-for="city in cities" :key="city.code" :value="city.code">
                         {{ city.code }} - {{ city.nom }}
                     </option>

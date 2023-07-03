@@ -7,30 +7,6 @@ definePageMeta({
     layout: 'empty'
 });
 
-const mapCenter = ref([]);
-
-// onMounted(() => {
-//     const accessToken = "pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag";
-//     useGatewayFetch('/user/me')
-//         .then((data) => {
-//             useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(data.data.value.address)}.json?access_token=${accessToken}`)
-//                 .then((data) => {
-//                     mapCenter.value = data.data.value.features[0].geometry.coordinates;
-//                     console.log(mapCenter.value);
-//                 })
-//         })
-
-//     useMapbox('zizizazacaca', (map) => {
-//         map.setCenter(mapCenter.value);
-//         const markerRef = defineMapboxMarker('marker1', {}, templateRef, (marker) => {
-//             console.log(marker);
-//             // marker.setLngLat(mapCenter.value)
-//         })
-//     })
-// })
-
-
-
 onMounted(async () => {
     const accessToken = "pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag";
     mapboxgl.accessToken = accessToken;
@@ -41,10 +17,6 @@ onMounted(async () => {
         maxZoom: 17,
         minZoom: 10
     })
-    // const popup = new mapboxgl.Popup()
-    //     .setLngLat(['2.262683', '48.777947'])
-    //     .setHTML('test')
-    //     .addTo(map);
     useGatewayFetch('/user/me')
         .then((data) => {
             useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(data.data.value.address)}.json?access_token=${accessToken}`)
@@ -61,14 +33,17 @@ onMounted(async () => {
                                         draggable: false
                                     }).setLngLat(data.data.value.features[0].geometry.coordinates)
                                         .addTo(map);
-                                    marker.getElement().addEventListener('click', () => {
-                                        new mapboxgl.Popup()
-                                            .setLngLat(data.data.value.features[0].geometry.coordinates)
-                                            .setHTML(`<h2>${restaurant.name}</h2><p>${restaurant.address}</p>`)
-                                            .addTo(map);
-                                    });
-
-
+                                    const popup = new mapboxgl.Popup()
+                                        .setLngLat(data.data.value.features[0].geometry.coordinates)
+                                        .setHTML(`
+                                            <h1 class="text-black text-[16px]">${restaurant.name}</h1>
+                                            <p class="text-black text-[14px] mt-2">${restaurant.address}</p>
+                                            <a class="text-black" href="/restaurant/${restaurant.id}"><button class="btn bg-neutral seeResto mt-2">Voir le restaurant</button></a>
+                                        `)
+                                    marker.setPopup(popup);
+                                    marker.on('click', () => {
+                                        popup.addTo(map);
+                                    })
                                 })
                         })
                     });
@@ -79,35 +54,53 @@ onMounted(async () => {
 
 <template>
     <div>
-        <div id='map' style='width: 100%; height: 100vh;'></div>
+        <div id='map' class="map-container" style='width: 100%; height: 100vh;'></div>
+        <NuxtLink to="/"><button class="go-back-button">Go Back</button></NuxtLink>
     </div>
-    <!-- {{ mapCenter  }}
-    <div v-if="mapCenter">
-        <MapboxMap map-id="zizizazacaca" style="width: 100%;" :options="{
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            zoom: 5, // starting zoom
-            minZoom: 10,
-            maxZoom: 17,
-        }">
-            <MapboxDefaultMarker marker-id="marker1" :options="{}" :lnglat="mapCenter.value">
-                <MapboxDefaultPopup popup-id="popup1" :lnglat="mapCenter.value" :options="{
-                    closeOnClick: false
-                }">
-                    <h1 class="test">
-                        Hello World!
-                    </h1>
-                </MapboxDefaultPopup>
-            </MapboxDefaultMarker>
-        </MapboxMap>
-    </div>
-    <div v-else>
-        <p>Loading...</p>
-    </div> -->
 </template>
 
-<style scoped>
-.mapboxgl-popup {
-    max-width: 400px;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+<style>
+.mapboxgl-popup-close-button {
+    width: 25px;
+    height: 25px;
+    color: black;
+    border-radius: 0px 10px 0px 0px;
+}
+
+.mapboxgl-popup-content {
+    border-radius: 10px;
+}
+
+.seeResto {
+    font-size: 12px;
+    padding: 8px;
+    height: auto;
+    min-height: auto;
+}
+
+#map {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.map-container {
+    width: 100%;
+    height: 100vh;
+}
+
+.go-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    padding: 10px;
+    background-color: black;
+    border-radius: 10px;
+    color: white;
 }
 </style>
