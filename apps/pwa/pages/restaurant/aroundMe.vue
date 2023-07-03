@@ -38,12 +38,23 @@ onMounted(async () => {
                                         .setLngLat(data.data.value.features[0].geometry.coordinates)
                                         .setHTML(`
                                             <h1 class="text-black text-[16px]">${restaurant.name}</h1>
-                                            <p class="text-black text-[14px] mt-2">${restaurant.address}</p>
-                                            <a class="text-black" href="/restaurant/${restaurant.id}"><button class="btn bg-neutral seeResto mt-2">Voir le restaurant</button></a>
+                                            <p class="text-black text-[14px] mt-2">${restaurant.address} - ${restaurant.city}</p>
+                                            <a class="text-black" href="/restaurant/${restaurant.id}"><button class="btn bg-neutral seeResto mt-2">Voir le shop</button></a>
                                         `)
                                     marker.setPopup(popup);
-                                    marker.on('click', () => {
-                                        popup.addTo(map);
+                                    marker.getElement().addEventListener('click', () => {
+                                        map.flyTo({
+                                            center: data.data.value.features[0].geometry.coordinates,
+                                            zoom: 15,
+                                            essential: true
+                                        })
+                                    })
+                                    popup.on('close', () => {
+                                        map.flyTo({
+                                            center: data.data.value.features[0].geometry.coordinates,
+                                            zoom: 12,
+                                            essential: true
+                                        })
                                     })
                                 })
                         })
