@@ -32,6 +32,7 @@ jobs:
 
       - name: "Get Terraform state"
         run: |
+          echo $(terraform state pull)
           terraform state pull > terraform.tfstate
           cat terraform.tfstate
         working-directory: ./infra/azure
