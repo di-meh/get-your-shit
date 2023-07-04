@@ -4,6 +4,19 @@ await nextTick();
 const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
 const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFetch('/user/me')
 
+function search(event) {
+  const search = event.target.value;
+  const restaurants = document.querySelectorAll('.restaurant .card');
+  restaurants.forEach(restaurant => {
+    if (restaurant.querySelector('p').id.toLowerCase().includes(search.toLowerCase())) {
+      restaurant.style.display = 'block';
+    } else {
+      restaurant.style.display = 'none';
+    }
+  })
+}
+
+
 </script>
 <template>
   <div class="container relative">
@@ -18,7 +31,7 @@ const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFet
     <div class="searchbar">
       <div class="bg-neutral">
         <i class='bx bx-search'></i>
-        <input type="text" @change="search()" placeholder="Rechercher un restaurant...">
+        <input type="text" @input="search($event)" placeholder="Rechercher un restaurant...">
       </div>
     </div>
     <div class="restaurant">
