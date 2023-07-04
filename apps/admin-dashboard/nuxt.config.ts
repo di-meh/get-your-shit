@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxthq/ui',
     '@nuxtjs/eslint-module',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    'nuxt-mapbox',
   ],
   devtools: {
     enabled: true
@@ -29,4 +30,7 @@ export default defineNuxtConfig({
     }
   },
   ssr: false,
+  mapbox: {
+    accessToken: 'pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag'
+  }
 })

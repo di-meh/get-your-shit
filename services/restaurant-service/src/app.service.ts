@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
+import { UpdateRestaurantDto } from './dto/updateRestaurant.dto';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
@@ -11,6 +12,13 @@ export class AppService {
   constructor(private readonly prismaService: PrismaService) { }
   create(data: CreateRestaurantDto) {
     return this.prismaService.restaurant.create({ data });
+  }
+
+  update(data: UpdateRestaurantDto) {
+    return this.prismaService.restaurant.update({
+      where: { id: data.id },
+      data,
+    });
   }
 
   getById(id: string) {
@@ -41,6 +49,12 @@ export class AppService {
 
   getRestaurant() {
     return this.prismaService.restaurant.findMany();
+  }
+
+  delete(id: string) {
+    return this.prismaService.restaurant.delete({
+      where: { id },
+    });
   }
 
   createProduct(data: CreateProductDto) {

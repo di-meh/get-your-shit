@@ -10,11 +10,13 @@ function deleteProduct(id) {
   useGatewayFetch(`/restaurant/products/${id}`, {
     method: 'DELETE',
     onResponse({ response }) {
-      toast.add({
-        title: 'Le produit ' + response._data.name + ' a bien été supprimé',
-        description: 'Le produit a bien été supprimé',
-      })
-      refresh();
+      if (response.ok) {
+        toast.add({
+          title: 'Le produit ' + response._data.name + ' a bien été supprimé',
+          description: 'Le produit a bien été supprimé',
+        })
+        refresh();
+      }
     }
   });
 }
@@ -34,8 +36,10 @@ function deleteProduct(id) {
           <h2 class="card-title">{{ product.name }}</h2>
           <p class="card-subtitle">{{ product.description }}</p>
           <p class="card-subtitle">{{ product.price }}€</p>
+          <p>{{ product.category.name }}</p>
           <div class="card-actions justify-end">
-            <NuxtLink :to="`/chief/products/edit/${product.id}`"><button class="btn btn-primary">Modifier</button></NuxtLink>
+            <NuxtLink :to="`/chief/products/edit/${product.id}`"><button class="btn btn-primary">Modifier</button>
+            </NuxtLink>
             <button class="btn bg-red-700 border-none" @click="deleteProduct(product.id)">Supprimer</button>
           </div>
         </div>

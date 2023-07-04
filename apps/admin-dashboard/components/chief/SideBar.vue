@@ -94,6 +94,7 @@ import { ref } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
   ArrowLeftOnRectangleIcon,
+  AdjustmentsHorizontalIcon,
   Bars3Icon,
   CalendarIcon,
   ChartPieIcon,
@@ -111,6 +112,7 @@ const navigation = [
   {name: "Produits", href: "/chief/products", icon: FolderIcon, current: false},
   {name: "Commandes", href: "/chief/orders", icon: DocumentDuplicateIcon, current: false},
   {name: "Clients", href: "/chief/clients", icon: UsersIcon, current: false},
+  {name: "Restaurants", href: "/chief/restaurants", icon: AdjustmentsHorizontalIcon, current: false},
 ]
 
 const sidebarOpen = ref(false)

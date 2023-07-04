@@ -117,7 +117,7 @@ function createProduct(event) {
           }"
         />
         <UButton size="md" type="submit" color="emerald" block>
-          Se connecter
+          Ajouter
         </UButton>
         
     </FormKit>

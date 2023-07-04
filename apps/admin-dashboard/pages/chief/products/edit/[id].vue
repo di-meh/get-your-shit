@@ -31,7 +31,6 @@ const { data: restaurants } = useGatewayFetch('/restaurant/getMyRestaurants', {
 
 
 function updateProduct(event) {
-  console.log(event.restaurantId);
   useGatewayFetch(`/restaurant/products/${route.params.id}`, {
     method: 'PUT',
     body: {
@@ -82,7 +81,7 @@ function updateProduct(event) {
 
 
     <UButton size="md" type="submit" color="emerald" block>
-      Se connecter
+      Modifier
     </UButton>
 
   </FormKit>

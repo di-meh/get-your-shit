@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
+import { UpdateRestaurantDto } from './dto/updateRestaurant.dto';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
@@ -14,6 +15,11 @@ export class AppController {
   @MessagePattern('restaurant-service:create')
   create(data: CreateRestaurantDto) {
     return this.appService.create(data);
+  }
+
+  @MessagePattern('restaurant-service:update')
+  update(data: UpdateRestaurantDto) {
+    return this.appService.update(data);
   }
 
 
@@ -30,6 +36,11 @@ export class AppController {
   @MessagePattern('restaurant-service:getByUserId')
   getByUserId(id: string) {
     return this.appService.getByUserId(id);
+  }
+
+  @MessagePattern('restaurant-service:delete')
+  delete(id: string) {
+    return this.appService.delete(id);
   }
 
   @MessagePattern('restaurant-service:createProduct')

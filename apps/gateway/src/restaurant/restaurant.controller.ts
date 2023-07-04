@@ -2,6 +2,7 @@ import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put, Request
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
+import { UpdateRestaurantDto } from './dto/updateRestaurant.dto';
 import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
@@ -18,6 +19,11 @@ export class RestaurantController {
     return this.client.send('restaurant-service:create', data);
   }
 
+  @Roles('CHIEF')
+  @Put('update/:id')
+  update(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateRestaurantDto) {
+    return this.client.send('restaurant-service:update', { id, ...data });
+  }
 
   @Get()
   getRestaurant() {
@@ -34,6 +40,12 @@ export class RestaurantController {
   @Get('getMyRestaurants')
   getMyRestaurant(@Request() req) {
     return this.client.send('restaurant-service:getByUserId', req.user.sub);
+  }
+
+  @Roles('CHIEF')
+  @Delete('delete/:id')
+  delete(@Param('id', ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:delete', id);
   }
 
   @Post('products')
