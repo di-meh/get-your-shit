@@ -26,6 +26,10 @@ jobs:
       - name: 'Get terraform.tfvars content'
         run: echo "${{ secrets.TERRAFORM_TFVARS }}" > ./infra/azure/terraform.tfvars
 
+      - name: "CAT terraform.tfvars"
+        run: terraform.tfvars
+        working-directory: ./infra/azure
+
       - name: 'Terraform Init'
         run: terraform init
         working-directory: ./infra/azure
