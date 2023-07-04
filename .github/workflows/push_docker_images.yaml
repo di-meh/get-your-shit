@@ -1,12 +1,12 @@
 name: "Upload des images Docker sur l'Azure Container Registry"
 
 on:
-  pull_request:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - dev
+  workflow_run:
+    workflows:
+      - "Création de l'infra avec Terraform"
+    types:
+      - completed
 
 
 jobs:
