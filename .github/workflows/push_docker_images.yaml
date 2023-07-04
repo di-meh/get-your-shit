@@ -1,9 +1,6 @@
 name: "Upload des images Docker sur l'Azure Container Registry"
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
   pull_request:
     types:
