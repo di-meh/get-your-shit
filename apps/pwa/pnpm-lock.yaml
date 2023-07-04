@@ -8,6 +8,9 @@ dependencies:
   '@mapbox/search-js-web':
     specifier: 1.0.0-beta.16
     version: 1.0.0-beta.16(mapbox-gl@2.15.0)
+  '@stripe/stripe-js':
+    specifier: ^1.54.1
+    version: 1.54.1
   '@vueuse/integrations':
     specifier: ^10.2.1
     version: 10.2.1(idb-keyval@6.2.1)(jwt-decode@3.1.2)(vue@3.3.4)
@@ -2653,6 +2656,10 @@ packages:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
     dev: true
+
+  /@stripe/stripe-js@1.54.1:
+    resolution: {integrity: sha512-smEXPu1GKMcAj9g2luT16+oXfg2jAwyc68t2Dm5wdtYl3p8PqQaZEiI8tQmboaQAjgF8pIGma6byz1T1vgmpbA==}
+    dev: false
 
   /@surma/rollup-plugin-off-main-thread@2.2.3:
     resolution: {integrity: sha512-lR8q/9W7hZpMWweNiAKU7NQerBnzQQLvi8qnTDU/fxItPhtZVMbPV3lbCwjhIlNBe9Bbr5V+KHshvWmVSG9cxQ==}

@@ -26,6 +26,19 @@ export class AppService {
     });
   }
 
+  getByUserId(id: string) {
+    return this.prismaService.restaurant.findMany({
+      where: { ownerId: id },
+      include: {
+        products: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+  }
+
   getRestaurant() {
     return this.prismaService.restaurant.findMany();
   }
@@ -39,6 +52,12 @@ export class AppService {
       include: {
         category: true,
       },
+    });
+  }
+
+  deleteProduct(id: string) {
+    return this.prismaService.product.delete({
+      where: { id },
     });
   }
 

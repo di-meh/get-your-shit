@@ -27,6 +27,11 @@ export class AppController {
     return this.appService.getRestaurant();
   }
 
+  @MessagePattern('restaurant-service:getByUserId')
+  getByUserId(id: string) {
+    return this.appService.getByUserId(id);
+  }
+
   @MessagePattern('restaurant-service:createProduct')
   createProduct(data: CreateProductDto) {
     return this.appService.createProduct(data);
@@ -40,6 +45,11 @@ export class AppController {
   @MessagePattern('restaurant-service:updateProduct')
   updateProduct(data: UpdateProductDto) {
     return this.appService.updateProduct(data);
+  }
+
+  @MessagePattern('restaurant-service:deleteProduct') 
+  deleteProduct(id: string) {
+    return this.appService.deleteProduct(id);
   }
 
   @MessagePattern('restaurant-service:createCategoryProduct')

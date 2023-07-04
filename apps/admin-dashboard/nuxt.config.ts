@@ -27,5 +27,6 @@ export default defineNuxtConfig({
         port: 24679
       }
     }
-  }
+  },
+  ssr: false,
 })

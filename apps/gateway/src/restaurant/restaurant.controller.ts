@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put } from '@nestjs/common';
+import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put, Request, Delete } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
@@ -6,6 +6,7 @@ import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { Observable } from 'rxjs';
+import { Roles } from 'src/auth/auth.decorator';
 @Controller('restaurant')
 export class RestaurantController {
   constructor(
@@ -23,6 +24,18 @@ export class RestaurantController {
     return this.client.send('restaurant-service:get', {});
   }
 
+  @Roles('ADMIN')
+  @Get('getByUserId/:id')
+  getByUserId(@Param('id', ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:getByUserId', id);
+  }
+
+  @Roles('CHIEF')
+  @Get('getMyRestaurants')
+  getMyRestaurant(@Request() req) {
+    return this.client.send('restaurant-service:getByUserId', req.user.sub);
+  }
+
   @Post('products')
   createProduct(@Body() data: CreateProductDto) {
     return this.client.send('restaurant-service:createProduct', data);
@@ -36,6 +49,11 @@ export class RestaurantController {
   @Put('products/:id')
   updateProduct(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateProductDto) {
     return this.client.send('restaurant-service:updateProduct', { id, ...data });
+  }
+
+  @Delete('products/:id')
+  deleteProduct(@Param("id", ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:deleteProduct', id);
   }
 
   @Post('categories')
