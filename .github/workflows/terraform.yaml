@@ -31,7 +31,9 @@ jobs:
         working-directory: ./infra/azure
 
       - name: "Get Terraform state"
-        run: terraform state pull > terraform.tfstate
+        run: |
+          terraform state pull > terraform.tfstate
+          cat terraform.tfstate
         working-directory: ./infra/azure
 
       - name: 'Terraform Plan'
