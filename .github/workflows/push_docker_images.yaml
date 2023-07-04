@@ -1,0 +1,45 @@
+name: "Upload des images Docker sur l'Azure Container Registry"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Build and push image'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - run: |
+          docker build ./apps/gateway -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/gateway:${{ github.sha }}
+          docker build ./services/demand-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/demand-service:${{ github.sha }}
+          docker build ./services/order-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/order-service:${{ github.sha }}
+          docker build ./services/payment-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/payment-service:${{ github.sha }}
+          docker build ./services/restaurant-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/restaurant-service:${{ github.sha }}
+          docker build ./services/shipping-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/shipping-service:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/gateway:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/demand-service:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/order-service:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/payment-service:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/restaurant-service:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/shipping-service:${{ github.sha }}
+
+#      TODO déployer sur Kubernetes
+
