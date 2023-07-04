@@ -1,12 +1,7 @@
 name: "Création de l'infra avec Terraform"
 
 on:
-  pull_request:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - dev
 
 jobs:
   create-terraform-infra:
