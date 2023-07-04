@@ -18,10 +18,30 @@
           <p>{{ demand.postal_code }}</p>
           <p>{{ demand.city }}</p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary" @click="acceptDemand(demand.id)">
+            <button class="btn btn-primary" @click="acceptDemand(demand.id, 'restaurant')">
               Accepter
             </button>
-            <button class="btn btn-secondary" @click="refuseDemand(demand.id)">
+            <button class="btn btn-secondary" @click="refuseDemand(demand.id, 'restaurant')">
+              Refuser
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ul v-if="driveDemands" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <li v-for="driver in driveDemands" :key="driver.id" class="card bg-bases-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">
+            {{ driver.name }}
+          </h2>
+          <p>{{ driver.departement }}</p>
+          <p>{{ driver.vehicule_type }}</p>
+          <p>{{ driver.date_birth }}</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary" @click="acceptDemand(driver.id, 'driver')">
+              Accepter
+            </button>
+            <button class="btn btn-secondary" @click="refuseDemand(driver.id, 'driver')">
               Refuser
             </button>
           </div>
@@ -39,15 +59,27 @@ definePageMeta(
   }
 )
 const { data: demands, pending, refresh } = useGatewayFetch('/demand/restaurant')
+const { data: driveDemands, refresh: refreshDriver } = useGatewayFetch('/demand/driver')
 
-const acceptDemand = async (id) => {
-  await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
-  refresh()
+
+const acceptDemand = async (id, type) => {
+  if (type === 'restaurant') {
+    await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
+    refresh()
+  } else {
+    await useGatewayFetch(`/demand/driver/${id}/accept`, { method: 'PUT' })
+    refreshDriver()
+  }
 }
 
-const refuseDemand = async (id) => {
-  await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
-  refresh()
+const refuseDemand = async (id, type) => {
+  if (type === 'restaurant') {
+    await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
+    refresh()
+  } else {
+    await useGatewayFetch(`/demand/driver/${id}/reject`, { method: 'PUT' })
+    refreshDriver()
+  }
 }
 
 onBeforeMount(() => {

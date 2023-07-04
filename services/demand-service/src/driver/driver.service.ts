@@ -13,7 +13,7 @@ export class DriverService {
     }
 
     getAll() {
-        return this.prismaService.driverDemand.findMany();
+        return this.prismaService.driverDemand.findMany({where: {reviewedBy: null}});
     }
 
     getOne(id: string) {
