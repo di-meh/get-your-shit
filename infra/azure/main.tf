@@ -6,6 +6,7 @@ terraform {
       version = "3.63.0"
     }
   }
+  backend "azurerm" {}
 }
 
 # Configure the Microsoft Azure Provider
@@ -22,11 +23,30 @@ resource "azurerm_resource_group" "rg_main" {
   }
 }
 
-resource "azurerm_container_registry" "acr" {
-  name                     = "gysACR"
-  resource_group_name      = azurerm_resource_group.rg_main.name
+resource "azurerm_storage_account" "gys-storage" {
+  account_replication_type = "ZRS"
+  account_tier             = "Standard"
   location                 = azurerm_resource_group.rg_main.location
-  sku                      = "Standard"
+  name                     = "gysstorageaccount"
+  resource_group_name      = azurerm_resource_group.rg_main.name
+
+  tags = {
+    environment = "GYS"
+  }
+}
+
+resource "azurerm_storage_container" "gys-storage-container" {
+  name                  = "tfstate"
+  storage_account_name  = azurerm_storage_account.gys-storage.name
+  container_access_type = "container"
+}
+
+resource "azurerm_container_registry" "acr" {
+  name                   = "gysACR"
+  resource_group_name    = azurerm_resource_group.rg_main.name
+  location               = azurerm_resource_group.rg_main.location
+  sku                    = "Standard"
+  anonymous_pull_enabled = true
   tags = {
     environment = "GYS"
   }
@@ -36,7 +56,7 @@ resource "azurerm_kubernetes_cluster" "akc" {
   location            = azurerm_resource_group.rg_main.location
   name                = "gys-akc"
   resource_group_name = azurerm_resource_group.rg_main.name
-  dns_prefix = "gys-akc"
+  dns_prefix          = "gys-akc"
 
   default_node_pool {
     name       = "default"
@@ -52,5 +72,3 @@ resource "azurerm_kubernetes_cluster" "akc" {
     environment = "GYS"
   }
 }
-
-

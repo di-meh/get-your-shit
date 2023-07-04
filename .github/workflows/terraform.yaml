@@ -22,16 +22,7 @@ jobs:
         run: echo "${{ secrets.TERRAFORM_TFVARS }}" > ./infra/azure/terraform.tfvars
 
       - name: 'Terraform Init'
-        run: terraform init
-        working-directory: ./infra/azure
-
-      - name: "Get Terraform state"
-        run: |
-          echo $(terraform workspace list)
-          echo $(terraform workspace show)
-          echo $(terraform state pull)
-          terraform state pull > terraform.tfstate
-          cat terraform.tfstate
+        run: terraform init -backend-config=config.azure.tfbackend -force-copy -no-color
         working-directory: ./infra/azure
 
       - name: 'Terraform Plan'
@@ -39,7 +30,5 @@ jobs:
         working-directory: ./infra/azure
 
       - name: 'Terraform Apply'
-        run: terraform apply plan.out
+        run: terraform apply plan.out -no-color -auto-approve
         working-directory: ./infra/azure
-
-
