@@ -18,7 +18,7 @@ const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFet
     <div class="searchbar">
       <div class="bg-neutral">
         <i class='bx bx-search'></i>
-        <input type="text" @input="search()" placeholder="Rechercher un restaurant...">
+        <input type="text" @change="search()" placeholder="Rechercher un restaurant...">
       </div>
     </div>
     <div class="restaurant">
@@ -35,7 +35,7 @@ const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFet
   </div>
   <NuxtLink to="/restaurant/aroundMe">
       <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
-    </NuxtLink>
+  </NuxtLink>
 </template>
 
 <style scoped>

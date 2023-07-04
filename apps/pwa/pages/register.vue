@@ -28,7 +28,7 @@ const register = async (e) => {
     return
   }
 
-  const data = await fetch('http://localhost:3000/auth/register', {
+  const { data: categories, pending, refresh } = useGatewayFetch('/auth/register',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -44,13 +44,12 @@ const register = async (e) => {
         postal_code: form.get('postcode'),
         phone: form.get('phone')
       }
-    )
+    ),
+    onResponse({response}) {
+      toast.success("Votre compte a bien été créé");
+      navigateTo('/login');
+    }
   });
-
-  if (data.ok) {
-    toast.success("Vous êtes inscrit");
-    navigateTo('/login')
-  }
 }
 
 

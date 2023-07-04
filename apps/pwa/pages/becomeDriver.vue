@@ -17,8 +17,7 @@ const setActiveDiv = (type) => {
 const becomeDriver = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-
-    await useFetch('http://localhost:3000/demand/driver', {
+    const { data: restaurants, pending, refresh } = useGatewayFetch('/demand/driver', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
