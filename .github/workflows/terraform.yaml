@@ -30,8 +30,8 @@ jobs:
         run: terraform init
         working-directory: ./infra/azure
 
-      - name: "Terraform Refresh"
-        run: terraform refresh
+      - name: "Terraform State Pull"
+        run: terraform state pull
         working-directory: ./infra/azure
 
       - name: 'Terraform Plan'
