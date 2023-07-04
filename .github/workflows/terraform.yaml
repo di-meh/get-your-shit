@@ -32,6 +32,8 @@ jobs:
 
       - name: "Get Terraform state"
         run: |
+          echo $(terraform workspace list)
+          echo $(terraform workspace show)
           echo $(terraform state pull)
           terraform state pull > terraform.tfstate
           cat terraform.tfstate
