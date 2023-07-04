@@ -30,8 +30,8 @@ jobs:
         run: terraform init
         working-directory: ./infra/azure
 
-      - name: "Terraform Import"
-        run: terraform import azurerm_resource_group.rg_main /subscriptions/$(az account show --query id -o tsv)/resourceGroups/gys
+      - name: "Terraform Refresh"
+        run: terraform refresh
         working-directory: ./infra/azure
 
       - name: 'Terraform Plan'
