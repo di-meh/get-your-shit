@@ -23,12 +23,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: 'Get terraform.tfvars content'
+        run: echo "${{ secrets.TERRAFORM_TFVARS }}" > ./infra/azure/terraform.tfvars
+
       - name: 'Terraform Init'
         run: terraform init
         working-directory: ./infra/azure
 
       - name: 'Terraform Plan'
-        run: terraform plan -out plan.out
+        run: terraform plan -no-color -out plan.out
         working-directory: ./infra/azure
 
       - name: 'Terraform Apply'
