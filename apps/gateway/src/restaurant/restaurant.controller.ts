@@ -46,6 +46,11 @@ export class RestaurantController {
     return this.client.send('restaurant-service:getProducts', {});
   }
 
+  @Get('products/:id')
+  getProductById(@Param('id', ParseUUIDPipe) id: string) {
+    return this.client.send('restaurant-service:getProductById', id);
+  }
+
   @Put('products/:id')
   updateProduct(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateProductDto) {
     return this.client.send('restaurant-service:updateProduct', { id, ...data });

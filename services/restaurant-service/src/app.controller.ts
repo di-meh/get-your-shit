@@ -52,6 +52,11 @@ export class AppController {
     return this.appService.deleteProduct(id);
   }
 
+  @MessagePattern('restaurant-service:getProductById')
+  getProductById(id: string) {
+    return this.appService.getProductById(id);
+  }
+
   @MessagePattern('restaurant-service:createCategoryProduct')
   createCategoryProduct(data: CreateCategoryProductDto) {
     return this.appService.createCategoryProduct(data);

@@ -21,7 +21,7 @@ const { data: restaurants } = useGatewayFetch('/restaurant/getMyRestaurants', {
 });
 
 
-function test(event) {
+function createProduct(event) {
   const { data: products } = useGatewayFetch('/restaurant/products', {
     method: 'POST',
     body: {
@@ -46,7 +46,7 @@ function test(event) {
 </script>
 
 <template>
-    <FormKit type="form" form-class="flex flex-col w-full items-center lg:items-start gap-6" :actions="false" @submit="test($event)">
+    <FormKit type="form" form-class="flex flex-col w-full items-center lg:items-start gap-6" :actions="false" @submit="createProduct($event)">
         <FormKit
           type="text"
           name="name"

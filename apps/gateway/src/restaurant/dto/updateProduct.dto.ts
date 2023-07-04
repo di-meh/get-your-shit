@@ -27,4 +27,10 @@ export class UpdateProductDto {
     @IsUUID()
     categoryId: string;
 
+    @IsString()
+    @IsOptional()
+    @IsUUID()
+    restaurantId: string;
+
+
 }

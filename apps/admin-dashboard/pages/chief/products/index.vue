@@ -35,7 +35,7 @@ function deleteProduct(id) {
           <p class="card-subtitle">{{ product.description }}</p>
           <p class="card-subtitle">{{ product.price }}€</p>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary">Modifier</button>
+            <NuxtLink :to="`/chief/products/edit/${product.id}`"><button class="btn btn-primary">Modifier</button></NuxtLink>
             <button class="btn bg-red-700 border-none" @click="deleteProduct(product.id)">Supprimer</button>
           </div>
         </div>

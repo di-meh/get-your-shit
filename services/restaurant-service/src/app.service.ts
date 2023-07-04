@@ -55,6 +55,15 @@ export class AppService {
     });
   }
 
+  getProductById(id: string) {
+    return this.prismaService.product.findUnique({
+      where: { id },
+      include: {
+        category: true,
+      },
+    });
+  }
+
   deleteProduct(id: string) {
     return this.prismaService.product.delete({
       where: { id },
