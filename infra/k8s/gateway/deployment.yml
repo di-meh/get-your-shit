@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gys-main-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gys-main
+  template:
+    metadata:
+      labels:
+        app: gys-main
+    spec:
+      containers:
+        - name: gys-main
+          image: gysacr.azurecr.io/gateway:eeb97ff1dd645b8ed570c748ad34e020d3475419
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTH_USER_DATABASE_URL
+                  name: gys-configmap
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: JWT_SECRET
+                  name: gys-configmap
+            - name: SMTP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SMTP_URL
+                  name: gys-configmap
