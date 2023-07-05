@@ -46,10 +46,13 @@ const becomeDriver = async (e) => {
 
 
 <template>
+    <div class="flex justify-start pt-4 pl-4">
+        <NuxtLink to="/profile"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+    </div>
     <div class="px-4">
         <form @submit="becomeDriver($event)" class="w-full flex flex-col items-center">
             <div class="flex flex-col lg:w-1/4 w-full">
-                <h1>Devenir livreur</h1>
+                <h1 class="text-2xl font-bold mt-4 mb-4">Devenir livreur</h1>
                 <p>Dans quelle departement souhaitez-vous rouler ?</p>
                 <select class="select w-full mt-4" v-model="selectedCity">
                     <option value="" disabled selected>Choisissez un département</option>
@@ -61,17 +64,17 @@ const becomeDriver = async (e) => {
             <div class=" lg:w-1/4 w-full mt-4">
                 <p>Type de véhicule</p>
                 <div class="flex justify-between mt-4">
-                    <div class="p-2 m-2 border-[3px] w-full" :class="{ active: activeDiv === 'bike' }"
+                    <div class="p-2 m-2 border-[3px] rounded-xl w-full" :class="{ active: activeDiv === 'bike' }"
                         @click="setActiveDiv('bike')">
                         <p class="text-lg">Vélo</p>
                         <i class="bx bx-cycling text-3xl"></i>
                     </div>
-                    <div class="p-2 m-2 border-[3px] w-full" :class="{ active: activeDiv === 'scooter' }"
+                    <div class="p-2 m-2 border-[3px] rounded-xl w-full" :class="{ active: activeDiv === 'scooter' }"
                         @click="setActiveDiv('scooter')">
                         <p class="text-lg">Scooter</p>
                         <i class="bx bx-cycling text-3xl"></i>
                     </div>
-                    <div class="p-2 m-2 border-[3px] w-full" :class="{ active: activeDiv === 'car' }"
+                    <div class="p-2 m-2 border-[3px] rounded-xl w-full" :class="{ active: activeDiv === 'car' }"
                         @click="setActiveDiv('car')">
                         <p class="text-lg">Voiture</p>
                         <i class="bx bx-car text-3xl"></i>

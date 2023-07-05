@@ -7,8 +7,11 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
 
 
 <template>
+    <div class="flex justify-start pt-4 pl-4">
+        <NuxtLink to="/"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+    </div>
     <div class="container">
-        <h3>Meilleures catégories</h3>
+        <h3 class="text-2xl font-bold">Meilleures catégories</h3>
         <div class="cats">
             <NuxtLink :to="`/restaurant/categories/${cat.id}`" v-for="cat in categories" class="links">
                 <div class="bg-neutral" >
@@ -32,6 +35,9 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
     grid-gap: 1em;
+    margin-top: 1em;
+    width: 70%;
+    margin: auto;
     margin-top: 1em;
 }
 
@@ -68,9 +74,6 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
 /* desktop */
 
 @media (min-width: 1280px) {
-    .cats {
-        grid-template-columns: repeat(4, 1fr);
-    }
 
     .cats div {
         width: 100%;
@@ -83,6 +86,13 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
 
     .cats div i {
         font-size: 2.5rem;
+    }
+}
+
+@media(max-width:634px) {
+    .cats {
+        width: 100%;
+        grid-gap: 0;
     }
 }
 </style>

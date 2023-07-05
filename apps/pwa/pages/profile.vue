@@ -3,6 +3,8 @@ import { useJwt } from '@vueuse/integrations/useJwt'
 const cookie = useCookie('token')
 const { header, payload } = useJwt(cookie.value)
 const userName = payload.value.username
+const role = payload.value.role
+
 
 </script>
 
@@ -25,16 +27,10 @@ const userName = payload.value.username
                 <p>Paramètres</p>
             </div>
         </NuxtLink>
-        <NuxtLink to="/becomeDriver" class="links hover:bg-neutral rounded-full">
+        <NuxtLink v-if="role !== 'DELIVERY'" to="/becomeDriver" class="links hover:bg-neutral rounded-full">
             <div>
                 <i class='bx bx-user-check'></i>
                 <p>Devenir un livreur</p>
-            </div>
-        </NuxtLink>
-        <NuxtLink class="links hover:bg-neutral rounded-full">
-            <div>
-                <i class='bx bx-help-circle'></i>
-                <p>Aide</p>
             </div>
         </NuxtLink>
         <NuxtLink to="/logout" class="links hover:bg-neutral rounded-full">

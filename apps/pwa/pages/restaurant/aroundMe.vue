@@ -79,7 +79,9 @@ onMounted(async () => {
 <template>
     <div>
         <div id='map' class="map-container" style='width: 100%; height: 100vh;'></div>
-        <NuxtLink to="/"><button class="go-back-button">Go Back</button></NuxtLink>
+        <div class="flex justify-start pl-4 absolute t-0 l-0">
+            <NuxtLink to="/"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+        </div>
     </div>
 </template>
 

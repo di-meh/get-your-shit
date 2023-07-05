@@ -3,10 +3,16 @@ import { useToast } from "vue-toastification";
 const userStore = useUserStore()
 const toast = useToast();
 
+const cartStore = useCartStore()
+
+definePageMeta({
+  layout: 'empty'
+})
 
 setTimeout(() => {
     userStore.logout()
     toast.success("Vous êtes déconnecté");
+    cartStore.clearCart()
     navigateTo('/')
 }, 1000)
 
@@ -19,7 +25,7 @@ setTimeout(() => {
     </div>
 </template>
 
-<style>
+<style scoped>
 
 .loading-logout {
     display: flex;

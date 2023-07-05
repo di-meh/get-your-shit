@@ -16,14 +16,28 @@ function search(event) {
   })
 }
 
+// one scroll make the search bar sticky
+window.addEventListener('scroll', () => {
+  const searchbar = document.querySelector('.searchbar');
+  const first = document.querySelector('.first');
+  const sticky = searchbar.offsetTop;
+  if (window.pageYOffset > sticky) {
+    searchbar.classList.add('sticky');
+    first.style.marginTop = '4rem';
+  } else {
+    searchbar.classList.remove('sticky');
+    first.style.marginTop = '0';
+  }
+})
+
 
 </script>
 <template>
-  <div class="container relative">
+  <div class="container relative lg:mb-28">
     <div class="first">
-      <div>
+      <div class="m-4 ">
         <p>Livrer maintenant</p>
-        <p v-if="user">{{ user.address }}<i class='bx bx-chevron-down'></i></p>
+        <p v-if="user">{{ user.address }}</p>
       </div>
       <div>
       </div>
@@ -31,23 +45,21 @@ function search(event) {
     <div class="searchbar">
       <div class="bg-neutral">
         <i class='bx bx-search'></i>
-        <input type="text" @input="search($event)" placeholder="Rechercher un restaurant...">
+        <input type="text" @input="search($event)" placeholder="Rechercher un shop...">
       </div>
     </div>
     <div class="restaurant">
-      <div class="card" v-for="restaurant in restaurants">
-        <NuxtLink :to="`/restaurant/${restaurant.id}`" class="links">
+      <div class="card p-4" v-for="restaurant in restaurants">
           <span>
             <p :id=restaurant.name>{{ restaurant.name }}</p>
             <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
           </span>
-        </NuxtLink>
-
+          <NuxtLink :to="`/restaurant/${restaurant.id}`"><button class="btn w-full mt-2">Voir</button></NuxtLink>
       </div>
     </div>
   </div>
   <NuxtLink to="/restaurant/aroundMe">
-      <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
+    <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
   </NuxtLink>
 </template>
 
@@ -70,7 +82,7 @@ function search(event) {
   justify-content: center;
   border-radius: 1rem;
   padding-left: 1rem;
-  width: 90%;
+  width: 100%;
 }
 
 .searchbar>div>i {
@@ -89,8 +101,6 @@ function search(event) {
 }
 
 
-
-
 /* Restaurants cards */
 
 .restaurant {
@@ -99,12 +109,20 @@ function search(event) {
   flex-direction: column;
 }
 
+
 .restaurant>.card {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   border-radius: 1rem;
+  line-height: 2em;
+  transition: 0.3s;
+  border: 2px solid #18342B;
+}
+
+.restaurant>.card:hover {
+  background-color: #18342B;
 }
 
 .restaurant>.card>.links>span {
@@ -116,13 +134,44 @@ function search(event) {
 }
 
 .seeRestaus {
-  position: absolute;
+  position: fixed;
   bottom: 6em;
   left: 50%;
   transform: translateX(-50%);
 }
 
+.sticky {
+  position: sticky;
+  top: 1em;
+  z-index: 100;
+}
 
+
+@media (max-width: 634px) {
+  .searchbar {
+    width: 100%;
+  }
+
+  .searchbar>div {
+    width: 90%;
+  }
+
+  .restaurant {
+    padding-bottom: 5em;
+  }
+
+  .restaurant>.card {
+    width: 90%;
+    background-color: #18342B;
+  }
+
+  .restaurant>.card>.links>span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+}
 
 
 
@@ -160,6 +209,7 @@ function search(event) {
   .restaurant>.card {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     width: 50%;
   }
 

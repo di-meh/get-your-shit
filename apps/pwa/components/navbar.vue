@@ -15,7 +15,8 @@
     <NuxtLink to="/cart" :class="{ active: isActive('/cart') }">
       <button class="flex flex-col items-center">
         <i class="bx bx-cart"></i>
-        <span>Pannier</span>
+        <span v-if="cartStore.cartCount > 0">Panier {{ cartStore.cartCount }}</span>
+        <span v-else>Panier</span>
       </button>
     </NuxtLink>
     <NuxtLink to="/profile" :class="{ active: isActive('/profile') }">
@@ -27,14 +28,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    isActive(route) {
-      return this.$route.path === route;
-    },
-  },
-};
+<script setup>
+const route = useRoute()
+const cartStore = useCartStore()
+function isActive(routePath) {
+  return route.path === routePath
+}
+
 </script>
 
 <style scoped>
@@ -42,4 +42,3 @@ export default {
   background-color: #222;
 }
 </style>
-

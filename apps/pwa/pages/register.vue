@@ -145,6 +145,14 @@ const register = async (e) => {
   color: #10B981;
 }
 
+
+
+@media (max-width: 634px) {
+  .register-container {
+    height: auto;
+  }
+}
+
 /* tablet */
 
 @media (min-width: 738px) {

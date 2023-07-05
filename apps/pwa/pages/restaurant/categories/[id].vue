@@ -38,13 +38,27 @@ function resetProductQuantity() {
 </script>
 
 <template>
-    <div v-if="categories">
-        {{ categories.value.name }}
-        <h2>Produits :</h2>
-        <div v-for="product in categories.value.products" @click="openModal(product)">
-            {{ product.name }}
-            {{ product.price }}
-            {{ product.description }}
+    <div class="flex justify-start pt-4 pl-4">
+        <NuxtLink to="/search"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+    </div>
+    <div v-if="categories" class="px-4">
+        <h1 class="text-2xl font-bold mb-4 mt-4">{{ categories.value.name }}</h1>
+        <div v-if="categories.value.products.length"  class="flex flex-col gap-4 pb-2">
+            <div v-for="product in categories.value.products" class="card w-full bg-neutral shadow-xl">
+                <div class="flex lg:justify-between p-4 items-center flex-col lg:flex-row">
+                    <div class="w-full flex flex-col align-center cardBody">
+                        <h2 class="card-title">{{ product.name }}</h2>
+                        <p class="lg:text-left description">{{ product.description }}</p>
+                        <p class="text-left italic font-bold">{{ product.price }}€</p>
+                    </div>
+                    <div class="card-actions mt-2 w-full lg:justify-end">
+                        <button class="btn w-full lg:w-auto" @click="openModal(product)">Ajouter au panier</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <p>La catégorie n'a pas encore ajouté de produits</p>
         </div>
     </div>
     <div v-else>Loading...</div>
@@ -55,7 +69,7 @@ function resetProductQuantity() {
             </div>
             <div class="modal-body">
                 <p>Quel quanité souhaitez vous acheter ?</p>
-                <select class="select w-full max-w-xs" v-model="selectedProductQuantity">
+                <select class="select w-full max-w-xs mt-4" v-model="selectedProductQuantity">
                     <option v-for="n in 30" :key="n" :value="n">{{ n }}</option>
                 </select>
             </div>
@@ -67,3 +81,28 @@ function resetProductQuantity() {
         </form>
     </dialog>
 </template>
+
+<style scoped>
+.description {
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+@media (min-width:1100px) {
+    .cardBody {
+        max-width: 80%;
+    }
+}
+
+@media (max-width:634px) {
+    .cardBody {
+        max-width: 100%;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .Modal {
+        margin-top: 1rem;
+    }
+}
+</style>

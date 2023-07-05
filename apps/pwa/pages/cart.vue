@@ -46,27 +46,41 @@ function updateCart(product) {
 </script>
 
 <template>
-    <h1>Panier</h1>
-    <div v-if="!cart || cart.length === 0">
+    <div class="flex justify-start pt-4 pl-4">
+        <NuxtLink to="/"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+    </div>
+    <h1 class="text-2xl font-bold mt-4 mb-4">Panier</h1>
+    <div v-if="!cart || cart.length === 0" class="emptyCart mt-4">
         <i class='bx bx-cart'></i>
-        <h2>Ajouter des articles pour commencer un panier</h2>
-        <p>
+        <h2 class="text-xl">Ajouter des articles pour commencer un panier</h2>
+        <p class="mt-4">
             Une fois que vous avez ajouté des
-            articles d'un magasin, votre panier s'affiche ici
+            articles d'un shop, votre panier s'affiche ici
         </p>
         <NuxtLink to="/search">
-            <button class="btn btn-neutral">Commander</button>
+            <button class="btn btn-neutral mt-4">Commander</button>
         </NuxtLink>
     </div>
-    <div v-else>
-        <div v-for="item in cart" class="flex flex-raw">
-            <span @click="openModal(item)">
-                {{ item.name }} | {{ item.price }}€ | {{ item.description }} | {{ item.quantity }}
-            </span>
-            <button @click="removeItemFromCart(item)">Remove</button>
+    <div v-else class="px-4">
+        <div v-if="cart">
+            <div v-if="cart" class="flex flex-col gap-4 pb-2">
+                <div v-for="product in cart" class="card w-full bg-neutral shadow-xl" >
+                    <div class="flex lg:justify-between p-4 items-center flex-col lg:flex-row">
+                        <div class="w-full flex flex-row justify-between align-center cardBody p-4">
+                            <h2 class="card-title">{{ product.name }}</h2>
+                            <p class="text-left italic font-bold">{{ product.price }}€</p>
+                            <p class="text-left">Qty: {{ product.quantity }}</p>
+                        </div>
+                        <div class="card-actions mt-2 w-full lg:justify-end">
+                            <button class="btn w-full lg:w-auto" @click="openModal(product)">Modifier</button>
+                            <button class="btn bg-red-700 border-none w-full lg:w-auto" @click="removeItemFromCart(product)">Retirer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <button class="mt-8" @click="emptyCart()">Vider le panier</button>
+        <h3>Total : {{ total }}€</h3>
+        <button class="mt-2 btn w-full" @click="emptyCart()">Vider le panier</button>
         <dialog class="modal" ref="modal">
             <form method="dialog" class="modal-box" v-if="selectedProduct">
                 <div class="modal-header">
@@ -74,7 +88,7 @@ function updateCart(product) {
                 </div>
                 <div class="modal-body">
                     <p>Quel quantité souhaitez-vous acheter ?</p>
-                    <select class="select w-full max-w-xs" v-model="selectedProductQuantity">
+                    <select class="select w-full max-w-xs mt-2" v-model="selectedProductQuantity">
                         <option v-for="n in 30" :key="n" :value="n" :selected="n === selectedProductQuantity">{{ n }}
                         </option>
                     </select>
@@ -86,48 +100,36 @@ function updateCart(product) {
                 </div>
             </form>
         </dialog>
-        <h3>Total : {{ total }}€</h3>
 
-        <button class="btn" onclick="my_modal_3.showModal()">open modal</button>
+        <!-- <button class="btn" onclick="my_modal_3.showModal()">open modal</button>
         <dialog id="my_modal_3" class="modal">
             <form method="dialog" class="modal-box">
                 
                 <div class="modal-action">
-                    <!-- if there is a button in form, it will close the modal -->
+                    if there is a button in form, it will close the modal
                     <button class="btn">Close</button>
                 </div>
             </form>
-        </dialog>
+        </dialog> -->
     </div>
 </template>
 
 <style scoped>
-h1 {
+
+
+
+.emptyCart {
     padding: 1em;
-    margin-bottom: 20px;
-    font-size: 2rem;
 }
 
-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+.emptyCart > p {
+    font-size: 0.8em;
 }
 
-div i {
-    font-size: 4rem;
-    margin-bottom: 20px;
+.emptyCart > i {
+    font-size: 3em;
+    margin-bottom: 10px;
 }
 
-div h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
 
-div p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
 </style>
