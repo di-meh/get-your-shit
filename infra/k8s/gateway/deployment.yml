@@ -33,3 +33,7 @@ spec:
                 configMapKeyRef:
                   key: SMTP_URL
                   name: gys-configmap
+            - name: PAYMENT_SERVICE_HOST
+              value: gys-payment-service
+            - name: PAYMENT_SERVICE_PORT
+              value: "4003"
