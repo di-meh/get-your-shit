@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-    layout: 'chief'
+    layout: 'chief',
+    middleware: 'chief'
 });
 import { autofill } from '@mapbox/search-js-web';
 const route = useRoute();
@@ -11,7 +12,6 @@ onMounted(async () => {
     const { data: restaurant } = useGatewayFetch(`/restaurant/${route.params.id}`, {
         onResponse({ response }) {
             restaurantRef.value = response._data;
-            console.log(restaurantRef.value)
         }
     }).then(() => {
         autofill({
@@ -19,9 +19,7 @@ onMounted(async () => {
         })
     })
 });
-
 function updateRestaurant(event) {
-    console.log(event)
     useGatewayFetch(`/restaurant/update/${route.params.id}`, {
         method: 'PUT',
         body: {
@@ -37,7 +35,7 @@ function updateRestaurant(event) {
                     title: 'Le restaurant ' + response._data.name + ' a bien été modifié',
                     description: 'Le restaurant a bien été modifié',
                 })
-                navigateTo('/chief/restaurants')
+                return navigateTo('/chief/restaurants')
             }
         }
     })

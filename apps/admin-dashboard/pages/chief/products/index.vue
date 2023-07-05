@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-  layout: 'chief'
+  layout: 'chief',
+    middleware: 'chief'
 });
 const toast = useToast();
 

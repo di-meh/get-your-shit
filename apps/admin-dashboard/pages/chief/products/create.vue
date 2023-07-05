@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-    layout: 'chief'
+    layout: 'chief',
+    middleware: 'chief'
 });
 
 const toast = useToast();
@@ -32,12 +33,11 @@ function createProduct(event) {
       restaurantId: event.restaurantId
     },
     onResponse({ response }) {
-      console.log(response);
       toast.add({
         title: 'Produit ajouté',
         description: 'Le produit a bien été ajouté',
       })
-      navigateTo('/chief/products');
+      return navigateTo('/chief/products');
     }
   });
 }

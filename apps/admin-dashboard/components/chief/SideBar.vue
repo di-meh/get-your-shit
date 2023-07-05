@@ -32,7 +32,7 @@
                     <li class="mt-8">
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <NuxtLink :to="item.href" :class="[item.current ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                          <NuxtLink :to="item.href" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                             <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                             {{ item.name }}
                           </NuxtLink>
@@ -57,7 +57,7 @@
             <li class="mt-8">
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <NuxtLink :to="item.href" :class="[item.current ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                  <NuxtLink :to="item.href" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                     <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
@@ -105,10 +105,12 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import {useUserStore} from "~/stores/user";
+const route = useRoute()
+console.log(route);
 
 const userStore = useUserStore()
 const navigation = [
-  { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: true },
+  { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: false },
   {name: "Produits", href: "/chief/products", icon: FolderIcon, current: false},
   {name: "Commandes", href: "/chief/orders", icon: DocumentDuplicateIcon, current: false},
   {name: "Clients", href: "/chief/clients", icon: UsersIcon, current: false},
