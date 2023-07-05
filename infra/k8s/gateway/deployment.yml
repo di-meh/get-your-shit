@@ -33,7 +33,23 @@ spec:
                 configMapKeyRef:
                   key: SMTP_URL
                   name: gys-configmap
+            - name: DEMAND_SERVICE_HOST
+              value: gys-demand-service
+            - name: DEMAND_SERVICE_PORT
+              value: "4001"
+            - name: ORDER_SERVICE_HOST
+              value: gys-order-service
+            - name: ORDER_SERVICE_PORT
+              value: "4002"
             - name: PAYMENT_SERVICE_HOST
               value: gys-payment-service
             - name: PAYMENT_SERVICE_PORT
               value: "4003"
+            - name: RESTAURANT_SERVICE_HOST
+              value: gys-restaurant-service
+            - name: RESTAURANT_SERVICE_PORT
+              value: "4004"
+            - name: SHIPPINNG_SERVICE_HOST
+              value: gys-shipping-service
+            - name: SHIPPINNG_SERVICE_PORT
+              value: "4005"
