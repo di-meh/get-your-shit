@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gys-restaurant-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gys-restaurant
+  template:
+    metadata:
+      labels:
+        app: gys-restaurant
+    spec:
+      containers:
+        - name: gys-restaurant
+          image: gysacr.azurecr.io/restaurant-service:latest
+          ports:
+            - containerPort: 4004
+          env:
+            - name: APP_PORT
+              value: "4004"
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: RESTAURANT_DATABASE_URL
+                  name: gys-configmap
