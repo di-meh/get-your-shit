@@ -2,10 +2,10 @@
 import { useToast } from "vue-toastification";
 import { autofill } from '@mapbox/search-js-web';
 
-
+const config = useRuntimeConfig();
 onMounted(() => {
   autofill({
-    accessToken: 'pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag'
+    accessToken: config.public.mapboxAccessToken
   })
 });
 

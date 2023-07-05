@@ -69,11 +69,12 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL
+      gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
+      mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN
     }
   },
   ssr: false,
   mapbox: {
-    accessToken: 'pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag'
+    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN
   }
 })

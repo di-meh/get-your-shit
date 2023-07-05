@@ -50,6 +50,7 @@ services:
       - gateway
     environment:
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
+      NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${PUBLIC_MAPBOX_ACCESS_TOKEN}
 
   admin-dashboard:
     container_name: admin-dashboard
@@ -66,6 +67,7 @@ services:
       - gateway
     environment:
       NUXT_PUBLIC_GATEWAY_URL: http://localhost:${GATEWAY_PORT-3000}
+      NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${PUBLIC_MAPBOX_ACCESS_TOKEN}
 
   # SERVICES
   demand:

@@ -4,6 +4,7 @@ import { useToast } from "vue-toastification";
 const userInfos = ref(null)
 const toast = useToast()
 const dateBirth = ref(null)
+const config = useRuntimeConfig();
 
 onMounted(async () => {
     const { data: user, pending, refresh } = useGatewayFetch('/auth/profile', {
@@ -18,7 +19,7 @@ onMounted(async () => {
         const formattedDate = date.toISOString().split('T')[0];
         dateBirth.value = formattedDate
         autofill({
-            accessToken: 'pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag'
+            accessToken: config.public.mapboxAccessToken
         })
     }).catch(() => {
         console.error('error')

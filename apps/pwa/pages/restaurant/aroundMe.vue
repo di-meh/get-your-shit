@@ -3,12 +3,14 @@ import { onMounted } from 'vue';
 import mapboxgl from 'mapbox-gl';
 await nextTick();
 
+const config = useRuntimeConfig();
+
 definePageMeta({
     layout: 'empty'
 });
 
 onMounted(async () => {
-    const accessToken = "pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag";
+    const accessToken = config.public.mapboxAccessToken;
     mapboxgl.accessToken = accessToken;
     const map = new mapboxgl.Map({
         container: 'map',

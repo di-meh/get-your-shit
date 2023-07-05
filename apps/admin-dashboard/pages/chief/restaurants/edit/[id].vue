@@ -6,6 +6,7 @@ import { autofill } from '@mapbox/search-js-web';
 const route = useRoute();
 const toast = useToast();
 const restaurantRef = ref(null);
+const config = useRuntimeConfig();
 onMounted(async () => {
     const { data: restaurant } = useGatewayFetch(`/restaurant/${route.params.id}`, {
         onResponse({ response }) {
@@ -14,7 +15,7 @@ onMounted(async () => {
         }
     }).then(() => {
         autofill({
-            accessToken: 'pk.eyJ1Ijoibmlrb2xhcGFhYWEiLCJhIjoiY2t4NXc5azQ2MTk0ejJvcWtqbmx5ZTkxaiJ9.z9gcfqUSWayg-2cSjUkiag'
+            accessToken: config.public.mapboxAccessToken
         })
     })
 });
