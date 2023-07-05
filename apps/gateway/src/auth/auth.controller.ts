@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Request, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Request, Post, Put, Param, ParseUUIDPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { LoginUserDto } from './dto/loginUser.dto';
@@ -25,6 +25,12 @@ export class AuthController {
   getProfile(@Request() req) {
     return this.userService.findOneById(req.user.sub);
   }
+
+  @Get('user/:id')
+  async getUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.findOneById(id);
+  }
+
 
 
 }

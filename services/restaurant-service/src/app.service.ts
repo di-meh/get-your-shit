@@ -48,7 +48,15 @@ export class AppService {
   }
 
   getRestaurant() {
-    return this.prismaService.restaurant.findMany();
+    return this.prismaService.restaurant.findMany({
+      include: {
+        products: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
   }
 
   delete(id: string) {

@@ -31,6 +31,12 @@ export const useCartStore = defineStore('cart', () => {
         toast.success('Product : ' + product.name + ' removed from cart')
     }
 
+
+    function clearOnLogout() {
+        cart.value = []
+    }
+
+
     function clearCart() {
         cart.value = []
         toast.success('Cart cleared')
@@ -57,7 +63,8 @@ export const useCartStore = defineStore('cart', () => {
         isFinished,
         updateCart,
         total,
-        cartCount
+        cartCount,
+        clearOnLogout
     }
 
 

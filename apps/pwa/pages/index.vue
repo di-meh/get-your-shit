@@ -16,20 +16,12 @@ function search(event) {
   })
 }
 
-// one scroll make the search bar sticky
-window.addEventListener('scroll', () => {
-  const searchbar = document.querySelector('.searchbar');
-  const first = document.querySelector('.first');
-  const sticky = searchbar.offsetTop;
-  if (window.pageYOffset > sticky) {
-    searchbar.classList.add('sticky');
-    first.style.marginTop = '4rem';
-  } else {
-    searchbar.classList.remove('sticky');
-    first.style.marginTop = '0';
-  }
-})
-
+function backToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 
 </script>
 <template>
@@ -50,17 +42,18 @@ window.addEventListener('scroll', () => {
     </div>
     <div class="restaurant">
       <div class="card p-4" v-for="restaurant in restaurants">
-          <span>
-            <p :id=restaurant.name>{{ restaurant.name }}</p>
-            <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
-          </span>
-          <NuxtLink :to="`/restaurant/${restaurant.id}`"><button class="btn w-full mt-2">Voir</button></NuxtLink>
+        <span>
+          <p :id=restaurant.name>{{ restaurant.name }}</p>
+          <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
+        </span>
+        <NuxtLink :to="`/restaurant/${restaurant.id}`"><button class="btn w-full mt-2">Voir</button></NuxtLink>
       </div>
     </div>
   </div>
   <NuxtLink to="/restaurant/aroundMe">
     <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
   </NuxtLink>
+  <button class="fixed right-8 bottom-20 bg-neutral rounded-full min-h-fit p-3 h-fit" @click="backToTop()"><i class='bx bx-chevron-up'></i></button>
 </template>
 
 <style scoped>

@@ -102,6 +102,7 @@ services:
     environment:
       APP_PORT: ${ORDER_PORT-4002}
       APP_HOST: order
+      DATABASE_URL: ${ORDER_DATABASE_URL}
 
   payment:
     container_name: payment

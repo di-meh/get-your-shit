@@ -5,6 +5,17 @@ const { header, payload } = useJwt(cookie.value)
 const userName = payload.value.username
 const role = payload.value.role
 
+if (role === 'DELIVERY') {
+    console.log(role)
+    setPageLayout('delivery')
+} else {
+    console.log('default')
+    definePageMeta({
+        layout: 'default'
+    })
+}
+
+
 
 </script>
 
@@ -13,13 +24,13 @@ const role = payload.value.role
         <p>{{ userName }}</p>
         <i class="bx bx-user"></i>
     </div>
-    <div class="second">
+    <div v-if="role !== 'DELIVERY'" class="second">
         <div class="bg-neutral">
             <i class='bx bx-cart'></i>
             <p>Commandes</p>
         </div>
     </div>
-    <div class="divider"></div>
+    <div class="divider" v-if="role !== 'DELIVERY'"></div>
     <div class="third">
         <NuxtLink to="/editProfile" class="links hover:bg-neutral rounded-full">
             <div>
@@ -209,10 +220,7 @@ const role = payload.value.role
         font-size: 1.5rem;
     }
 
-    .divider {
-        margin-top: 6em;
-    }
-
+   
     .third {
         padding: 0 40px;
     }

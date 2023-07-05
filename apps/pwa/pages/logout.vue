@@ -12,7 +12,7 @@ definePageMeta({
 setTimeout(() => {
     userStore.logout()
     toast.success("Vous êtes déconnecté");
-    cartStore.clearCart()
+    cartStore.clearOnLogout()
     navigateTo('/')
 }, 1000)
 

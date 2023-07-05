@@ -9,3 +9,30 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Order {
+  id           String       @id @default(uuid())
+  buyerId      String
+  orderItems   OrderItem[]
+  totalPrice   Float
+  deliveryId   String?
+  status       ORDER_STATUS @default(CREATED)
+  orderCode    String?
+  restaurantId String
+}
+
+model OrderItem {
+  id           String @id @default(uuid())
+  productId    String
+  restaurantId String
+  quantity     Int
+  order        Order  @relation(fields: [orderId], references: [id])
+  orderId      String
+}
+
+enum ORDER_STATUS {
+  CREATED
+  PICKINGUP
+  DELIVERING
+  DELIVERED
+}

@@ -21,6 +21,7 @@ function addProductToCart(product) {
         price: product.price,
         description: product.description,
         quantity: selectedProductQuantity.value,
+        restaurantId: product.restaurantId,
     };
     cart.addToCart(productToAdd);
     selectedProductQuantity.value = 1;
