@@ -196,7 +196,7 @@ window.addEventListener('scroll', () => {
 
 /* desktop */
 
-@media (min-width: 1280px) {
+@media (min-width: 1000px) {
   .searchbar {
     width: 100%;
   }
