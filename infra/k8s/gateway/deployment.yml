@@ -49,7 +49,7 @@ spec:
               value: gys-restaurant-service
             - name: RESTAURANT_SERVICE_PORT
               value: "4004"
-            - name: SHIPPINNG_SERVICE_HOST
+            - name: SHIPPING_SERVICE_HOST
               value: gys-shipping-service
-            - name: SHIPPINNG_SERVICE_PORT
+            - name: SHIPPING_SERVICE_PORT
               value: "4005"

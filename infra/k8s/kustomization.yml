@@ -13,4 +13,7 @@ resources:
   - namespace.yml
   - ./gateway
   - ./demand
+  - ./order
   - ./payment
+  - ./restaurant
+  - ./shipping
