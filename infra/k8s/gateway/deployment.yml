@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gys-main
-          image: gysacr.azurecr.io/gateway:eeb97ff1dd645b8ed570c748ad34e020d3475419
+          image: gysacr.azurecr.io/gateway:latest
           ports:
             - containerPort: 3000
           env:

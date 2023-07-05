@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gys-demand
-          image: gysacr.azurecr.io/demand-service:eeb97ff1dd645b8ed570c748ad34e020d3475419
+          image: gysacr.azurecr.io/demand-service:latest
           ports:
             - containerPort: 4001
           env:

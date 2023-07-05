@@ -30,27 +30,27 @@ jobs:
 
       - name: "Build and push gateway image"
         run: |
-          docker build ./apps/gateway -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/gateway:${{ github.sha }}
+          docker build ./apps/gateway -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/gateway:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/gateway:${{ github.sha }}
       - name: "Build and push demand-service image"
         run: |
-          docker build ./services/demand-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/demand-service:${{ github.sha }}
+          docker build ./services/demand-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/demand-service:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/demand-service:${{ github.sha }}
       - name: "Build and push order-service image"
         run: |
-          docker build ./services/order-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/order-service:${{ github.sha }}
+          docker build ./services/order-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/order-service:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/order-service:${{ github.sha }}
       - name: "Build and push payment-service image"
         run: |
-          docker build ./services/payment-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/payment-service:${{ github.sha }}
+          docker build ./services/payment-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/payment-service:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/payment-service:${{ github.sha }}
       - name: "Build and push restaurant-service image"
         run: |
-          docker build ./services/restaurant-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/restaurant-service:${{ github.sha }}
+          docker build ./services/restaurant-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/restaurant-service:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/restaurant-service:${{ github.sha }}
       - name: "Build and push shipping-service image"
         run: |
-          docker build ./services/shipping-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/shipping-service:${{ github.sha }}
+          docker build ./services/shipping-service -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/shipping-service:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/shipping-service:${{ github.sha }}
 
 #      TODO déployer sur Kubernetes
