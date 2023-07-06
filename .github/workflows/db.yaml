@@ -2,11 +2,9 @@ name: "Migration des DB avec Prisma"
 
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches:
       - main
-      - dev
 jobs:
   migrate-gateway-db:
     runs-on: ubuntu-latest

@@ -53,3 +53,13 @@ spec:
               value: gys-shipping-service
             - name: SHIPPING_SERVICE_PORT
               value: "4005"
+            - name: GATEWAY_PWA_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: GATEWAY_PWA_URL
+                  name: gys-configmap
+            - name: GATEWAY_ADMIN_DASHBOARD_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: GATEWAY_ADMIN_DASHBOARD_URL
+                  name: gys-configmap
