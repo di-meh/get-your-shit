@@ -1,0 +1,34 @@
+name: "Création de l'infra avec Terraform"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-terraform-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+        name: "Setup Terraform"
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Get terraform.tfvars content'
+        run: echo "${{ secrets.TERRAFORM_TFVARS }}" > ./infra/azure/terraform.tfvars
+
+      - name: 'Terraform Init'
+        run: terraform init -backend-config=config.azure.tfbackend -force-copy -no-color
+        working-directory: ./infra/azure
+
+      - name: 'Terraform Plan'
+        run: terraform plan -no-color -out plan.out
+        working-directory: ./infra/azure
+
+      - name: 'Terraform Apply'
+        run: terraform apply plan.out -no-color -auto-approve
+        working-directory: ./infra/azure

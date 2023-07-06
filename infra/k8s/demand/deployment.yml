@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gys-demand-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gys-demand
+  template:
+    metadata:
+      labels:
+        app: gys-demand
+    spec:
+      containers:
+        - name: gys-demand
+          image: gysacr.azurecr.io/demand-service:latest
+          ports:
+            - containerPort: 4001
+          env:
+            - name: APP_PORT
+              value: "4001"
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DEMAND_DATABASE_URL
+                  name: gys-configmap

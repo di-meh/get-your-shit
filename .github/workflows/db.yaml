@@ -1,0 +1,62 @@
+name: "Migration des DB avec Prisma"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  migrate-gateway-db:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.GATEWAY_DATABASE_URL }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+      - name: 'Install node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: 'Install dependencies'
+        run: npm ci
+        working-directory: ./apps/gateway
+      - name: 'Migrate DB'
+        run: npx prisma migrate deploy
+        working-directory: ./apps/gateway
+  migrate-demand-db:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DEMAND_DATABASE_URL }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+      - name: 'Install node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: 'Install dependencies'
+        run: npm ci
+        working-directory: ./services/demand-service
+      - name: 'Migrate DB'
+        run: npx prisma migrate deploy
+        working-directory: ./services/demand-service
+
+  migrate-restaurants-db:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.RESTAURANT_DATABASE_URL }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+      - name: 'Install node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: 'Install dependencies'
+        run: npm ci
+        working-directory: ./services/restaurant-service
+      - name: 'Migrate DB'
+        run: npx prisma migrate deploy
+        working-directory: ./services/restaurant-service
+
+# TODO ajouter les autres services au fur et à mesure des merges
