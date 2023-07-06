@@ -40,6 +40,24 @@ jobs:
       - name: 'Migrate DB'
         run: npx prisma migrate deploy
         working-directory: ./services/demand-service
+  migrate-order-db:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.ORDER_DATABASE_URL }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+      - name: 'Install node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: 'Install dependencies'
+        run: npm ci
+        working-directory: ./services/order-service
+      - name: 'Migrate DB'
+        run: npx prisma migrate deploy
+        working-directory: ./services/order-service
+
 
   migrate-restaurants-db:
     runs-on: ubuntu-latest
@@ -58,5 +76,3 @@ jobs:
       - name: 'Migrate DB'
         run: npx prisma migrate deploy
         working-directory: ./services/restaurant-service
-
-# TODO ajouter les autres services au fur et à mesure des merges
