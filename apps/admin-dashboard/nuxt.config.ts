@@ -14,11 +14,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
-      mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-    }
+      mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+    },
   },
   eslint: {
-    lintOnStart: false
+    lintOnStart: false,
   },
   colorMode: {
     dataValue: 'theme',
@@ -26,12 +26,12 @@ export default defineNuxtConfig({
   vite: {
     server: {
       hmr: {
-        port: 24679
-      }
-    }
+        port: 24679,
+      },
+    },
   },
   ssr: false,
   mapbox: {
-    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-  }
+    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+  },
 })

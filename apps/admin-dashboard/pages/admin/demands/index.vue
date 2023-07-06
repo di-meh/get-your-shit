@@ -6,15 +6,28 @@ definePageMeta(
   },
 )
 const { data: demands, pending, refresh } = useGatewayFetch('/demand/restaurant')
+const { data: driveDemands, refresh: refreshDriver } = useGatewayFetch('/demand/driver')
 
-async function acceptDemand(id) {
-  await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
-  refresh()
+async function acceptDemand(id, type) {
+  if (type === 'restaurant') {
+    await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
+    refresh()
+  }
+  else {
+    await useGatewayFetch(`/demand/driver/${id}/accept`, { method: 'PUT' })
+    refreshDriver()
+  }
 }
 
-async function refuseDemand(id) {
-  await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
-  refresh()
+async function refuseDemand(id, type) {
+  if (type === 'restaurant') {
+    await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
+    refresh()
+  }
+  else {
+    await useGatewayFetch(`/demand/driver/${id}/reject`, { method: 'PUT' })
+    refreshDriver()
+  }
 }
 
 onBeforeMount(() => {
@@ -78,43 +91,3 @@ onBeforeMount(() => {
     </ul>
   </div>
 </template>
-
-<script setup>
-definePageMeta(
-  {
-    layout: 'admin',
-    middleware: 'admin'
-  }
-)
-const { data: demands, pending, refresh } = useGatewayFetch('/demand/restaurant')
-const { data: driveDemands, refresh: refreshDriver } = useGatewayFetch('/demand/driver')
-
-
-const acceptDemand = async (id, type) => {
-  if (type === 'restaurant') {
-    await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
-    refresh()
-  } else {
-    await useGatewayFetch(`/demand/driver/${id}/accept`, { method: 'PUT' })
-    refreshDriver()
-  }
-}
-
-const refuseDemand = async (id, type) => {
-  if (type === 'restaurant') {
-    await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
-    refresh()
-  } else {
-    await useGatewayFetch(`/demand/driver/${id}/reject`, { method: 'PUT' })
-    refreshDriver()
-  }
-}
-
-onBeforeMount(() => {
-  useHead({
-    htmlAttrs: {
-      'data-theme': 'lemonade'
-    }
-  })
-})
-</script>

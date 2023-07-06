@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
+  AdjustmentsHorizontalIcon,
   ArrowLeftOnRectangleIcon,
   Bars3Icon,
-  DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
@@ -12,12 +12,14 @@ import {
 } from '@heroicons/vue/24/outline'
 import { useUserStore } from '~/stores/user'
 
+const route = useRoute()
+
 const userStore = useUserStore()
 const navigation = [
-  { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: true },
+  { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: false },
   { name: 'Produits', href: '/chief/products', icon: FolderIcon, current: false },
-  { name: 'Commandes', href: '/chief/orders', icon: DocumentDuplicateIcon, current: false },
   { name: 'Clients', href: '/chief/clients', icon: UsersIcon, current: false },
+  { name: 'Restaurants', href: '/chief/restaurants', icon: AdjustmentsHorizontalIcon, current: false },
 ]
 
 const sidebarOpen = ref(false)
@@ -61,7 +63,7 @@ function logout() {
                     <li class="mt-8">
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <NuxtLink :to="item.href" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                          <NuxtLink :to="item.href" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus']">
                             <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                             {{ item.name }}
                           </NuxtLink>
@@ -86,7 +88,7 @@ function logout() {
             <li class="mt-8">
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <NuxtLink :to="item.href" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                  <NuxtLink :to="item.href" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold" :class="[item.href === route.path ? 'bg-secondary-focus' : 'hover:text-white hover:bg-secondary-focus']">
                     <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
@@ -123,36 +125,3 @@ function logout() {
     </main>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import {
-  ArrowLeftOnRectangleIcon,
-  AdjustmentsHorizontalIcon,
-  Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
-import {useUserStore} from "~/stores/user";
-const route = useRoute()
-
-const userStore = useUserStore()
-const navigation = [
-  { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: false },
-  {name: "Produits", href: "/chief/products", icon: FolderIcon, current: false},
-  {name: "Clients", href: "/chief/clients", icon: UsersIcon, current: false},
-  {name: "Restaurants", href: "/chief/restaurants", icon: AdjustmentsHorizontalIcon, current: false},
-]
-
-const sidebarOpen = ref(false)
-
-const logout = () => {
-  userStore.logout()
-}
-</script>
