@@ -25,10 +25,12 @@ if (role === 'DELIVERY') {
         <i class="bx bx-user"></i>
     </div>
     <div v-if="role !== 'DELIVERY'" class="second">
-        <div class="bg-neutral">
-            <i class='bx bx-cart'></i>
-            <p>Commandes</p>
-        </div>
+        <NuxtLink to="/orders">
+            <div class="bg-neutral">
+                <i class='bx bx-cart'></i>
+                <p>Commandes</p>
+            </div>
+        </NuxtLink>
     </div>
     <div class="divider" v-if="role !== 'DELIVERY'"></div>
     <div class="third">
@@ -220,7 +222,7 @@ if (role === 'DELIVERY') {
         font-size: 1.5rem;
     }
 
-   
+
     .third {
         padding: 0 40px;
     }

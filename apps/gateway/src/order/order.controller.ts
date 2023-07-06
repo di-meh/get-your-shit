@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { CreateOrderItemDto } from './dto/createOrderItem.dto';
 import { catchError, lastValueFrom } from 'rxjs';
+import { UserService } from 'src/user/user.service';
 
 @Controller('order')
 export class OrderController {
   constructor(
     @Inject('ORDER_SERVICE') private readonly client: ClientProxy,
     @Inject('RESTAURANT_SERVICE') private readonly restaurantClient: ClientProxy,
+    private readonly userService: UserService
   ) { }
 
   @Get('ping')
@@ -33,9 +35,28 @@ export class OrderController {
   }
 
   @Get('myOrders')
-  getAllByUserId(@Request() req)
+  async getAllByUserId(@Request() req)
   {
-    return this.client.send('order-service:getAllByUserId', req.user.sub);
+    const orders = await lastValueFrom(
+      this.client.send('order-service:getAllByUserId', req.user.sub)
+      .pipe(
+        catchError((error) => {
+          throw new InternalServerErrorException(error.message);
+        })
+      )
+    );
+    for (let i = 0; i < orders.length; i++) {
+      const restaurantFromOrder = await lastValueFrom(
+        this.restaurantClient
+        .send('restaurant-service:getById',orders[i].restaurantId)
+        .pipe(
+          catchError((error) => {
+            throw new InternalServerErrorException(error.message);
+        })));
+        orders[i].restaurant = restaurantFromOrder;
+    }
+
+    return orders;
   }
 
   @Get('created')
@@ -44,8 +65,19 @@ export class OrderController {
   }
 
   @Get('restaurant/:id')
-  getOrderByRestaurantId(@Param('id', ParseUUIDPipe) id: string) {
-    return this.client.send('order-service:getOrderByRestaurantId', id);
+  async getOrderByRestaurantId(@Param('id', ParseUUIDPipe) id: string) {
+    const order = await lastValueFrom(
+      this.client
+      .send('order-service:getOrderByRestaurantId', id)
+      .pipe(
+        catchError((error) => {
+          throw new InternalServerErrorException(error.message);
+      })));
+    for (let i = 0; i < order.length; i++) {
+      const userFromOrder = await this.userService.findOneById(order[i].buyerId);
+        order[i].user = userFromOrder;
+    }
+    return order;
   }
 
 

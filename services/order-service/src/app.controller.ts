@@ -40,7 +40,7 @@ export class AppController {
   
 
   @MessagePattern('order-service:delete')
-  deleteOrder(data: CreateOrderDto): any {
+  deleteOrder(data: string): any {
     return this.appService.deleteOrder(data);
   }
 

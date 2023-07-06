@@ -26,7 +26,7 @@ model OrderItem {
   productId    String
   restaurantId String
   quantity     Int
-  order        Order  @relation(fields: [orderId], references: [id])
+  order        Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId      String
 }
 

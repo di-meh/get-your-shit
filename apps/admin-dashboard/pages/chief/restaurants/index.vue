@@ -33,8 +33,8 @@ function deleteProduct(id) {
         <div class="card-body items-center text-center">
           <h2 class="card-title">{{ restaurant.name }}</h2>
           <p>{{ restaurant.address }}, {{ restaurant.city }}</p>
-          <div class="card-actions justify-end">
-            <NuxtLink :to="`/chief/restaurants/${restaurant.id}`"><button class="btn btn">Voir</button></NuxtLink>
+          <div class="card-actions justify-end flex-nowrap">
+            <NuxtLink :to="`/chief/restaurants/${restaurant.id}`"><button class="btn btn">Voir les commandes</button></NuxtLink>
             <NuxtLink :to="`/chief/restaurants/edit/${restaurant.id}`"><button class="btn btn-primary">Modifier</button></NuxtLink>
             <button class="btn bg-red-700 border-none" @click="deleteProduct(restaurant.id)">Supprimer</button>
           </div>

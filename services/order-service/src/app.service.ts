@@ -14,8 +14,8 @@ export class AppService {
     return this.prisma.order.create({ data });
   }
 
-  async deleteOrder(data: CreateOrderDto) {
-    return this.prisma.order.delete({ where: { id: data.id } });
+  async deleteOrder(id: string) {
+    return this.prisma.order.delete({ where: { id } });
   }
 
   async getAll() {
