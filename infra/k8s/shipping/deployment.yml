@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gys-shipping-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gys-shipping
+  template:
+    metadata:
+      labels:
+        app: gys-shipping
+    spec:
+      containers:
+        - name: gys-shipping
+          image: gysacr.azurecr.io/shipping-service:latest
+          ports:
+            - containerPort: 4005
+          env:
+            - name: APP_PORT
+              value: "4005"
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SHIPPING_DATABASE_URL
+                  name: gys-configmap

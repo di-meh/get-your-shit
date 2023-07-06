@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DemandController } from './demand.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
+import { DriverDemandController } from './driver.controller';
+import { RestaurantDemandController } from './restaurant.controller';
 
 @Module({
   imports: [
@@ -13,8 +16,18 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           port: parseInt(process.env.DEMAND_SERVICE_PORT || '3000'),
         },
       },
+      {
+        name: 'RESTAURANT_SERVICE',
+        transport: Transport.TCP,
+        options: {
+          host: process.env.RESTAURANT_SERVICE_HOST || '',
+          port: parseInt(process.env.RESTAURANT_SERVICE_PORT || '3000'),
+        },
+      },
     ]),
+    AuthModule,
+    UserModule,
   ],
-  controllers: [DemandController],
+  controllers: [RestaurantDemandController, DriverDemandController],
 })
 export class DemandModule {}

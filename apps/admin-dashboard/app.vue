@@ -1,5 +1,9 @@
+<script setup lang="ts">
+</script>
+
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+    <UNotifications />
+  </NuxtLayout>
 </template>

@@ -1,9 +1,8 @@
 node_modules
-*.log*
-.nuxt
-.nitro
-.cache
-.output
-.env
+*.log
 dist
-.DS_Store
+.output
+.nuxt
+.env
+.idea/
+.pnpm-store

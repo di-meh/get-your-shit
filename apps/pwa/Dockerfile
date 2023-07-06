@@ -1,31 +1,29 @@
 FROM node:lts-alpine as development
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
-COPY --chown=node:node package*.json ./
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN npm ci
+COPY .npmrc package.json pnpm-lock.yaml ./
 
-COPY --chown=node:node . .
+RUN pnpm config set store-dir /root/app/.pnpm-store/v3 --global && pnpm i
 
-RUN chown -R node:node /home/node
+COPY . .
 
-USER node
-
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev:pwa"]
 
 FROM development as build
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
 ENV NODE_ENV production
 
-RUN npm run build
+RUN pnpm run build
 
-RUN npm cache clean --force
+# RUN npm cache clean --force
 
 FROM build as production
 
-WORKDIR /home/node/app
+WORKDIR /root/app
 
 CMD ["node", ".output/server/index.mjs"]

@@ -3,6 +3,7 @@ version: "3.7"
 services:
   # APPS
   gateway:
+    container_name: gateway
     build:
       context: ./apps/gateway
       target: development
@@ -12,16 +13,16 @@ services:
       - ./apps/gateway:/home/node/app
       - /home/node/app/node_modules
     depends_on:
-      - auth-user
+      - postgres
       - demand
       - order
       - payment
       - restaurant
       - shipping
     environment:
+      JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: ${AUTH_USER_DATABASE_URL}
       APP_PORT: ${GATEWAY_PORT-3000}
-      AUTH_USER_SERVICE_HOST: auth-user
-      AUTH_USER_SERVICE_PORT: ${AUTH_PORT-4000}
       DEMAND_SERVICE_HOST: demand
       DEMAND_SERVICE_PORT: ${DEMAND_PORT-4001}
       ORDER_SERVICE_HOST: order
@@ -32,48 +33,45 @@ services:
       RESTAURANT_SERVICE_PORT: ${RESTAURANT_PORT-4004}
       SHIPPING_SERVICE_HOST: shipping
       SHIPPING_SERVICE_PORT: ${SHIPPING_PORT-4005}
+      SMTP_URL: ${SMTP_URL}
+      GATEWAY_PWA_URL: ${GATEWAY_PWA_URL}
+      GATEWAY_ADMIN_DASHBOARD_URL: ${GATEWAY_ADMIN_DASHBOARD_URL}
 
   pwa:
+    container_name: pwa
     build:
       context: ./apps/pwa
       target: development
     ports:
       - ${PWA_PORT-3001}:3000
+      - 24678:24678
     volumes:
-      - ./apps/pwa:/home/node/app
-      - /home/node/app/node_modules
+      - ./apps/pwa:/root/app
+      - /root/app/node_modules
+      - /root/app/.pnpm-store
     depends_on:
       - gateway
+    environment:
+      NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
+      NUXT_PUBLIC_SERVER_GATEWAY_URL: ${NUXT_PUBLIC_SERVER_GATEWAY_URL}
 
   admin-dashboard:
+    container_name: admin-dashboard
     build:
       context: ./apps/admin-dashboard
       target: development
     ports:
       - ${ADMIN_DASHBOARD_PORT-3002}:3000
+      - "24679:24679"
     volumes:
       - ./apps/admin-dashboard:/home/node/app
       - /home/node/app/node_modules
     depends_on:
       - gateway
+    environment:
+      NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
 
   # SERVICES
-  auth-user:
-    container_name: auth-user
-    build:
-      context: ./services/auth-user-service
-      target: development
-    ports:
-      - ${AUTH_PORT-4000}:${AUTH_PORT-4000}
-    volumes:
-      - ./services/auth-user-service:/home/node/app
-      - /home/node/app/node_modules
-    depends_on:
-      - postgres
-    environment:
-      APP_PORT: ${AUTH_PORT-4000}
-      APP_HOST: auth-user
-
   demand:
     container_name: demand
     build:
@@ -89,6 +87,7 @@ services:
     environment:
       APP_PORT: ${DEMAND_PORT-4001}
       APP_HOST: demand
+      DATABASE_URL: ${DEMAND_DATABASE_URL}
 
   order:
     container_name: order
@@ -135,6 +134,7 @@ services:
     environment:
       APP_PORT: ${RESTAURANT_PORT-4004}
       APP_HOST: restaurant
+      DATABASE_URL: ${RESTAURANT_DATABASE_URL}
 
   shipping:
     container_name: shipping
@@ -154,6 +154,7 @@ services:
 
   # DATABASES
   postgres:
+    container_name: postgres
     image: postgres:15-alpine
     restart: always
     volumes:
@@ -167,6 +168,7 @@ services:
       - POSTGRES_MULTIPLE_DATABASES="auth-user","demand","order","restaurant","shipping"
 
   adminer:
+    container_name: adminer
     image: adminer:4.8.1
     restart: always
     depends_on:

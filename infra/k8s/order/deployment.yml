@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gys-order-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gys-order
+  template:
+    metadata:
+      labels:
+        app: gys-order
+    spec:
+      containers:
+        - name: gys-order
+          image: gysacr.azurecr.io/order-service:latest
+          ports:
+            - containerPort: 4002
+          env:
+            - name: APP_PORT
+              value: "4002"
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: ORDER_DATABASE_URL
+                  name: gys-configmap
