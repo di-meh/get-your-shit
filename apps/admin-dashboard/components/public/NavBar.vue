@@ -10,7 +10,7 @@
           <li><NuxtLink to="/register">Devenir restaurateur</NuxtLink></li>
         </ul>
       </div>
-      <NuxtLink to="/" class="btn btn-ghost normal-case text-xl">Get Your Shit</NuxtLink>
+      <NuxtLink to="/" class="btn btn-ghost normal-case text-xl">Get Your Stuff</NuxtLink>
     </div>
     <div class="navbar-end gap-4 hidden md:flex">
       <NuxtLink to="/login">

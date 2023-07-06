@@ -9,7 +9,7 @@ export class MailService {
   async sendSignUpMail(mailData: MailData<{ hash: string }>) {
     await this.mailerService.sendMail({
       to: mailData.to,
-      subject: 'Bienvenue sur GetYourShit',
+      subject: 'Bienvenue sur GetYourStuff',
       text: `Veuillez cliquer sur le lien ci-après pour vérifier votre compte: ${process.env.GATEWAY_PWA_URL}/api/verify-email/${mailData.data.hash}`,
     });
   }

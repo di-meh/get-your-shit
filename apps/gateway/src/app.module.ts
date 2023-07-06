@@ -14,7 +14,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MailerModule.forRoot({
       transport: process.env.SMTP_URL,
       defaults: {
-        from: '"Get Your Shit" <hello@gys.com>',
+        from: '"Get Your Stuff" <hello@gys.com>',
       },
     }),
     AuthModule,

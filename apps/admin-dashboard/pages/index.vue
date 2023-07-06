@@ -1,10 +1,10 @@
 <script setup lang="ts">
 useHeadSafe({
-  title: 'Devenez partenaire commercial de Get Your Shit',
+  title: 'Devenez partenaire commercial de Get Your Stuff',
   meta: [
     {
       name: 'description',
-      content: 'Laissez Get Your Shit vous aider à toucher plus de clients.',
+      content: 'Laissez Get Your Stuff vous aider à toucher plus de clients.',
     },
   ],
 })
