@@ -31,6 +31,4 @@ export class AuthController {
     return this.userService.findOneById(id);
   }
 
-
-
 }

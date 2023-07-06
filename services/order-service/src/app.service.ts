@@ -19,8 +19,17 @@ export class AppService {
   }
 
   async getAll() {
-    return this.prisma.order.findMany();
+    return this.prisma.order.findMany({});
   }
+
+  async getAllByUserId(id: string) {
+    return this.prisma.order.findMany({ where: { buyerId: id } });
+  }
+
+  async getAllCreated() {
+    return this.prisma.order.findMany({ where: { status: 'CREATED' } });
+  }
+
 
   async getOrderByRestaurantId(id: string) {
     return this.prisma.order.findMany({ where: { restaurantId: id } });
@@ -60,7 +69,10 @@ export class AppService {
 
   async acceptOrderByRestaurant(data: any) {
     const order = await this.getOrder(data.id);
-    if (!order) {
+    if (order.deliveryId !== data.deliveryId) {
+      throw new RpcException('Delivery id is not valid');
+    } 
+    if (!order) {  
       throw new RpcException('Order not found');
     }
     if (parseInt(order.orderCode) !== parseInt(data.orderCode.orderCode)) {
@@ -71,7 +83,6 @@ export class AppService {
         where: { id: data.id },
         data: {
           status: 'DELIVERING',
-          deliveryId: data.deliveryId,
           orderCode: randomOrderCode.toString(), 
         },
       });
@@ -80,6 +91,9 @@ export class AppService {
 
   async acceptOrderByUser(data: any) {
     const order = await this.getOrder(data.id);
+    if (order.deliveryId !== data.deliveryId) {
+      throw new RpcException('Delivery id is not valid');
+    } 
     if (!order) {
       throw new RpcException('Order not found');
     }
@@ -91,7 +105,6 @@ export class AppService {
         where: { id: data.id },
         data: {
           status: 'DELIVERED',
-          deliveryId: data.deliveryId,
           orderCode: randomOrderCode.toString(),
         },
       });

@@ -106,13 +106,11 @@ import {
 } from '@heroicons/vue/24/outline'
 import {useUserStore} from "~/stores/user";
 const route = useRoute()
-console.log(route);
 
 const userStore = useUserStore()
 const navigation = [
   { name: 'Dashboard', href: '/chief', icon: HomeIcon, current: false },
   {name: "Produits", href: "/chief/products", icon: FolderIcon, current: false},
-  {name: "Commandes", href: "/chief/orders", icon: DocumentDuplicateIcon, current: false},
   {name: "Clients", href: "/chief/clients", icon: UsersIcon, current: false},
   {name: "Restaurants", href: "/chief/restaurants", icon: AdjustmentsHorizontalIcon, current: false},
 ]

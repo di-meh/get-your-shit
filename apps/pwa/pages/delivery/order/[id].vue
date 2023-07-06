@@ -1,58 +1,55 @@
 <script setup>
 const route = useRoute()
-
 const orderItemsRef = ref([])
-const restaurantsRef = ref([])
-
-
-
-
-
+const orderRef = ref([])
+import { useToast } from "vue-toastification";
+const toast = useToast()
 
 const { data: orderItems } = useGatewayFetch(`/order/item/${route.params.id}`, {
     onResponse({ response }) {
         orderItemsRef.value = response._data
     }
 })
-const { data: restaurants } = useGatewayFetch('/restaurant', {
+
+const { data: order } = useGatewayFetch(`/order/${route.params.id}`, {
     onResponse({ response }) {
-        restaurantsRef.value = response._data
+        orderRef.value = response._data
     }
 })
 
-
-// get the restaurant name, address, product name, and price for each order item
-
-const orderItemsWithRestaurantName = computed(() => {
-    return orderItemsRef.value.map(orderItem => {
-        const restaurant = restaurantsRef.value.find(restaurant => restaurant.id === orderItem.restaurantId)
-        
-        
+function acceptDelivery() {
+    useGatewayFetch(`/order/delivery/accept/${route.params.id}`, {
+        method: 'PUT',
+        body: {
+            orderCode: orderRef.value.orderCode
+        },
+        onResponse({ response }) {
+            if (response.ok) {
+                toast.success('Commande acceptée')
+                navigateTo('/delivery/order/' + route.params.id + '-pickingup')
+            } else {
+                toast.error('Code de livraison incorrect')
+            }
+        }
     })
-})
-
-
-
-
-
-
+}
 
 </script>
 
 <template>
     <h1>Delivery</h1>
-    <div v-if="orderItemsWithRestaurantName.length === 0">
-        <p>Loading...</p>
-    </div>
-    <div v-else>
-        <h2>Order Items</h2>
-        <!-- <ul>
-            <li v-for="orderItem in orderItemsWithRestaurantName" :key="orderItem.id">
-                <p>Restaurant Name: {{ orderItem.restaurantName }}</p>
-                <p>Restaurant Address: {{ orderItem.restaurantAddress }}</p>
-                <p>Product Name: {{ orderItem.productName }}</p>
-                <p>Price: {{ orderItem.price }}</p>
-            </li>
-        </ul> -->
+    <div v-if="orderItemsRef" class="px-4">
+        <div v-if="orderItemsRef.length" class="flex flex-col gap-4 pb-2">
+            <div v-for="orderItem in orderItemsRef" class="card w-full bg-neutral shadow-xl">
+                <div class="flex lg:justify-between p-4 items-center flex-col lg:flex-row">
+                    <div class="w-full flex flex-col align-center cardBody">
+                        <h2 class="card-title">{{ orderItem.product.name }}</h2>
+                        <p class="lg:text-left description">{{ orderItem.product.description }}</p>
+                        <p class="text-left italic font-bold">{{ orderItem.product.price }}€</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn w-full lg:w-auto" @click="acceptDelivery()">Accepter</button>
+        </div>
     </div>
 </template>

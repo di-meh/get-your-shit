@@ -1,12 +1,16 @@
-import { Controller, Get, Inject, Post, Put, Delete, Body, Param, Request, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Inject, Post, Put, Delete, Body, Param, Request, ParseUUIDPipe, InternalServerErrorException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { CreateOrderItemDto } from './dto/createOrderItem.dto';
+import { catchError, lastValueFrom } from 'rxjs';
 
 @Controller('order')
 export class OrderController {
-  constructor(@Inject('ORDER_SERVICE') private readonly client: ClientProxy) { }
+  constructor(
+    @Inject('ORDER_SERVICE') private readonly client: ClientProxy,
+    @Inject('RESTAURANT_SERVICE') private readonly restaurantClient: ClientProxy,
+  ) { }
 
   @Get('ping')
   ping(): Observable<string> {
@@ -28,6 +32,17 @@ export class OrderController {
     return this.client.send('order-service:getAll', {});
   }
 
+  @Get('myOrders')
+  getAllByUserId(@Request() req)
+  {
+    return this.client.send('order-service:getAllByUserId', req.user.sub);
+  }
+
+  @Get('created')
+  getAllCreated() {
+    return this.client.send('order-service:getAllCreated', {});
+  }
+
   @Get('restaurant/:id')
   getOrderByRestaurantId(@Param('id', ParseUUIDPipe) id: string) {
     return this.client.send('order-service:getOrderByRestaurantId', id);
@@ -40,8 +55,27 @@ export class OrderController {
   }
 
   @Get('item/:id')
-  getOrderItem(@Param('id', ParseUUIDPipe) id: string) {
-    return this.client.send('order-service:getOrderItem', id);
+  async getOrderItem(@Param('id', ParseUUIDPipe) id: string) {
+    const orderItem = await lastValueFrom(
+      this.client
+      .send('order-service:getOrderItem', id)
+      .pipe(
+        catchError((error) => {
+        throw new InternalServerErrorException(error.message);
+      })));
+
+    for (let i = 0; i < orderItem.length; i++) {
+      const productFromOrder = await lastValueFrom(
+        this.restaurantClient
+        .send('restaurant-service:getProductById',orderItem[i].productId)
+        .pipe(
+          catchError((error) => {
+          throw new InternalServerErrorException(error.message);
+        })));
+        orderItem[i].product = productFromOrder;
+    }
+          
+    return orderItem;
   }
 
   @Put('delivery/accept/:id')
@@ -51,12 +85,12 @@ export class OrderController {
 
   @Put('delivery/restaurant/accept/:id')
   acceptOrderByRestaurant(@Body() orderCode: string, @Param('id', ParseUUIDPipe) id: string, @Request() req: any) {
-    return this.client.send('order-service:acceptByRestaurant', { orderCode, id, restaurantId: req.user.sub});
+    return this.client.send('order-service:acceptByRestaurant', { orderCode, id, deliveryId: req.user.sub});
   }
 
   @Put('delivery/user/accept/:id')
   acceptOrderByUser(@Body() orderCode: string, @Param('id', ParseUUIDPipe) id: string, @Request() req: any) {
-    return this.client.send('order-service:acceptByUser', { orderCode, id, userId: req.user.sub});
+    return this.client.send('order-service:acceptByUser', { orderCode, id, deliveryId: req.user.sub});
   }
 
 

@@ -23,6 +23,11 @@ export class AppController {
     return this.appService.getAll();
   }
 
+  @MessagePattern('order-service:getAllByUserId')
+  getAllByUserId(id: string): any {
+    return this.appService.getAllByUserId(id);
+  }
+
   @MessagePattern('order-service:getOrderByRestaurantId')
   getOrderByRestaurantId(id: string): any {
     return this.appService.getOrderByRestaurantId(id);
@@ -64,6 +69,11 @@ export class AppController {
     return this.appService.getOrder(id);
   }
 
+  @MessagePattern('order-service:getAllCreated')
+  getAllCreated(): any {
+    return this.appService.getAllCreated();
+  }
+  
 
  
 
