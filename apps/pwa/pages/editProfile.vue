@@ -80,8 +80,8 @@ function updateUser(e) {
                 <input id="phone" name="phone" class="input" type="number" :value=userInfos.phone />
             </div>
             <div class="form-control">
-                <label for="date_birth" class="label label-text">Tel</label>
-                <input id="date_birth" name="date_birth" class="input" type="date" :value=dateBirth />
+                <label for="date_birth" class="label label-text">Date de naissance</label>
+                <input id="date_birth" name="date_birth" class="input w-full" type="date" :value=dateBirth />
             </div>
             <div class="form-control">
                 <label for="address" class="label label-text">Address</label>
