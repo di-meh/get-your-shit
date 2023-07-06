@@ -56,9 +56,9 @@ function acceptDelivery() {
           </div>
         </div>
       </div>
+      <button class="btn w-full lg:w-auto" @click="acceptDelivery()">
+        Accepter
+      </button>
     </div>
   </div>
-  <button class="btn w-full lg:w-auto" @click="acceptDelivery()">
-    Accepter
-  </button>
 </template>
