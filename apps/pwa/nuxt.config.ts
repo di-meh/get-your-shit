@@ -72,6 +72,8 @@ export default defineNuxtConfig({
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
       mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
       serverGatewayUrl: process.env.NUXT_PUBLIC_SERVER_GATEWAY_URL,
+      stripePublicKey: process.env.NUXT_PUBLIC_STRIPE_PUBLIC_KEY,
+      stripeSecretKey: process.env.NUXT_PUBLIC_STRIPE_SECRET_KEY,
     },
   },
   mapbox: {
