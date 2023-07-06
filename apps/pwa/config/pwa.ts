@@ -16,7 +16,7 @@ export const pwa: ModuleOptions = {
     theme_color: '#ffffff',
     icons: [
       {
-        src: 'images/ubereats.png',
+        src: 'images/gys-high-resolution-logo-color-on-transparent-background.png',
         sizes: '360x360',
         type: 'image/png',
       },

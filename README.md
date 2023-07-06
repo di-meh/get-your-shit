@@ -20,3 +20,25 @@ docker compose build --pull --no-cache
 ```bash
 docker compose up -d
 ```
+
+## Prod
+
+### Terraform
+
+```bash
+cd infra/azure
+cp terraform.tfvars.example terraform.tfvars
+terraform init
+terraform plan
+terraform apply
+```
+
+### Kubernetes
+
+```bash
+cd infra/k8s
+cp .env.prod.example .env.prod
+```
+
+Remplissez les valeurs nécessaires.
+

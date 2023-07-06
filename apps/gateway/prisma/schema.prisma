@@ -21,6 +21,14 @@ model User {
   verified            Boolean               @default(false)
   verifyHash          String?               @unique
   ForgotPasswordToken ForgotPasswordToken[]
+  customerId          String?
+  address             String?
+  city                String?
+  postal_code         String?
+  phone               String?
+  departement         String?
+  vehicule_type       String?
+  date_birth          DateTime?
 }
 
 model ForgotPasswordToken {

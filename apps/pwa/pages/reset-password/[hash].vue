@@ -1,22 +1,5 @@
-<template>
-  <div class="h-screen flex items-center justify-center flex-col">
-    <h1 class="font-bold text-2xl mb-8">Choisissez un nouveau mot de passe</h1>
-    <form @submit.prevent="resetPassword($event)" class="flex flex-col items-center space-y-8">
-      <div class="form-control">
-        <label for="password" class="label label-text">Mot de passe</label>
-        <input class="input w-full max-w-xs" name="password" type="password" />
-      </div>
-      <div class="form-control">
-        <label for="password_confirm" class="label label-text">Confirmation du mot de passe</label>
-        <input class="input w-full max-w-xs" name="password_confirm" type="password" />
-      </div>
-      <button type="submit" class="btn btn-primary" :disabled="isLoading">Envoyer</button>
-    </form>
-  </div>
-</template>
-
 <script setup>
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification'
 
 const isLoading = ref(false)
 const { hash } = useRoute().params
@@ -25,7 +8,7 @@ const toast = useToast()
 
 await useGatewayFetch(url, {
   key: hash,
-  async onResponse ({ response }) {
+  async onResponse({ response }) {
     if (response.ok) {
       const validRoles = ['USER', 'DELIVERY']
       if (!validRoles.includes(response._data.user.role)) {
@@ -34,10 +17,10 @@ await useGatewayFetch(url, {
       }
     }
   },
-  async onResponseError () {
+  async onResponseError() {
     toast.error('Une erreur est survenue. Veuillez réessayer.')
     await navigateTo('/login')
-  }
+  },
 })
 
 async function resetPassword(event) {
@@ -55,7 +38,7 @@ async function resetPassword(event) {
   await useGatewayFetch(resetUrl, {
     method: 'POST',
     body,
-    async onResponse({response}) {
+    async onResponse({ response }) {
       if (response.ok) {
         toast.success('Votre mot de passe a été réinitialisé.')
         await navigateTo('/login')
@@ -63,7 +46,7 @@ async function resetPassword(event) {
     },
     onResponseError() {
       toast.error('Une erreur est survenue. Veuillez réessayer.')
-    }
+    },
   })
   isLoading.value = false
 }
@@ -72,11 +55,32 @@ useHeadSafe({
   meta: [
     {
       name: 'description',
-      content: 'Réinitialisez votre mot de passe pour continuer.'
-    }
-  ]
+      content: 'Réinitialisez votre mot de passe pour continuer.',
+    },
+  ],
 })
 definePageMeta({
-  layout: 'empty'
+  layout: 'empty',
 })
 </script>
+
+<template>
+  <div class="h-screen flex items-center justify-center flex-col">
+    <h1 class="font-bold text-2xl mb-8">
+      Choisissez un nouveau mot de passe
+    </h1>
+    <form class="flex flex-col items-center space-y-8" @submit.prevent="resetPassword($event)">
+      <div class="form-control">
+        <label for="password" class="label label-text">Mot de passe</label>
+        <input class="input w-full max-w-xs" name="password" type="password">
+      </div>
+      <div class="form-control">
+        <label for="password_confirm" class="label label-text">Confirmation du mot de passe</label>
+        <input class="input w-full max-w-xs" name="password_confirm" type="password">
+      </div>
+      <button type="submit" class="btn btn-primary" :disabled="isLoading">
+        Envoyer
+      </button>
+    </form>
+  </div>
+</template>

@@ -2,9 +2,6 @@ name: "Upload des images Docker sur l'Azure Container Registry"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build-and-upload:

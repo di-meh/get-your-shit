@@ -4,7 +4,9 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     '@pinia/nuxt',
     '@nuxthq/ui',
+    '@nuxtjs/eslint-module',
     '@vueuse/nuxt',
+    'nuxt-mapbox',
   ],
   devtools: {
     enabled: true,
@@ -12,7 +14,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
+      mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     },
+  },
+  eslint: {
+    lintOnStart: false,
   },
   colorMode: {
     dataValue: 'theme',
@@ -25,4 +31,7 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
+  mapbox: {
+    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+  },
 })

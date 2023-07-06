@@ -53,6 +53,7 @@ services:
       - gateway
     environment:
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
+      NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${PUBLIC_MAPBOX_ACCESS_TOKEN}
       NUXT_PUBLIC_SERVER_GATEWAY_URL: ${NUXT_PUBLIC_SERVER_GATEWAY_URL}
 
   admin-dashboard:
@@ -69,6 +70,7 @@ services:
     depends_on:
       - gateway
     environment:
+      NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${PUBLIC_MAPBOX_ACCESS_TOKEN}
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
 
   # SERVICES
@@ -104,6 +106,7 @@ services:
     environment:
       APP_PORT: ${ORDER_PORT-4002}
       APP_HOST: order
+      DATABASE_URL: ${ORDER_DATABASE_URL}
 
   payment:
     container_name: payment
