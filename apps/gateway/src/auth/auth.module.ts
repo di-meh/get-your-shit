@@ -5,10 +5,11 @@ import { JwtModule } from '@nestjs/jwt';
 import * as process from 'process';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuthService } from './auth.service';
+import { UserService } from '../user/user.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { MailService } from '../mail/mail.service';
-import {RolesGuard} from "./roles.guard";
+import { RolesGuard } from './roles.guard';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import {RolesGuard} from "./roles.guard";
   providers: [
     AuthService,
     PrismaService,
+    UserService,
     MailService,
     {
       provide: APP_GUARD,
@@ -29,7 +31,7 @@ import {RolesGuard} from "./roles.guard";
     },
     {
       provide: APP_GUARD,
-      useClass: RolesGuard
+      useClass: RolesGuard,
     },
   ],
   controllers: [AuthController],

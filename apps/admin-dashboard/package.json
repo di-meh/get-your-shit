@@ -14,6 +14,7 @@
     "@formkit/nuxt": "^0.17.2",
     "@formkit/themes": "^0.17.2",
     "@heroicons/vue": "^2.0.18",
+    "@mapbox/search-js-web": "^1.0.0-beta.16",
     "@pinia/nuxt": "^0.4.11",
     "@vueuse/integrations": "^10.2.0",
     "jwt-decode": "^3.1.2",
@@ -24,6 +25,7 @@
     "@nuxt/devtools": "^0.6.0",
     "@nuxthq/ui": "^2.4.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18",
@@ -31,7 +33,9 @@
     "@vueuse/nuxt": "^10.2.0",
     "daisyui": "^3.1.0",
     "eslint": "^8.42.0",
-    "nuxt": "^3.6.1"
+    "mapbox-gl": "^2.15.0",
+    "nuxt": "^3.6.1",
+    "nuxt-mapbox": "^1.3.9"
   },
   "overrides": {
     "vue": "latest"

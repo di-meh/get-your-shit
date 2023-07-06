@@ -24,7 +24,8 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterUserDto, role: ROLE = ROLE.USER) {
-    const { username, password, email } = registerDto;
+    const { username, password, email, address, postal_code, city, phone } =
+      registerDto;
     const existingUser = await this.prismaService.user.findUnique({
       where: { username },
     });
@@ -45,6 +46,10 @@ export class AuthService {
         password: hashedPassword,
         email,
         role,
+        address,
+        postal_code,
+        city,
+        phone,
         verifyHash,
       },
     });
@@ -102,6 +107,16 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async getUserById(id: string) {
+    const user = await this.prismaService.user.findUnique({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
   async forgotPassword(email: string) {

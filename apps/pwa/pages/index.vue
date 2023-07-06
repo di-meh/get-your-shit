@@ -1,120 +1,70 @@
 <script setup>
+await nextTick()
 
-let restaurants = [
-  {
-    name: "Pizza Hut",
-    location: "Sceaux",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Paris",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Boulogne",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-  {
-    name: "Pizza Hut",
-    location: "Clamart",
-    deliveryPrice: 4.99,
-    deliveryTime: "35-50min",
-    image: "../images/PizzaHut-header-2280x900px.jpg"
-  },
-]
+const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
+const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFetch('/user/me')
 
-// search bar function
-const search = () => {
-  let input = document.querySelector('input')
-  let filter = input.value.toUpperCase()
-  let cards = document.querySelectorAll('.card')
-
-  for (let i = 0; i < cards.length; i++) {
-    let p = cards[i].getElementsByTagName('p')[0]
-    let txtValue = p.textContent || p.innerText
-
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      cards[i].style.display = ""
-    } else {
-      cards[i].style.display = "none"
-    }
-  }
+function search(event) {
+  const search = event.target.value
+  const restaurants = document.querySelectorAll('.restaurant .card')
+  restaurants.forEach((restaurant) => {
+    if (restaurant.querySelector('p').id.toLowerCase().includes(search.toLowerCase()))
+      restaurant.style.display = 'block'
+    else
+      restaurant.style.display = 'none'
+  })
 }
 
+function backToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
 </script>
+
 <template>
-  <div class="container">
+  <div class="container relative lg:mb-28">
     <div class="first">
-      <div>
+      <div class="m-4 ">
         <p>Livrer maintenant</p>
-        <p>1 rue du test <i class='bx bx-chevron-down'></i></p>
+        <p v-if="user">
+          {{ user.address }}
+        </p>
       </div>
-      <div>
-      </div>
+      <div />
     </div>
     <div class="searchbar">
       <div class="bg-neutral">
-        <i class='bx bx-search'></i>
-        <input type="text" @input="search()" placeholder="Rechercher un restaurant...">
+        <i class="bx bx-search" />
+        <input type="text" placeholder="Rechercher un shop..." @input="search($event)">
       </div>
     </div>
     <div class="restaurant">
-      <div class="card" v-for="restaurant in restaurants">
-        <img :src="restaurant.image" alt="">
+      <div v-for="restaurant in restaurants" class="card p-4">
         <span>
-          <p :id=restaurant.name :data=restaurant.location>{{ restaurant.name }} - {{ restaurant.location }}</p>
-          <p>{{ restaurant.deliveryPrice }}€ - {{ restaurant.deliveryTime }}</p>
+          <p :id="restaurant.name">{{ restaurant.name }}</p>
+          <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
         </span>
+        <NuxtLink :to="`/restaurant/${restaurant.id}`">
+          <button class="btn w-full mt-2">
+            Voir
+          </button>
+        </NuxtLink>
       </div>
     </div>
   </div>
+  <NuxtLink to="/restaurant/aroundMe">
+    <button class="btn bg-neutral seeRestaus">
+      Voir sur la carte
+    </button>
+  </NuxtLink>
+  <button class="fixed right-8 bottom-20 bg-neutral rounded-full min-h-fit p-3 h-fit" @click="backToTop()">
+    <i class="bx bx-chevron-up" />
+  </button>
 </template>
 
 <style scoped>
-
 .container {
   max-width: 100%;
 }
@@ -133,7 +83,7 @@ const search = () => {
   justify-content: center;
   border-radius: 1rem;
   padding-left: 1rem;
-  width: 90%;
+  width: 100%;
 }
 
 .searchbar>div>i {
@@ -151,9 +101,6 @@ const search = () => {
   line-height: 3em;
 }
 
-
-
-
 /* Restaurants cards */
 
 .restaurant {
@@ -166,23 +113,63 @@ const search = () => {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-
-  width: 90%;
-  border-radius: 1rem;
-}
-
-.restaurant>.card>img {
   width: 100%;
   border-radius: 1rem;
+  line-height: 2em;
+  transition: 0.3s;
+  border: 2px solid #18342B;
 }
 
-.restaurant>.card>span {
+.restaurant>.card:hover {
+  background-color: #18342B;
+}
+
+.restaurant>.card>.links>span {
   display: flex;
+
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 0.5rem 1rem;
 }
 
+.seeRestaus {
+  position: fixed;
+  bottom: 6em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sticky {
+  position: sticky;
+  top: 1em;
+  z-index: 100;
+}
+
+@media (max-width: 634px) {
+  .searchbar {
+    width: 100%;
+  }
+
+  .searchbar>div {
+    width: 90%;
+  }
+
+  .restaurant {
+    padding-bottom: 5em;
+  }
+
+  .restaurant>.card {
+    width: 90%;
+    background-color: #18342B;
+  }
+
+  .restaurant>.card>.links>span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+}
 
 /* tablet */
 
@@ -199,13 +186,11 @@ const search = () => {
     width: 70%;
   }
 
-
 }
-
 
 /* desktop */
 
-@media (min-width: 1280px) {
+@media (min-width: 1000px) {
   .searchbar {
     width: 100%;
   }
@@ -214,16 +199,11 @@ const search = () => {
     width: 50%;
   }
 
-
   .restaurant>.card {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     width: 50%;
-  }
-
-  .restaurant>.card>img {
-    width: 30%;
-    border-radius: 1rem;
   }
 
   .restaurant>.card>span {
@@ -233,25 +213,6 @@ const search = () => {
     align-items: flex-start;
     padding: 0.5rem 1rem;
   }
-
-  .restaurant>.card>span>p:first-child {
-    font-size: 1.2rem;
-  }
-
-  .restaurant>.card>span>p:last-child {
-    font-size: 1rem;
-  }
-
-  .restaurant>.card>span>p:last-child:before {
-    content: "•";
-    margin-right: 0.5rem;
-  }
-
-  .restaurant>.card>span>p:last-child:after {
-    content: "•";
-    margin-left: 0.5rem;
-  }
-
 
 }
 </style>
