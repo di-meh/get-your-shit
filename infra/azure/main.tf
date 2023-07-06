@@ -57,6 +57,13 @@ resource "azurerm_kubernetes_cluster" "akc" {
   name                = "gys-akc"
   resource_group_name = azurerm_resource_group.rg_main.name
   dns_prefix          = "gys-akc"
+#  network_profile {
+#    network_plugin    = "azure"
+#    load_balancer_sku = "standard"
+#    load_balancer_profile {
+#      outbound_ip_address_ids = [azurerm_public_ip.gys-akc-public-ip.id]
+#    }
+#  }
 
   default_node_pool {
     name       = "default"
@@ -72,3 +79,22 @@ resource "azurerm_kubernetes_cluster" "akc" {
     environment = "GYS"
   }
 }
+
+resource "azurerm_public_ip" "gys-akc-public-ip" {
+  allocation_method   = "Static"
+  location            = azurerm_resource_group.rg_main.location
+  name                = "gys-akc-public-ip"
+  resource_group_name = azurerm_kubernetes_cluster.akc.node_resource_group
+  sku                 = "Standard"
+}
+
+#resource "azurerm_lb" "gys-akc-lb" {
+#  location            = azurerm_resource_group.rg_main.location
+#  name                = "gys-akc-lb"
+#  resource_group_name = azurerm_resource_group.rg_main.name
+#
+#  frontend_ip_configuration {
+#    name = "PublicIPAddress"
+#    public_ip_address_id = azurerm_public_ip.gys-akc-public-ip.id
+#  }
+#}
