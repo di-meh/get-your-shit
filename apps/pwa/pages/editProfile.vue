@@ -62,7 +62,8 @@ function updateUser(e) {
 
 <template>
     <div class="flex justify-start pt-4 pl-4">
-        <NuxtLink to="/profile"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
+        <NuxtLink to="/profile"><button class="btn rounded-full min-h-fit p-3 h-fit"><i
+                    class='bx bx-left-arrow-alt text-2xl'></i></button></NuxtLink>
     </div>
     <h1 class="text-2xl m-8 font-bold">Edit profile</h1>
     <div v-if="userInfos" class="w-full mx-auto">
@@ -81,7 +82,7 @@ function updateUser(e) {
             </div>
             <div class="form-control">
                 <label for="date_birth" class="label label-text">Date de naissance</label>
-                <input id="date_birth" name="date_birth" class="input w-full" type="date" :value=dateBirth />
+                <input id="date_birth" name="date_birth" class="input w-full birthDate" type="date" :value=dateBirth />
             </div>
             <div class="form-control">
                 <label for="address" class="label label-text">Address</label>
@@ -112,3 +113,9 @@ function updateUser(e) {
     </div>
     <div v-else>Loading...</div>
 </template>
+
+<style scoped>
+.birthDate {
+    -webkit-appearance: none;
+}
+</style>

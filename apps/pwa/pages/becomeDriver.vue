@@ -83,7 +83,7 @@ const becomeDriver = async (e) => {
             </div>
             <div class="lg:w-1/4 w-full flex flex-col mt-4">
                 <label for="birthday">Date de naissance</label>
-                <input type="date" id="birthday" name="birthday" class="input mt-4 w-full">
+                <input type="date" id="birthday" name="birthday" class="input mt-4 w-full birthDate">
                 <button class="btn bg-neutral mt-3">Envoyer</button>
             </div>
         </form>
@@ -93,5 +93,9 @@ const becomeDriver = async (e) => {
 <style scoped>
 .active {
     border: #18342B 3px solid;
+}
+
+.birthDate {
+    -webkit-appearance: none;
 }
 </style>
