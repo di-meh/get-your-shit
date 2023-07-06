@@ -1,3 +1,23 @@
+<script setup>
+import { authRegister } from '~/utils/auth'
+
+const isLoading = ref(false)
+useHeadSafe({
+  title: 'Inscription',
+  meta: [
+    {
+      name: 'description',
+      content: 'Inscription',
+    },
+  ],
+})
+async function register(credentials) {
+  isLoading.value = true
+  await authRegister(credentials)
+  isLoading.value = false
+}
+</script>
+
 <template>
   <div class="flex items-center justify-center min-h-full flex-1 h-full">
     <div class="flex flex-col justify-center w-full px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -118,23 +138,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { authRegister } from '~/utils/auth'
-
-const isLoading = ref(false)
-useHeadSafe({
-  title: 'Inscription',
-  meta: [
-    {
-      name: 'description',
-      content: 'Inscription'
-    }
-  ]
-})
-async function register (credentials) {
-  isLoading.value = true
-  await authRegister(credentials)
-  isLoading.value = false
-}
-</script>

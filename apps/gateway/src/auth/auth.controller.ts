@@ -4,6 +4,9 @@ import { UserService } from '../user/user.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { Public } from './auth.decorator';
+import { VerifyEmailDto } from './dto/verifyEmail.dto';
+import { ForgotPasswordDto } from './dto/forgotPassword.dto';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,6 +22,30 @@ export class AuthController {
   @Post('login')
   login(@Body() loginDto: LoginUserDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Public()
+  @Post('verify')
+  verify(@Body() data: VerifyEmailDto) {
+    return this.authService.verify(data.hash);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  forgotPassword(@Body() data: ForgotPasswordDto) {
+    return this.authService.forgotPassword(data.email);
+  }
+
+  @Public()
+  @Get('reset-password/:hash')
+  getResetPassword(@Param('hash') hash: string) {
+    return this.authService.getResetPasswordToken(hash);
+  }
+
+  @Public()
+  @Post('reset-password')
+  resetPassword(@Body() data: ResetPasswordDto) {
+    return this.authService.resetPassword(data);
   }
 
   @Get('profile')

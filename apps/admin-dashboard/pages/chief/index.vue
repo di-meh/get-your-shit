@@ -1,3 +1,10 @@
+<script setup>
+definePageMeta({
+  layout: false,
+  middleware: 'chief',
+})
+</script>
+
 <template>
   <NuxtLayout name="chief">
     <div class="card w-full bg-base-100 shadow-xl border-2 border-secondary">
@@ -10,11 +17,3 @@
     </div>
   </NuxtLayout>
 </template>
-
-<script setup>
-definePageMeta({
-  layout: false,
-  middleware: 'chief'
-})
-
-</script>

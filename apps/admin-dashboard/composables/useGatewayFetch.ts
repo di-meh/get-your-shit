@@ -1,7 +1,7 @@
-import type { UseFetchOptions } from '#app'
 import { defu } from 'defu'
+import type { UseFetchOptions } from '#app'
 
-export default function useGatewayFetch<T> (url: string, options: UseFetchOptions<T> = {}) {
+export default function useGatewayFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
   const config = useRuntimeConfig()
   const userAuth = useCookie('token')
   const toast = useToast()
@@ -12,23 +12,24 @@ export default function useGatewayFetch<T> (url: string, options: UseFetchOption
     headers: userAuth.value
       ? { Authorization: `Bearer ${userAuth.value}` }
       : {},
-    onResponseError ({ response, error }): Promise<void> | void {
+    onResponseError({ response, error }): Promise<void> | void {
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           toast.add({
             title: 'Vous n\'êtes pas autorisé à effectuer cette action',
-            description: 'Veuillez vous reconnecter'
+            description: 'Veuillez vous reconnecter',
           })
           navigateTo('/login')
-        } else if (response.status === 304) {
+        }
+        else if (response.status === 304) {
           toast.add({
             title: 'Une erreur s\'est produite',
-            description: error?.message ?? 'Veuillez réessayer'
+            description: error?.message ?? 'Veuillez réessayer',
           })
         }
       }
-    }
+    },
   }
   const params = defu(options, defaults)
-  return useFetch(url, params)
+  return useFetch(() => url, params)
 }

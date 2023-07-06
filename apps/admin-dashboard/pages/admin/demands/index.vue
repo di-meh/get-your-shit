@@ -1,3 +1,31 @@
+<script setup>
+definePageMeta(
+  {
+    layout: 'admin',
+    middleware: 'admin',
+  },
+)
+const { data: demands, pending, refresh } = useGatewayFetch('/demand/restaurant')
+
+async function acceptDemand(id) {
+  await useGatewayFetch(`/demand/restaurant/${id}/accept`, { method: 'PUT' })
+  refresh()
+}
+
+async function refuseDemand(id) {
+  await useGatewayFetch(`/demand/restaurant/${id}/reject`, { method: 'PUT' })
+  refresh()
+}
+
+onBeforeMount(() => {
+  useHead({
+    htmlAttrs: {
+      'data-theme': 'lemonade',
+    },
+  })
+})
+</script>
+
 <template>
   <div>
     <h1 class="font-bold text-4xl mb-6">

@@ -1,3 +1,6 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div>
     <header class="relative">
@@ -9,5 +12,3 @@
     <PublicFooter />
   </div>
 </template>
-<script setup lang="ts">
-</script>

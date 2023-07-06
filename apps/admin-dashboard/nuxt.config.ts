@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     'nuxt-mapbox',
   ],
   devtools: {
-    enabled: true
+    enabled: true,
   },
   runtimeConfig: {
     public: {
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     lintOnStart: false
   },
   colorMode: {
-    dataValue: 'theme'
+    dataValue: 'theme',
   },
   vite: {
     server: {

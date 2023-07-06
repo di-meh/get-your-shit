@@ -5,6 +5,7 @@ import { CreateOrderDto } from './dto/createOrder.dto';
 import { CreateOrderItemDto } from './dto/createOrderItem.dto';
 import { catchError, lastValueFrom } from 'rxjs';
 import { UserService } from 'src/user/user.service';
+import {Public} from "../auth/auth.decorator";
 
 @Controller('order')
 export class OrderController {
@@ -14,6 +15,7 @@ export class OrderController {
     private readonly userService: UserService
   ) { }
 
+  @Public()
   @Get('ping')
   ping(): Observable<string> {
     return this.client.send('order-service:ping', 'order');

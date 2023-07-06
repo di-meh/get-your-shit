@@ -8,6 +8,8 @@ import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { Observable } from 'rxjs';
 import { Roles } from 'src/auth/auth.decorator';
+import {Public} from "../auth/auth.decorator";
+
 @Controller('restaurant')
 export class RestaurantController {
   constructor(
@@ -17,6 +19,12 @@ export class RestaurantController {
   @Post('create')
   create(@Body() data: CreateRestaurantDto) {
     return this.client.send('restaurant-service:create', data);
+  }
+  
+  @Public()
+  @Get('ping')
+  ping(): Observable<string> {
+    return this.client.send('restaurant-service:ping', 'restaurant');
   }
 
   @Roles('CHIEF')

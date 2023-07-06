@@ -11,22 +11,33 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  username    String   @unique
-  password    String
-  email       String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  role        ROLE     @default(USER)
-  verified    Boolean  @default(false)
-  customerId  String?
-  address     String?
-  city        String?
-  postal_code String?
-  phone         String?
-  departement   String?
-  vehicule_type String?
-  date_birth    DateTime?
+  id                  String                @id @default(uuid())
+  username            String                @unique
+  password            String
+  email               String                @unique
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  role                ROLE                  @default(USER)
+  verified            Boolean               @default(false)
+  verifyHash          String?               @unique
+  ForgotPasswordToken ForgotPasswordToken[]
+  customerId          String?
+  address             String?
+  city                String?
+  postal_code         String?
+  phone               String?
+  departement         String?
+  vehicule_type       String?
+  date_birth          DateTime?
+}
+
+model ForgotPasswordToken {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 enum ROLE {
