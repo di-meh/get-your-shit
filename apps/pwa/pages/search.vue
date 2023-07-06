@@ -1,27 +1,29 @@
 <script setup>
-await nextTick();
+await nextTick()
 
 const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/categories')
-
 </script>
 
-
 <template>
-    <div class="flex justify-start pt-4 pl-4">
-        <NuxtLink to="/"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
-    </div>
-    <div class="container">
-        <h3 class="text-2xl font-bold">Meilleures catégories</h3>
-        <div class="cats">
-            <NuxtLink :to="`/restaurant/categories/${cat.id}`" v-for="cat in categories" class="links">
-                <div class="bg-neutral" >
-                    <p>{{ cat.name }}</p>
-                </div>
-            </NuxtLink>
-
+  <div class="flex justify-start pt-4 pl-4">
+    <NuxtLink to="/">
+      <button class="btn rounded-full min-h-fit p-3 h-fit">
+        <i class="bx bx-left-arrow-alt text-2xl" />
+      </button>
+    </NuxtLink>
+  </div>
+  <div class="container">
+    <h3 class="text-2xl font-bold">
+      Meilleures catégories
+    </h3>
+    <div class="cats">
+      <NuxtLink v-for="cat in categories" :to="`/restaurant/categories/${cat.id}`" class="links">
+        <div class="bg-neutral">
+          <p>{{ cat.name }}</p>
         </div>
-
+      </NuxtLink>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -69,7 +71,6 @@ const { data: categories, pending, refresh } = useGatewayFetch('/restaurant/cate
 .cats div p {
     font-size: 1rem;
 }
-
 
 /* desktop */
 

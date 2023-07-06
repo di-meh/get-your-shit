@@ -9,7 +9,6 @@ import {
 } from 'class-validator';
 
 export class CreateOrderItemDto {
-  
   @IsString()
   @IsNotEmpty()
   productId: string;
@@ -25,5 +24,4 @@ export class CreateOrderItemDto {
   @IsString()
   @IsNotEmpty()
   orderId: string;
-
 }

@@ -10,12 +10,11 @@ import {
 } from 'class-validator';
 
 export class CreateOrderDto {
-
   @IsString()
   @IsNotEmpty()
   @IsOptional()
   id: string;
-  
+
   @IsString()
   @IsNotEmpty()
   buyerId: string;
@@ -36,5 +35,4 @@ export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   restaurantId: string;
-  
 }

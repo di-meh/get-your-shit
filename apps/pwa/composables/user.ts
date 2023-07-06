@@ -7,7 +7,7 @@ export const useUserStore = defineStore('user', () => {
 
   const cookie = useCookie('token')
 
-  const hasCookie = computed(()=> !!cookie.value)
+  const hasCookie = computed(() => !!cookie.value)
 
   function setCookie(value: string) {
     cookie.value = value

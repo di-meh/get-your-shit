@@ -1,48 +1,54 @@
 <script setup>
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification'
+
 definePageMeta({
-  layout: 'empty'
+  layout: 'empty',
 })
 
-const login = async (e) => {
+async function login(e) {
   e.preventDefault()
   const form = new FormData(e.target)
   const email = form.get('email')
   const password = form.get('password')
-  const toast = useToast();
+  const toast = useToast()
   const userStore = useUserStore()
-
 
   const { data, pending, refresh } = useGatewayFetch('/auth/login', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: { email, password },
     onResponse({ response }) {
       if (response.ok) {
         userStore.setCookie(response._data.access_token)
-        toast.success("Vous êtes connecté");
+        toast.success('Vous êtes connecté')
         navigateTo('/')
       }
-    }
-  });
+    },
+  })
 }
-
 </script>
 
 <template>
   <div class="login-container">
     <div class="login-header">
-      <h1 class="login-title">Login</h1>
+      <h1 class="login-title">
+        Login
+      </h1>
     </div>
     <div class="login-content">
-      <form @submit="login($event)" class="login-form">
-        <input type="email" name="email" placeholder="Email" class="input" />
-        <input type="password" name="password" placeholder="Password" class="input" />
-        <button class="btn" type="submit">Login</button>
+      <form class="login-form" @submit="login($event)">
+        <input type="email" name="email" placeholder="Email" class="input">
+        <input type="password" name="password" placeholder="Password" class="input">
+        <button class="btn" type="submit">
+          Login
+        </button>
       </form>
-      <p class="login-text">Vous n'avez pas de compte ? <NuxtLink to="/register" class="login-link">Inscription</NuxtLink>
+      <p class="login-text">
+        Vous n'avez pas de compte ? <NuxtLink to="/register" class="login-link">
+          Inscription
+        </NuxtLink>
       </p>
     </div>
   </div>
@@ -124,7 +130,6 @@ const login = async (e) => {
   }
 }
 
-
 /* desktop */
 
 @media (min-width: 1280px) {
@@ -137,4 +142,3 @@ const login = async (e) => {
   }
 }
 </style>
-

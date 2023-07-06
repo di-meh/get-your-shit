@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async findOne(username: string) {
     return this.prisma.user.findUnique({
@@ -68,7 +68,6 @@ export class UserService {
   async getMe(id: string) {
     return await this.prisma.user.findUnique({
       where: { id },
-      
     });
   }
 }

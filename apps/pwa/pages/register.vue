@@ -1,37 +1,34 @@
 <script setup>
-import { useToast } from "vue-toastification";
-import { autofill } from '@mapbox/search-js-web';
+import { useToast } from 'vue-toastification'
+import { autofill } from '@mapbox/search-js-web'
 
-const config = useRuntimeConfig();
+const config = useRuntimeConfig()
 onMounted(() => {
   autofill({
-    accessToken: config.public.mapboxAccessToken
+    accessToken: config.public.mapboxAccessToken,
   })
-});
-
-
-definePageMeta({
-  layout: 'empty'
 })
 
+definePageMeta({
+  layout: 'empty',
+})
 
-
-const register = async (e) => {
+async function register(e) {
   e.preventDefault()
-  const toast = useToast();
+  const toast = useToast()
   const form = new FormData(e.target)
   const password = form.get('password')
   const password_confirmation = form.get('password_confirmation')
 
   if (password !== password_confirmation) {
-    toast.error("Les mots de passe ne correspondent pas");
+    toast.error('Les mots de passe ne correspondent pas')
     return
   }
 
-  const { data: categories, pending, refresh } = useGatewayFetch('/auth/register',{
+  const { data: categories, pending, refresh } = useGatewayFetch('/auth/register', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(
       {
@@ -42,40 +39,43 @@ const register = async (e) => {
         address: form.get('address address-search'),
         city: form.get('city'),
         postal_code: form.get('postcode'),
-        phone: form.get('phone')
-      }
+        phone: form.get('phone'),
+      },
     ),
-    onResponse({response}) {
-      toast.success("Votre compte a bien été créé");
-      navigateTo('/login');
-    }
-  });
+    onResponse({ response }) {
+      toast.success('Votre compte a bien été créé')
+      navigateTo('/login')
+    },
+  })
 }
-
-
 </script>
 
 <template>
   <div class="register-container">
     <div class="register-header">
-      <h1 class="register-title">Register</h1>
+      <h1 class="register-title">
+        Register
+      </h1>
     </div>
     <div class="register-content">
-      <form @submit="register($event)" class="register-form">
-        <input type="text" name="username" placeholder="Username" class="input" />
-        <input type="email" name="email" placeholder="Email" class="input" />
-        <input type="number" name="phone" placeholder="Phone" class="input" />
-        <input type="password" name="password" placeholder="Password" class="input" />
-        <input type="password" name="password_confirmation" placeholder="Password confirmation" class="input" />
-        <input name="address" type="text" autocomplete="address-line1" placeholder="Address" class="input" />
-        <input name="city" class="input" placeholder="City" type="text" autocomplete="address-level2" />
-        <input class="input" name="postcode" placeholder="Postcode" type="text" autocomplete="postal-code" />
+      <form class="register-form" @submit="register($event)">
+        <input type="text" name="username" placeholder="Username" class="input">
+        <input type="email" name="email" placeholder="Email" class="input">
+        <input type="number" name="phone" placeholder="Phone" class="input">
+        <input type="password" name="password" placeholder="Password" class="input">
+        <input type="password" name="password_confirmation" placeholder="Password confirmation" class="input">
+        <input name="address" type="text" autocomplete="address-line1" placeholder="Address" class="input">
+        <input name="city" class="input" placeholder="City" type="text" autocomplete="address-level2">
+        <input class="input" name="postcode" placeholder="Postcode" type="text" autocomplete="postal-code">
 
-
-
-        <button class="btn" type="submit">Register</button>
+        <button class="btn" type="submit">
+          Register
+        </button>
       </form>
-      <p class="register-text">Vous avez déjà un compte ? <NuxtLink to="/login" class="register-link">Connexion</NuxtLink>
+      <p class="register-text">
+        Vous avez déjà un compte ? <NuxtLink to="/login" class="register-link">
+          Connexion
+        </NuxtLink>
       </p>
     </div>
   </div>
@@ -145,8 +145,6 @@ const register = async (e) => {
   color: #10B981;
 }
 
-
-
 @media (max-width: 634px) {
   .register-container {
     height: auto;
@@ -165,7 +163,6 @@ const register = async (e) => {
   }
 }
 
-
 /* desktop */
 
 @media (min-width: 1280px) {
@@ -178,4 +175,3 @@ const register = async (e) => {
   }
 }
 </style>
-

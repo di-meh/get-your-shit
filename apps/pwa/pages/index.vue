@@ -1,59 +1,67 @@
 <script setup>
-await nextTick();
+await nextTick()
 
 const { data: restaurants, pending, refresh } = useGatewayFetch('/restaurant')
 const { data: user, pending: pendingUser, refresh: refreshUser } = useGatewayFetch('/user/me')
 
 function search(event) {
-  const search = event.target.value;
-  const restaurants = document.querySelectorAll('.restaurant .card');
-  restaurants.forEach(restaurant => {
-    if (restaurant.querySelector('p').id.toLowerCase().includes(search.toLowerCase())) {
-      restaurant.style.display = 'block';
-    } else {
-      restaurant.style.display = 'none';
-    }
+  const search = event.target.value
+  const restaurants = document.querySelectorAll('.restaurant .card')
+  restaurants.forEach((restaurant) => {
+    if (restaurant.querySelector('p').id.toLowerCase().includes(search.toLowerCase()))
+      restaurant.style.display = 'block'
+    else
+      restaurant.style.display = 'none'
   })
 }
 
 function backToTop() {
   window.scrollTo({
     top: 0,
-    behavior: 'smooth'
+    behavior: 'smooth',
   })
 }
-
 </script>
+
 <template>
   <div class="container relative lg:mb-28">
     <div class="first">
       <div class="m-4 ">
         <p>Livrer maintenant</p>
-        <p v-if="user">{{ user.address }}</p>
+        <p v-if="user">
+          {{ user.address }}
+        </p>
       </div>
-      <div>
-      </div>
+      <div />
     </div>
     <div class="searchbar">
       <div class="bg-neutral">
-        <i class='bx bx-search'></i>
-        <input type="text" @input="search($event)" placeholder="Rechercher un shop...">
+        <i class="bx bx-search" />
+        <input type="text" placeholder="Rechercher un shop..." @input="search($event)">
       </div>
     </div>
     <div class="restaurant">
-      <div class="card p-4" v-for="restaurant in restaurants">
+      <div v-for="restaurant in restaurants" class="card p-4">
         <span>
-          <p :id=restaurant.name>{{ restaurant.name }}</p>
+          <p :id="restaurant.name">{{ restaurant.name }}</p>
           <p> {{ restaurant.address }}, {{ restaurant.city }}</p>
         </span>
-        <NuxtLink :to="`/restaurant/${restaurant.id}`"><button class="btn w-full mt-2">Voir</button></NuxtLink>
+        <NuxtLink :to="`/restaurant/${restaurant.id}`">
+          <button class="btn w-full mt-2">
+            Voir
+          </button>
+        </NuxtLink>
       </div>
     </div>
   </div>
   <NuxtLink to="/restaurant/aroundMe">
-    <button class="btn bg-neutral seeRestaus">Voir sur la carte</button>
+    <button class="btn bg-neutral seeRestaus">
+      Voir sur la carte
+    </button>
   </NuxtLink>
-  <button class="fixed right-8 bottom-20 bg-neutral rounded-full min-h-fit p-3 h-fit" @click="backToTop()"><i class='bx bx-chevron-up'></i></button>
+  <button class="fixed right-8 bottom-20 bg-neutral rounded-full min-h-fit p-3 h-fit" @click="backToTop()">
+    <i class="bx bx-chevron-up" />
+  </button>
 </template>
 
 <style scoped>
@@ -93,7 +101,6 @@ function backToTop() {
   line-height: 3em;
 }
 
-
 /* Restaurants cards */
 
 .restaurant {
@@ -101,7 +108,6 @@ function backToTop() {
   align-items: center;
   flex-direction: column;
 }
-
 
 .restaurant>.card {
   margin-top: 1rem;
@@ -139,7 +145,6 @@ function backToTop() {
   z-index: 100;
 }
 
-
 @media (max-width: 634px) {
   .searchbar {
     width: 100%;
@@ -166,8 +171,6 @@ function backToTop() {
   }
 }
 
-
-
 /* tablet */
 
 @media (min-width: 738px) {
@@ -183,9 +186,7 @@ function backToTop() {
     width: 70%;
   }
 
-
 }
-
 
 /* desktop */
 
@@ -198,14 +199,12 @@ function backToTop() {
     width: 50%;
   }
 
-
   .restaurant>.card {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 50%;
   }
-
 
   .restaurant>.card>span {
     display: flex;
@@ -214,8 +213,6 @@ function backToTop() {
     align-items: flex-start;
     padding: 0.5rem 1rem;
   }
-
-
 
 }
 </style>

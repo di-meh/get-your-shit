@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Request, Post, Put, Param, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Request,
+  Post,
+  Put,
+  Param,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { LoginUserDto } from './dto/loginUser.dto';
@@ -10,7 +19,10 @@ import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Public()
   @Post('register')
@@ -57,5 +69,4 @@ export class AuthController {
   async getUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.findOneById(id);
   }
-
 }

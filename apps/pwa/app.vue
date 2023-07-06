@@ -1,6 +1,5 @@
 <script setup>
 import 'boxicons/css/boxicons.min.css'
-
 </script>
 
 <template>
@@ -32,6 +31,4 @@ html.dark {
   background: #222;
   color: white;
 }
-
-
 </style>

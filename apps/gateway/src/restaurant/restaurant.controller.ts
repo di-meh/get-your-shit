@@ -1,4 +1,15 @@
-import { Controller, Get, Inject, Post, Body, Param, ParseUUIDPipe, Put, Request, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Body,
+  Param,
+  ParseUUIDPipe,
+  Put,
+  Request,
+  Delete,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateRestaurantDto } from './dto/createRestaurant.dto';
@@ -8,19 +19,19 @@ import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { Observable } from 'rxjs';
 import { Roles } from 'src/auth/auth.decorator';
-import {Public} from "../auth/auth.decorator";
+import { Public } from '../auth/auth.decorator';
 
 @Controller('restaurant')
 export class RestaurantController {
   constructor(
     @Inject('RESTAURANT_SERVICE') private readonly client: ClientProxy,
-  ) { }
+  ) {}
 
   @Post('create')
   create(@Body() data: CreateRestaurantDto) {
     return this.client.send('restaurant-service:create', data);
   }
-  
+
   @Public()
   @Get('ping')
   ping(): Observable<string> {
@@ -29,7 +40,10 @@ export class RestaurantController {
 
   @Roles('CHIEF')
   @Put('update/:id')
-  update(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateRestaurantDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() data: UpdateRestaurantDto,
+  ) {
     return this.client.send('restaurant-service:update', { id, ...data });
   }
 
@@ -60,7 +74,7 @@ export class RestaurantController {
   createProduct(@Body() data: CreateProductDto) {
     return this.client.send('restaurant-service:createProduct', data);
   }
-  
+
   @Get('products')
   getProducts() {
     return this.client.send('restaurant-service:getProducts', {});
@@ -72,12 +86,18 @@ export class RestaurantController {
   }
 
   @Put('products/:id')
-  updateProduct(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateProductDto) {
-    return this.client.send('restaurant-service:updateProduct', { id, ...data });
+  updateProduct(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() data: UpdateProductDto,
+  ) {
+    return this.client.send('restaurant-service:updateProduct', {
+      id,
+      ...data,
+    });
   }
 
   @Delete('products/:id')
-  deleteProduct(@Param("id", ParseUUIDPipe) id: string) {
+  deleteProduct(@Param('id', ParseUUIDPipe) id: string) {
     return this.client.send('restaurant-service:deleteProduct', id);
   }
 
@@ -97,15 +117,18 @@ export class RestaurantController {
   }
 
   @Put('categories/:id')
-  updateCategoryProduct(@Param("id", ParseUUIDPipe) id: string, @Body() data: UpdateCategoryProductDto) {
-    return this.client.send('restaurant-service:updateCategoryProduct', { id, ...data });
+  updateCategoryProduct(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() data: UpdateCategoryProductDto,
+  ) {
+    return this.client.send('restaurant-service:updateCategoryProduct', {
+      id,
+      ...data,
+    });
   }
 
   @Get(':id')
   getById(@Param('id', ParseUUIDPipe) id: string) {
     return this.client.send('restaurant-service:getById', id);
   }
-
-
-
 }

@@ -1,59 +1,55 @@
 <script setup>
 import { useJwt } from '@vueuse/integrations/useJwt'
+
 const cookie = useCookie('token')
 const { header, payload } = useJwt(cookie.value)
 const userName = payload.value.username
 const role = payload.value.role
 
 if (role === 'DELIVERY') {
-    console.log(role)
-    setPageLayout('delivery')
-} else {
-    console.log('default')
-    definePageMeta({
-        layout: 'default'
-    })
+  setPageLayout('delivery')
 }
-
-
-
+else {
+  definePageMeta({
+    layout: 'default',
+  })
+}
 </script>
 
 <template>
-    <div class="first">
-        <p>{{ userName }}</p>
-        <i class="bx bx-user"></i>
-    </div>
-    <div v-if="role !== 'DELIVERY'" class="second">
-        <NuxtLink to="/orders">
-            <div class="bg-neutral">
-                <i class='bx bx-cart'></i>
-                <p>Commandes</p>
-            </div>
-        </NuxtLink>
-    </div>
-    <div class="divider" v-if="role !== 'DELIVERY'"></div>
-    <div class="third">
-        <NuxtLink to="/editProfile" class="links hover:bg-neutral rounded-full">
-            <div>
-                <i class='bx bx-cog'></i>
-                <p>Paramètres</p>
-            </div>
-        </NuxtLink>
-        <NuxtLink v-if="role !== 'DELIVERY'" to="/becomeDriver" class="links hover:bg-neutral rounded-full">
-            <div>
-                <i class='bx bx-user-check'></i>
-                <p>Devenir un livreur</p>
-            </div>
-        </NuxtLink>
-        <NuxtLink to="/logout" class="links hover:bg-neutral rounded-full">
-            <div>
-                <i class='bx bx-log-out'></i>
-                <p>Déconnexion</p>
-            </div>
-        </NuxtLink>
-
-    </div>
+  <div class="first">
+    <p>{{ userName }}</p>
+    <i class="bx bx-user" />
+  </div>
+  <div v-if="role !== 'DELIVERY'" class="second">
+    <NuxtLink to="/orders">
+      <div class="bg-neutral">
+        <i class="bx bx-cart" />
+        <p>Commandes</p>
+      </div>
+    </NuxtLink>
+  </div>
+  <div v-if="role !== 'DELIVERY'" class="divider" />
+  <div class="third">
+    <NuxtLink to="/editProfile" class="links hover:bg-neutral rounded-full">
+      <div>
+        <i class="bx bx-cog" />
+        <p>Paramètres</p>
+      </div>
+    </NuxtLink>
+    <NuxtLink v-if="role !== 'DELIVERY'" to="/becomeDriver" class="links hover:bg-neutral rounded-full">
+      <div>
+        <i class="bx bx-user-check" />
+        <p>Devenir un livreur</p>
+      </div>
+    </NuxtLink>
+    <NuxtLink to="/logout" class="links hover:bg-neutral rounded-full">
+      <div>
+        <i class="bx bx-log-out" />
+        <p>Déconnexion</p>
+      </div>
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>
@@ -126,7 +122,6 @@ if (role === 'DELIVERY') {
     padding: 1em;
 }
 
-
 .third .links div i {
     font-size: 1.5rem;
 }
@@ -135,8 +130,6 @@ if (role === 'DELIVERY') {
     font-size: 1.2rem;
     margin-left: 1em;
 }
-
-
 
 @media (min-width: 738px) {
     .first {
@@ -189,7 +182,6 @@ if (role === 'DELIVERY') {
     }
 }
 
-
 /* desktop */
 
 @media (min-width: 1280px) {
@@ -221,7 +213,6 @@ if (role === 'DELIVERY') {
     .second div p {
         font-size: 1.5rem;
     }
-
 
     .third {
         padding: 0 40px;

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
     '@nuxtjs/tailwindcss',
-    'nuxt-mapbox'
+    'nuxt-mapbox',
   ],
 
   experimental: {
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    // vue-toastification - old commonjs module 
+    // vue-toastification - old commonjs module
     transpile: ['vue-toastification'],
   },
   runtimeConfig: {
@@ -72,9 +72,9 @@ export default defineNuxtConfig({
       gatewayUrl: process.env.NUXT_PUBLIC_GATEWAY_URL,
       mapboxAccessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
       serverGatewayUrl: process.env.NUXT_PUBLIC_SERVER_GATEWAY_URL,
-    }
+    },
   },
   mapbox: {
-    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-  }
+    accessToken: process.env.NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
+  },
 })

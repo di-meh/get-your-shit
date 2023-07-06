@@ -1,90 +1,95 @@
 <script setup>
-import { onMounted } from 'vue';
-import mapboxgl from 'mapbox-gl';
-await nextTick();
+import { onMounted } from 'vue'
+import mapboxgl from 'mapbox-gl'
 
-const config = useRuntimeConfig();
+await nextTick()
+
+const config = useRuntimeConfig()
 
 definePageMeta({
-    layout: 'empty'
-});
+  layout: 'empty',
+})
 
 onMounted(async () => {
-    const accessToken = config.public.mapboxAccessToken;
-    mapboxgl.accessToken = accessToken;
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        zoom: 12,
-        maxZoom: 17,
-        minZoom: 10
-    })
-    map.addControl(
-        new mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
-            // When active the map will receive updates to the device's location as it changes.
-            trackUserLocation: true,
-            // Draw an arrow next to the location dot to indicate which direction the device is heading.
-            showUserHeading: true,
-        })
-    );
+  const accessToken = config.public.mapboxAccessToken
+  mapboxgl.accessToken = accessToken
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    zoom: 12,
+    maxZoom: 17,
+    minZoom: 10,
+  })
+  map.addControl(
+    new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    }),
+  )
 
-    map.addControl(new mapboxgl.NavigationControl());
-    useGatewayFetch('/user/me')
+  map.addControl(new mapboxgl.NavigationControl())
+  useGatewayFetch('/user/me')
+    .then((data) => {
+      useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(data.data.value.address)}.json?access_token=${accessToken}`)
         .then((data) => {
-            useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(data.data.value.address)}.json?access_token=${accessToken}`)
+          map.setCenter(data.data.value.features[0].geometry.coordinates)
+        }).then(() => {
+          const { data: restaurants } = useGatewayFetch('/restaurant').then((data) => {
+            const restaurantData = data.data.value
+            restaurantData.forEach((restaurant) => {
+              useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(restaurant.address)}.json?access_token=${accessToken}`)
                 .then((data) => {
-                    map.setCenter(data.data.value.features[0].geometry.coordinates);
-                }).then(() => {
-                    const { data: restaurants } = useGatewayFetch('/restaurant').then((data) => {
-                        let restaurantData = data.data.value;
-                        restaurantData.forEach((restaurant) => {
-                            useGatewayFetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(restaurant.address)}.json?access_token=${accessToken}`)
-                                .then((data) => {
-                                    const marker = new mapboxgl.Marker({
-                                        color: "#000000",
-                                        draggable: false
-                                    }).setLngLat(data.data.value.features[0].geometry.coordinates)
-                                        .addTo(map);
-                                    const popup = new mapboxgl.Popup()
-                                        .setLngLat(data.data.value.features[0].geometry.coordinates)
-                                        .setHTML(`
+                  const marker = new mapboxgl.Marker({
+                    color: '#000000',
+                    draggable: false,
+                  }).setLngLat(data.data.value.features[0].geometry.coordinates)
+                    .addTo(map)
+                  const popup = new mapboxgl.Popup()
+                    .setLngLat(data.data.value.features[0].geometry.coordinates)
+                    .setHTML(`
                                             <h1 class="text-black text-[16px]">${restaurant.name}</h1>
                                             <p class="text-black text-[14px] mt-2">${restaurant.address} - ${restaurant.city}</p>
                                             <a class="text-black" href="/restaurant/${restaurant.id}"><button class="btn bg-neutral seeResto mt-2">Voir le shop</button></a>
                                         `)
-                                    marker.setPopup(popup);
-                                    marker.getElement().addEventListener('click', () => {
-                                        map.flyTo({
-                                            center: data.data.value.features[0].geometry.coordinates,
-                                            zoom: 15,
-                                            essential: true
-                                        })
-                                    })
-                                    popup.on('close', () => {
-                                        map.flyTo({
-                                            center: data.data.value.features[0].geometry.coordinates,
-                                            zoom: 12,
-                                            essential: true
-                                        })
-                                    })
-                                })
-                        })
-                    });
+                  marker.setPopup(popup)
+                  marker.getElement().addEventListener('click', () => {
+                    map.flyTo({
+                      center: data.data.value.features[0].geometry.coordinates,
+                      zoom: 15,
+                      essential: true,
+                    })
+                  })
+                  popup.on('close', () => {
+                    map.flyTo({
+                      center: data.data.value.features[0].geometry.coordinates,
+                      zoom: 12,
+                      essential: true,
+                    })
+                  })
                 })
+            })
+          })
         })
-});
+    })
+})
 </script>
 
 <template>
-    <div>
-        <div id='map' class="map-container" style='width: 100%; height: 100vh;'></div>
-        <div class="flex justify-start pl-4 absolute t-0 l-0">
-            <NuxtLink to="/"><button class="btn rounded-full min-h-fit p-3 h-fit"><i class='bx bx-left-arrow-alt text-2xl' ></i></button></NuxtLink>
-        </div>
+  <div>
+    <div id="map" class="map-container" style="width: 100%; height: 100vh;" />
+    <div class="flex justify-start pl-4 absolute t-0 l-0">
+      <NuxtLink to="/">
+        <button class="btn rounded-full min-h-fit p-3 h-fit">
+          <i class="bx bx-left-arrow-alt text-2xl" />
+        </button>
+      </NuxtLink>
     </div>
+  </div>
 </template>
 
 <style>
