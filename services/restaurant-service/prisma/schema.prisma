@@ -25,16 +25,18 @@ model Restaurant {
 }
 
 model Product {
-  id           String     @id @default(uuid())
-  name         String
-  description  String?
-  price        Float
-  restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  categoryId   String
-  category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id              String     @id @default(uuid())
+  name            String
+  description     String?
+  price           Float
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  categoryId      String
+  category        Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  stripePriceId   String?    @unique
+  stripeProductId String?    @unique
 }
 
 model Category {

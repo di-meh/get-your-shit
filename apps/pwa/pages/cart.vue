@@ -1,11 +1,26 @@
 <script setup>
 import { storeToRefs } from 'pinia'
+import { loadStripe } from '@stripe/stripe-js'
+import {useJwt} from "@vueuse/integrations/useJwt";
+import { useToast } from 'vue-toastification'
 
+const toast = useToast()
 const cartStore = useCartStore()
 const { cart, total } = storeToRefs(cartStore)
+const cookie = useCookie('token')
+const { payload } = useJwt(cookie.value)
+const runtimeConfig = useRuntimeConfig()
 const modal = ref(null)
 const selectedProduct = ref(null)
 const selectedProductQuantity = ref(1)
+const stripePromise = await loadStripe(runtimeConfig.public.stripePublicKey)
+const origin = process.client ? window.location.origin : ''
+const successUrl = `${origin}/payment/success`
+const cancelUrl = `${origin}/payment/cancel`
+const route = useRoute()
+// Get current host from the browser using Nuxt
+
+console.log(successUrl, route);
 
 function removeItemFromCart(product) {
   cartStore.removeFromCart(product)
@@ -42,6 +57,24 @@ function updateCart(product) {
     return item
   })
   modal.value.close()
+}
+
+async function buy() {
+  const lineItems = cart.value.map((item) => ({
+    price: item.stripePriceId,
+    quantity: item.quantity,
+  }))
+  const stripe = await stripePromise;
+  const { error } = await stripe.redirectToCheckout({
+    mode: 'payment',
+    lineItems,
+    successUrl,
+    cancelUrl,
+    customerEmail: payload.value.email,
+  })
+  if (error) {
+    toast.error(error.message)
+  }
 }
 </script>
 
@@ -102,6 +135,9 @@ function updateCart(product) {
     <h3>Total : {{ total }}€</h3>
     <button class="mt-2 btn w-full" @click="emptyCart()">
       Vider le panier
+    </button>
+    <button class="mt-2 btn bg-neutral border-none w-full" @click="buy">
+      Payer
     </button>
     <dialog ref="modal" class="modal">
       <form v-if="selectedProduct" method="dialog" class="modal-box">

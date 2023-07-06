@@ -36,6 +36,9 @@ services:
       SMTP_URL: ${SMTP_URL}
       GATEWAY_PWA_URL: ${GATEWAY_PWA_URL}
       GATEWAY_ADMIN_DASHBOARD_URL: ${GATEWAY_ADMIN_DASHBOARD_URL}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
 
   pwa:
     container_name: pwa
@@ -55,6 +58,8 @@ services:
       NUXT_PUBLIC_GATEWAY_URL: ${NUXT_PUBLIC_GATEWAY_URL}
       NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${PUBLIC_MAPBOX_ACCESS_TOKEN}
       NUXT_PUBLIC_SERVER_GATEWAY_URL: ${NUXT_PUBLIC_SERVER_GATEWAY_URL}
+      NUXT_PUBLIC_STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      NUXT_PUBLIC_STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
 
   admin-dashboard:
     container_name: admin-dashboard
@@ -121,6 +126,8 @@ services:
     environment:
       APP_PORT: ${PAYMENT_PORT-4003}
       APP_HOST: payment
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
 
   restaurant:
     container_name: restaurant
@@ -138,6 +145,8 @@ services:
       APP_PORT: ${RESTAURANT_PORT-4004}
       APP_HOST: restaurant
       DATABASE_URL: ${RESTAURANT_DATABASE_URL}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
 
   shipping:
     container_name: shipping

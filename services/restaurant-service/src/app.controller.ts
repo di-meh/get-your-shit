@@ -7,6 +7,8 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
+import { StripeService } from './stripe.service';
+
 
 @Controller()
 export class AppController {
@@ -66,6 +68,10 @@ export class AppController {
   @MessagePattern('restaurant-service:getProductById')
   getProductById(id: string) {
     return this.appService.getProductById(id);
+  }
+  @MessagePattern('restaurant-service:getProductByPriceId')
+  getProductByPriceID(id: string) {
+    return this.appService.getProductByPriceId(id);
   }
 
   @MessagePattern('restaurant-service:createCategoryProduct')

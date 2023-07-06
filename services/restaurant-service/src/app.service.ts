@@ -6,10 +6,11 @@ import { UpdateProductDto } from './dto/updateProduct.dto';
 import { CreateCategoryProductDto } from './dto/createCategoryProduct.dto';
 import { UpdateCategoryProductDto } from './dto/updateCategoryProduct.dto';
 import { PrismaService } from './prisma.service';
+import { StripeService } from './stripe.service';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService, private readonly stripeService: StripeService) { }
   create(data: CreateRestaurantDto) {
     return this.prismaService.restaurant.create({ data });
   }
@@ -65,8 +66,24 @@ export class AppService {
     });
   }
 
-  createProduct(data: CreateProductDto) {
-    return this.prismaService.product.create({ data });
+  async createProduct(data: CreateProductDto) {
+
+    const stripeProduct = await this.stripeService.stripe.products.create({
+      name: data.name,
+      description: data.description,
+      default_price_data: {
+        currency: 'eur',
+        unit_amount: data.price * 100,
+      }
+    })
+
+    return this.prismaService.product.create({ 
+      data: {
+        stripeProductId: stripeProduct.id,
+        stripePriceId: stripeProduct.default_price.toString(),
+        ...data,
+      }
+    });
   }
 
   getProducts() {
@@ -80,6 +97,15 @@ export class AppService {
   getProductById(id: string) {
     return this.prismaService.product.findUnique({
       where: { id },
+      include: {
+        category: true,
+      },
+    });
+  }
+
+  getProductByPriceId(id: string) {
+    return this.prismaService.product.findUnique({
+      where: { stripePriceId: id },
       include: {
         category: true,
       },
