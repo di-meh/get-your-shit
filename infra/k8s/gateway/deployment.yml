@@ -63,3 +63,18 @@ spec:
                 configMapKeyRef:
                   key: GATEWAY_ADMIN_DASHBOARD_URL
                   name: gys-configmap
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                  configMapKeyRef:
+                    key: STRIPE_SECRET_KEY
+                    name: gys-configmap
+            - name: STRIPE_PUBLIC_KEY
+              valueFrom:
+                  configMapKeyRef:
+                      key: STRIPE_PUBLIC_KEY
+                      name: gys-configmap
+            - name: STRIPE_WEBHOOK_SECRET
+              valueFrom:
+                  configMapKeyRef:
+                      key: STRIPE_WEBHOOK_SECRET
+                      name: gys-configmap

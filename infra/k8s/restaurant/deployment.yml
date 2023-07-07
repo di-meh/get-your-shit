@@ -25,3 +25,13 @@ spec:
                 configMapKeyRef:
                   key: RESTAURANT_DATABASE_URL
                   name: gys-configmap
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: STRIPE_SECRET_KEY
+                  name: gys-configmap
+            - name: STRIPE_PUBLIC_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: STRIPE_PUBLIC_KEY
+                  name: gys-configmap
